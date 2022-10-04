@@ -103,6 +103,46 @@ export const navigations = [
     label: "Vendor",
   },
   {
+    name: "Products",
+    icon: duotone.Products,
+    children: [
+      {
+        name: "Product List",
+        path: "/vendor/products",
+      },
+      {
+        name: "Create Product",
+        path: "/vendor/products/create",
+      },
+      {
+        name: "Category",
+        path: "/vendor/categories",
+      },
+      {
+        name: "Brand",
+        path: "/vendor/brands",
+      },
+      {
+        name: "Review",
+        path: "/vendor/product-reviews",
+      },
+    ],
+  },
+  {
+    name: "Orders",
+    icon: duotone.Order,
+    children: [
+      {
+        name: "Order List",
+        path: "/vendor/orders",
+      },
+      {
+        name: "Order Details",
+        path: "/vendor/orders/1",
+      },
+    ],
+  },
+  {
     name: "Earnings",
     icon: duotone.ProjectChart,
     children: [
