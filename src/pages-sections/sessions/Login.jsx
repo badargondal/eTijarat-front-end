@@ -1,5 +1,6 @@
 import { Card } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { keys } from "@mui/system";
 import BazaarButton from "components/BazaarButton";
 import BazaarTextField from "components/BazaarTextField";
 import { H3, Small } from "components/Typography";
@@ -8,6 +9,11 @@ import React, { useCallback, useState } from "react";
 import * as yup from "yup";
 import EyeToggleButton from "./EyeToggleButton";
 import SocialButtons from "./SocialButtons";
+import axios from "axios";
+
+import Router , {useRouter}  from 'next/router';
+
+
 const fbStyle = {
   background: "#3B5998",
   color: "white",
@@ -41,14 +47,41 @@ export const Wrapper = styled(({ children, passwordVisibility, ...rest }) => (
   },
 }));
 
+
+// useEffect(() => {
+//   const {pathname} = Router
+//   if(pathname == '/' ){
+//       Router.push('/hello-nextjs')
+//   }
+// });
+
+
 const Login = () => {
+  const router = useRouter()
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
   }, []);
 
+  
+
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    const res = await axios
+      .post("http://127.0.0.1:5000/buyer/login", values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(
+        (response) => {
+          const session_id = response.data.session_id;
+          !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil
+          router.push('/')
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =

@@ -17,7 +17,15 @@ const Signup = () => {
   }, []);
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    // console.log(values);
+
+    return fetch("http://127.0.0.1:5000/buyer/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    }).then((data) => console.log(data.json()));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
