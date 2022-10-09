@@ -89,7 +89,7 @@ const CheckoutForm2 = () => {
     return email;
   };
 
-  console.log(Buyer_email);
+  console.log("Buyer Email",Buyer_email);
 
   const handleFormSubmit = async (values) => {
     const order = new Object();

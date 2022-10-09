@@ -25,18 +25,7 @@ const OrderList = () => {
     });
     setorders(response.data);
   };
-  // console.log("useeffect",orders)
-
-  // const my_orders = Promise.resolve(getTopCategories());
-  // let pure_orders;
-  // my_orders.then((value) => {
-  //   pure_orders=value
-  // })
-  // if (pure_orders!=null){
-  //   console.log(pure_orders)
-  //   setorders(pure_orders)
-  // }
-
+  console.log("order",orders)
   return (
     <Fragment>
       <TableRow

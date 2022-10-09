@@ -28,15 +28,13 @@ const CreateProduct = () => {
   }
   const vendor_email = async () => {
     const email = await getVendorData ();
-    // console.log("mail is this",email)
+    
     return email
   };
   const p = Promise.resolve(vendor_email());
   p.then((value) => {
-    // console.log("mail is this",value)
     setemail(value)
   })
-  // console.log("test",email)
   const initialValues = {
     name: "",
     stock: "",

@@ -6,9 +6,11 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 // =================================================
-const OrderRow = ({ item , }) => {
-  console.log(item)
-  var count=0
+const OrderRow = ({ item }) => {
+  // console.log("item",item)
+  // console.log("item id",item._id.$oid)
+  var counter = 0;
+  var total = 0;
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -30,7 +32,8 @@ const OrderRow = ({ item , }) => {
 
   return (
     // <Link href={item.href}>
-    <Link href={""}>
+    // <Link href={`orders/${item._id.$oid}`} state={{order_id:item._id.$oid}} >
+    <Link href={`orders/${item._id.$oid}`}>
       <a>
         <TableRow
           sx={{
@@ -39,7 +42,7 @@ const OrderRow = ({ item , }) => {
           }}
         >
           <H5 m={0.75} textAlign="left">
-            {1}
+            {`${item._id.$oid}`}
           </H5>
           <Box m={0.75}>
             <Chip
@@ -62,8 +65,10 @@ const OrderRow = ({ item , }) => {
           </Typography>
 
           <Typography m={0.75} textAlign="left">
-            
-            ${item.products[0].price * item.products[0].qty}
+            $
+            {item.products
+              .map((item) => item.price * item.qty)
+              .reduce((acc, amount) => acc + amount)}
           </Typography>
 
           <Typography
@@ -91,9 +96,7 @@ const OrderRow = ({ item , }) => {
         </TableRow>
       </a>
     </Link>
-    
   );
-  
 };
 
 export default OrderRow;
