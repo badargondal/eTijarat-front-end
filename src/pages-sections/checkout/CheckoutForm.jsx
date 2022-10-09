@@ -14,6 +14,8 @@ const CheckoutForm = () => {
   const [sameAsShipping, setSameAsShipping] = useState(false);
 
   const handleFormSubmit = async (values) => {
+    console.log(values)
+    
     router.push("/payment");
   };
 

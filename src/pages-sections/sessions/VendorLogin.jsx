@@ -46,9 +46,7 @@ export const Wrapper = styled(({ children, passwordVisibility, ...rest }) => (
     marginBottom: 24,
   },
 }));
-
-
-const Login = () => {
+const VendorLogin = () => {
   const router = useRouter()
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
@@ -59,7 +57,7 @@ const Login = () => {
 
   const handleFormSubmit = async (values) => {
     const res = await axios
-      .post("http://127.0.0.1:5000/buyer/login", values, {
+      .post("http://127.0.0.1:5000/vendor/login", values, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -167,4 +165,4 @@ const formSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
   email: yup.string().email("invalid email").required("Email is required"),
 });
-export default Login;
+export default VendorLogin;

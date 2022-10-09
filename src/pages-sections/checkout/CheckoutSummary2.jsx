@@ -2,8 +2,15 @@ import { Box, Divider } from "@mui/material";
 import { FlexBetween } from "components/flex-box";
 import { Paragraph, Span } from "components/Typography";
 import React from "react";
+import { useAppContext } from "contexts/AppContext";
 
 const CheckoutSummary2 = () => {
+  const { state } = useAppContext();
+  const cartList = state.cart;
+  console.log(state.cart)
+  const getTotalPrice = () => {
+    return cartList.reduce((accum, item) => accum + item.price * item.qty, 0);
+  };
   return (
     <Box>
       <Paragraph color="secondary.900" fontWeight={700} mb={2}>
@@ -14,7 +21,7 @@ const CheckoutSummary2 = () => {
         <FlexBetween mb={1.5} key={item.name}>
           <Paragraph>
             <Span fontWeight="700" fontSize="14px">
-              {item.quantity}
+              {item.qty}
             </Span>{" "}
             x {item.name}
           </Paragraph>
@@ -31,7 +38,7 @@ const CheckoutSummary2 = () => {
 
       <FlexBetween mb={0.5}>
         <Paragraph color="grey.600">Subtotal:</Paragraph>
-        <Paragraph fontWeight="700">${(2610).toFixed(2)}</Paragraph>
+        <Paragraph fontWeight="700">${getTotalPrice().toFixed(2)}</Paragraph>
       </FlexBetween>
 
       <FlexBetween mb={0.5}>
@@ -58,27 +65,29 @@ const CheckoutSummary2 = () => {
 
       <FlexBetween fontWeight="700" mb={1}>
         <Paragraph>Total:</Paragraph>
-        <Paragraph fontWeight="700">${(2610).toFixed(2)}</Paragraph>
+        <Paragraph fontWeight="700">${getTotalPrice()+(40)}</Paragraph>
       </FlexBetween>
     </Box>
   );
 };
 
-const cartList = [
-  {
-    name: "iPhone 12",
-    quantity: 1,
-    price: 999,
-  },
-  {
-    name: "iPhone 12 pro",
-    quantity: 1,
-    price: 1199,
-  },
-  {
-    name: "iPhone 12 pro max",
-    quantity: 1,
-    price: 1299,
-  },
-];
+// const cartList = [
+
+
+//   {
+//     name: "iPhone 12",
+//     quantity: 1,
+//     price: 999,
+//   },
+//   {
+//     name: "iPhone 12 pro",
+//     quantity: 1,
+//     price: 1199,
+//   },
+//   {
+//     name: "iPhone 12 pro max",
+//     quantity: 1,
+//     price: 1299,
+//   },
+// ];
 export default CheckoutSummary2;

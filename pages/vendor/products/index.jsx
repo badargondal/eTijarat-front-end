@@ -10,6 +10,7 @@ import useMuiTable from "hooks/useMuiTable";
 import { ProductRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard";
+import  {useRouter}  from 'next/router';
 const tableHeading = [
   {
     id: "name",
@@ -49,6 +50,7 @@ ProductList.getLayout = function getLayout(page) {
 
 // =============================================================================
 export default function ProductList(props) {
+  const router = useRouter()
   const { products } = props;
   const {
     order,
@@ -68,7 +70,7 @@ export default function ProductList(props) {
       <SearchArea
         handleSearch={() => {}}
         buttonText="Add Product"
-        handleBtnClick={() => {}}
+        handleBtnClick={() => {router.push('/vendor/products/create')}}
         searchPlaceholder="Search Product..."
       />
 

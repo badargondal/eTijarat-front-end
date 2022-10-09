@@ -17,8 +17,10 @@ const PaymentForm = () => {
   const isMobile = width < 769;
 
   const handleFormSubmit = async (values) => {
+    alert("yay")
+    console.log("values")
     console.log(values)
-    router.push("/payment");
+    
   };
 
   const handlePaymentMethodChange = ({ target: { name } }) => {
@@ -123,6 +125,7 @@ const PaymentForm = () => {
                 <Button
                   variant="outlined"
                   color="primary"
+                  type="submit"
                   sx={{
                     mb: 4,
                   }}
@@ -214,7 +217,8 @@ const PaymentForm = () => {
         </Grid>
         <Grid item sm={6} xs={12}>
           <Link href="" passHref >
-            <Button variant="contained" color="primary" type="submit" fullWidth>
+          {/* onClick={()=>{router.push('/order-confirmation')}} */}
+            <Button variant="contained" color="primary" type="submit" fullWidth >
               Review
             </Button>
           </Link>
@@ -243,17 +247,18 @@ const initialValues = {
   billing_address2: "",
 };
 const checkoutSchema = yup.object().shape({
-  card_no: yup.string().required("required"),
-  name: yup.string().required("required"),
-  exp_date: yup.string().required("required"),
-  cvc: yup.string().required("required"), // shipping_zip: yup.string().required("required"),
-  // shipping_country: yup.object().required("required"),
-  // shipping_address1: yup.string().required("required"),
-  // billing_name: yup.string().required("required"),
-  // billing_email: yup.string().required("required"),
-  // billing_contact: yup.string().required("required"),
-  // billing_zip: yup.string().required("required"),
-  // billing_country: yup.string().required("required"),
-  // billing_address1: yup.string().required("required"),
+  // card_no: yup.string().required("required"),
+  // name: yup.string().required("required"),
+  // exp_date: yup.string().required("required"),
+  // cvc: yup.string().required("required"), 
+  // // shipping_zip: yup.string().required("required"),
+ // // shipping_country: yup.object().required("required"),
+  //// shipping_address1: yup.string().required("required"),
+  //// billing_name: yup.string().required("required"),
+  //// billing_email: yup.string().required("required"),
+  // //billing_contact: yup.string().required("required"),
+  //// billing_zip: yup.string().required("required"),
+  //// billing_country: yup.string().required("required"),
+//  // billing_address1: yup.string().required("required"),
 });
 export default PaymentForm;

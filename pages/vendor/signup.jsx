@@ -1,12 +1,12 @@
 import { FlexRowCenter } from "components/flex-box";
 import SEO from "components/SEO";
-import Signup from "pages-sections/sessions/Signup";
+import VendorSignup from "pages-sections/sessions/VendorSignup";
 
 const SignUpPage = () => {
   return (
     <FlexRowCenter flexDirection="column" minHeight="100vh">
       <SEO title="Sign up" />
-      <Signup />
+      <VendorSignup />
     </FlexRowCenter>
   );
 };

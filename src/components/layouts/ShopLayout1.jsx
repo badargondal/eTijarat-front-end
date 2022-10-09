@@ -2,7 +2,7 @@ import Footer from "components/footer/Footer";
 import Header from "components/header/Header";
 import MobileNavigationBar from "components/mobile-navigation/MobileNavigationBar";
 import Sticky from "components/sticky/Sticky";
-import Topbar from "components/topbar/Topbar";
+// import Topbar from "components/topbar/Topbar";
 import React, { Fragment, useCallback, useState } from "react";
 import Navbar from "components/navbar/Navbar";
 /**
@@ -29,7 +29,7 @@ const ShopLayout1 = ({
   return (
     <Fragment>
       {/* TOPBAR */}
-      {showTopbar && <Topbar bgColor={topbarBgColor} />}
+      {/* {showTopbar && <Topbar bgColor={topbarBgColor} />} */}
 
       {/* HEADER */}
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>

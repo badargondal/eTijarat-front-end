@@ -2,11 +2,41 @@ import { Pagination } from "@mui/material";
 import { FlexBox } from "components/flex-box";
 import TableRow from "components/TableRow";
 import { H5 } from "components/Typography";
-import { Fragment } from "react";
-import OrderRow from "./OrderRow"; // ============================================================
+import { Fragment, useState, useEffect } from "react";
+import OrderRow from "./OrderRow";
+import axios from "axios";
+// ============================================================
 
 // ============================================================
+
 const OrderList = () => {
+  const [orders, setorders] = useState(null);
+
+  useEffect(() => {
+    orders == null ? getTopCategories() : null;
+  }, []);
+
+  var getTopCategories = async () => {
+    const response = await axios.get("http://127.0.0.1:5000/buyer/orders", {
+      headers: {
+        "Content-Type": "application/json",
+        session_id: localStorage.getItem("sessionId"),
+      },
+    });
+    setorders(response.data);
+  };
+  // console.log("useeffect",orders)
+
+  // const my_orders = Promise.resolve(getTopCategories());
+  // let pure_orders;
+  // my_orders.then((value) => {
+  //   pure_orders=value
+  // })
+  // if (pure_orders!=null){
+  //   console.log(pure_orders)
+  //   setorders(pure_orders)
+  // }
+
   return (
     <Fragment>
       <TableRow
@@ -38,9 +68,9 @@ const OrderList = () => {
         <H5 flex="0 0 0 !important" color="grey.600" px={2.75} my={0} />
       </TableRow>
 
-      {orderList.map((item, ind) => (
-        <OrderRow item={item} key={ind} />
-      ))}
+      { (orders!=null)
+        ? orders.map((item, ind) => <OrderRow item={item} key={ind} />)
+        : false }
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination

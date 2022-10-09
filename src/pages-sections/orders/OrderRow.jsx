@@ -6,7 +6,9 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 // =================================================
-const OrderRow = ({ item }) => {
+const OrderRow = ({ item , }) => {
+  console.log(item)
+  var count=0
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -27,7 +29,8 @@ const OrderRow = ({ item }) => {
   };
 
   return (
-    <Link href={item.href}>
+    // <Link href={item.href}>
+    <Link href={""}>
       <a>
         <TableRow
           sx={{
@@ -36,12 +39,12 @@ const OrderRow = ({ item }) => {
           }}
         >
           <H5 m={0.75} textAlign="left">
-            {item.orderNo}
+            {1}
           </H5>
           <Box m={0.75}>
             <Chip
               size="small"
-              label={item.status}
+              label={"Pending"}
               sx={{
                 p: "0.25rem 0.5rem",
                 fontSize: 12,
@@ -55,11 +58,12 @@ const OrderRow = ({ item }) => {
             />
           </Box>
           <Typography className="pre" m={0.75} textAlign="left">
-            {format(new Date(item.purchaseDate), "MMM dd, yyyy")}
+            {format(new Date(item.details.date), "MMM dd, yyyy")}
           </Typography>
 
           <Typography m={0.75} textAlign="left">
-            ${item.price.toFixed(2)}
+            
+            ${item.products[0].price * item.products[0].qty}
           </Typography>
 
           <Typography
@@ -87,7 +91,9 @@ const OrderRow = ({ item }) => {
         </TableRow>
       </a>
     </Link>
+    
   );
+  
 };
 
 export default OrderRow;

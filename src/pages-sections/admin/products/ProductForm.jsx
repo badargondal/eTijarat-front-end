@@ -1,11 +1,20 @@
 import { Button, Card, Grid, MenuItem, TextField } from "@mui/material";
 import DropZone from "components/DropZone";
 import { Formik } from "formik";
-import React from "react";
+import React,{useState}from "react";
 
 // ================================================================
+
 const ProductForm = (props) => {
-  const { initialValues, validationSchema, handleFormSubmit } = props;
+  const [email, setemail] = useState('');
+  const p = Promise.resolve(props.vendor_email);
+  p.then((value) => {
+    setemail(value)
+  })
+  // console.log(props.json());
+  // console.log(props)
+  const { initialValues, validationSchema, handleFormSubmit } =
+    props;
   return (
     <Card
       sx={{
@@ -101,16 +110,17 @@ const ProductForm = (props) => {
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
-                  name="tags"
-                  label="Tags"
+                  disabled
+                  name="vendor"
+                  label="Vendor Name"
                   color="info"
                   size="medium"
-                  placeholder="Tags"
+                  placeholder="Vendor"
                   onBlur={handleBlur}
-                  value={values.tags}
+                  value={email}
                   onChange={handleChange}
-                  error={!!touched.tags && !!errors.tags}
-                  helperText={touched.tags && errors.tags}
+                  error={!!touched.vendor && !!errors.vendor}
+                  helperText={touched.vendor && errors.vendor}
                 />
               </Grid>
               <Grid item sm={6} xs={12}>

@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import Header from "components/header/Header";
 import Navbar from "components/navbar/Navbar";
 import Sticky from "components/sticky/Sticky";
-import Topbar from "components/topbar/Topbar";
 import React, { Fragment, useCallback, useState } from "react";
 /**
  *  Used in:
@@ -18,9 +17,7 @@ const ShopLayout2 = ({ children, showTopbar = true, showNavbar = true }) => {
   const toggleIsFixed = useCallback((fixed) => setIsFixed(fixed), []);
   return (
     <Fragment>
-      {/* TOPBAR */}
-      {showTopbar && <Topbar />}
-
+    
       {/* HEADER */}
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={70}>
         <Header isFixed={isFixed} searchBoxType="type2" />

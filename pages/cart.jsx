@@ -13,7 +13,7 @@ import Link from "next/link";
 const Cart = () => {
   const { state } = useAppContext();
   const cartList = state.cart;
-
+  console.log(cartList)
   const getTotalPrice = () => {
     return cartList.reduce((accum, item) => accum + item.price * item.qty, 0);
   };
