@@ -58,7 +58,7 @@ const ProductSearchResult = () => {
           >
             <FlexBox alignItems="center" gap={1} flex="1 1 0">
               <Paragraph color="grey.600" whiteSpace="pre">
-                Short by:
+                Sort by:
               </Paragraph>
 
               <TextField

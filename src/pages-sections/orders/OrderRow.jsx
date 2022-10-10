@@ -7,10 +7,7 @@ import Link from "next/link";
 
 // =================================================
 const OrderRow = ({ item }) => {
-  // console.log("item",item)
-  // console.log("item id",item._id.$oid)
-  var counter = 0;
-  var total = 0;
+
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -31,7 +28,7 @@ const OrderRow = ({ item }) => {
   };
 
   return (
-    // <Link href={item.href}>
+
     // <Link href={`orders/${item._id.$oid}`} state={{order_id:item._id.$oid}} >
     <Link href={`orders/${item._id.$oid}`}>
       <a>
