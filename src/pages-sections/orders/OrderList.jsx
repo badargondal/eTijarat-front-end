@@ -1,4 +1,4 @@
-import { Pagination } from "@mui/material";
+import { CircularProgress, Pagination } from "@mui/material";
 import { FlexBox } from "components/flex-box";
 import TableRow from "components/TableRow";
 import { H5 } from "components/Typography";
@@ -11,6 +11,7 @@ import axios from "axios";
 
 const OrderList = () => {
   const [orders, setorders] = useState(null);
+  const [loading,setloading]=useState(true)
 
   useEffect(() => {
     orders == null ? getTopCategories() : null;
@@ -24,6 +25,7 @@ const OrderList = () => {
       },
     });
     setorders(response.data);
+    setloading(false)
   };
   console.log("order",orders)
   return (
@@ -57,9 +59,11 @@ const OrderList = () => {
         <H5 flex="0 0 0 !important" color="grey.600" px={2.75} my={0} />
       </TableRow>
 
-      { (orders!=null)
+      { loading ? <CircularProgress/> :
+      (orders!=null)
         ? orders.map((item, ind) => <OrderRow item={item} key={ind} />)
-        : false }
+        : false 
+        }
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination

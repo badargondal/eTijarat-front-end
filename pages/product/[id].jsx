@@ -9,6 +9,8 @@ import RelatedProducts from "components/products/RelatedProducts";
 import { H2 } from "components/Typography";
 import bazaarReactDatabase from "data/bazaar-react-database";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   getFrequentlyBought,
   getRelatedProducts,
@@ -25,10 +27,15 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   },
 })); // ===============================================================
 
+
+
+
+
+
 // ===============================================================
 const ProductDetails = (props) => {
   // const { frequentlyBought, relatedProducts } = props;
-  const [product, setProduct] = useState(bazaarReactDatabase[0]);
+  const [product, setProduct] = useState(null);
   const [selectedOption, setSelectedOption] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [frequentlyBought, setFrequentlyBought] = useState([]);
@@ -41,10 +48,38 @@ const ProductDetails = (props) => {
    *    The code is commented if want to call it just uncomment code and put the server url
    */
 
+
+
+
+   var order_id = null;
+   const router = useRouter();
+   var { id } = router.query;
+   console.log("params id", id);
+ 
+  //  const [data, setData] = useState(null);
+   const [loading, setloading] = useState(true);
+   const fetchData = async (id) => {
+     const data = await fetch(`http://127.0.0.1:5000/product/${id}`, {
+       headers: {
+         session_id: localStorage.getItem("sessionId"),
+       },
+     });
+     const json = await data.json();
+     console.log(json);
+     setProduct(json);
+     setloading(false);
+   };
   useEffect(() => {
     getRelatedProducts().then((data) => setRelatedProducts(data));
     getFrequentlyBought().then((data) => setFrequentlyBought(data));
+ 
+
   }, []);
+  if (product == null) {
+    if (id != undefined) {
+      fetchData(id);
+    }
+  }
 
   const handleOptionClick = (_, value) => setSelectedOption(value);
 
@@ -55,7 +90,8 @@ const ProductDetails = (props) => {
           my: 4,
         }}
       >
-        {product ? <ProductIntro product={product} /> : <H2>Loading...</H2>}
+        {product ? <ProductIntro product={product} /> : <><H2>Loading...</H2>
+        <CircularProgress /> </>}
 
         <StyledTabs
           textColor="primary"
@@ -82,7 +118,9 @@ const ProductDetails = (props) => {
       </Container>
     </ShopLayout1>
   );
-}; // export const getStaticPaths: GetStaticPaths = async () => {
+};
+
+// export const getStaticPaths: GetStaticPaths = async () => {
 //   const paths = bazaarReactDatabase.slice(0, 2).map((pro) => ({ params: { id: pro.id } }));
 //   return {
 //     paths: [], //indicates that no page needs be created at build time

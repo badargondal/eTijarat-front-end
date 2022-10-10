@@ -21,7 +21,7 @@ const getCarBrands = async () => {
 };
 
 const getCarList = async () => {
-  const response = await axios.get("/api/market-1/car-list");
+  const response = await axios.get("http://127.0.0.1:5000/product/search/automotive");
   return response.data;
 };
 
@@ -36,7 +36,7 @@ const getMobileShops = async () => {
 };
 
 const getMobileList = async () => {
-  const response = await axios.get("/api/market-1/mobile-list");
+  const response = await axios.get("http://127.0.0.1:5000/product/search/electronics");
   return response.data;
 };
 
@@ -76,7 +76,7 @@ const getMainCarousel = async () => {
 };
 
 const getFlashDeals = async () => {
-  const response = await axios.get("/api/market-1/flash-deals");
+  const response = await axios.get("http://127.0.0.1:5000/products");
   return response.data;
 };
 
@@ -88,7 +88,8 @@ const getTopCategories = async () => {
 const getBigDiscountList = async () => {
   const response = await axios.get("/api/market-1/big-discounts");
   return response.data;
-}; // eslint-disable-next-line import/no-anonymous-default-export
+}; 
+// eslint-disable-next-line import/no-anonymous-default-export
 
 export default {
   getMainCarousel,

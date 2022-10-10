@@ -16,9 +16,13 @@ import ProductCard9List from "components/products/ProductCard9List";
 import ProductFilterCard from "components/products/ProductFilterCard";
 import Sidenav from "components/sidenav/Sidenav";
 import { H5, Paragraph } from "components/Typography";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 
 const ProductSearchResult = () => {
+  const router =useRouter()
+  const {id}=router.query
+  // console.log("parmas",{id})
   const [view, setView] = useState("grid");
   const downMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const toggleView = useCallback((v) => () => setView(v), []);
@@ -46,7 +50,7 @@ const ProductSearchResult = () => {
           }}
         >
           <Box>
-            <H5>Searching for “ mobile phone ”</H5>
+            <H5>Searching for “ {id} ”</H5>
             <Paragraph color="grey.600">48 results found</Paragraph>
           </Box>
 

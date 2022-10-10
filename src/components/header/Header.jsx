@@ -1,4 +1,6 @@
 import { KeyboardArrowDown, PersonOutline } from "@mui/icons-material";
+import Logout from "@mui/icons-material/Logout";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Badge, Box, Dialog, Drawer, styled } from "@mui/material";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +22,8 @@ import Login from "pages-sections/sessions/Login";
 import { useState } from "react";
 import { layoutConstant } from "utils/constants";
 import SearchBox from "../search-box/SearchBox"; // styled component
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export const HeaderWrapper = styled(Box)(({ theme }) => ({
   zIndex: 3,
@@ -33,7 +37,8 @@ export const HeaderWrapper = styled(Box)(({ theme }) => ({
 })); // ==============================================================
 
 // ==============================================================
-const Header = ({ isFixed, className, searchBoxType = "type1" }) => {
+const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
+  console.log("props", props.session_id);
   const theme = useTheme();
   const { state } = useAppContext();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -44,6 +49,19 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }) => {
   const toggleDialog = () => setDialogOpen(!dialogOpen);
 
   const toggleSidenav = () => setSidenavOpen(!sidenavOpen);
+
+  const router = useRouter();
+
+  // if (typeof window !== 'undefined') {
+  //   console.log(session_id)
+  //    session_id = localStorage.getItem('sessionId')
+  // }
+
+  // const session_Id = async () => {
+  //   return await localStorage.getItem("sessionID").then(id => console.log(id));
+  // };
+  // var session_id = session_Id();
+  // console.log("sessionID",session_id)
 
   return (
     <HeaderWrapper className={clsx(className)}>
@@ -99,14 +117,33 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }) => {
             },
           }}
         >
-          <Box
-            component={IconButton}
-            p={1.25}
-            bgcolor="grey.200"
-            onClick={toggleDialog}
-          >
-            <PersonOutline />
-          </Box>
+          {props.session_id === undefined ? (
+            <>
+              <Box
+                component={IconButton}
+                p={1.25}
+                bgcolor="grey.200"
+                onClick={toggleDialog}
+              >
+                <PersonOutline/>
+              </Box>
+              <Box
+                component={IconButton}
+                p={1.25}
+                bgcolor="grey.200"
+                // onClick={toggleDialog}
+              >
+                <LogoutIcon
+                  onClick={() => {
+                    console.log(localStorage.removeItem("sessionId"));
+                    router.push("/");
+                  }}
+                />
+              </Box>
+            </>
+          ) : (
+            false
+          )}
 
           <Badge badgeContent={state.cart.length} color="primary">
             <Box
@@ -127,7 +164,8 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }) => {
           scroll="body"
           onClose={toggleDialog}
         >
-          <Login />
+          < Login />
+
         </Dialog>
 
         <Drawer open={sidenavOpen} anchor="right" onClose={toggleSidenav}>
@@ -140,4 +178,17 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }) => {
   );
 };
 
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const session_id = localStorage.getItem("sessionId");
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      session_id,
+    },
+  };
+}
 export default Header;

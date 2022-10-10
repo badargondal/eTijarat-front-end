@@ -185,7 +185,7 @@ const ProductCard1 = ({
             className="add-cart"
             flexDirection="column-reverse"
             justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}
-          >
+           >
             <Button
               color="primary"
               variant="outlined"

@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"; // ================================
 
 // =============================================================
 const Section2 = ({ flashDeals }) => {
+  // {(flashDeals.slice(1,3)).map(item => console.log(item))}
+  {flashDeals.slice(1,3).map(item => console.log("item",item))}
   const [visibleSlides, setVisibleSlides] = useState(4);
   const width = useWindowSize();
   useEffect(() => {
@@ -23,11 +25,11 @@ const Section2 = ({ flashDeals }) => {
       seeMoreLink="#"
     >
       <Carousel
-        totalSlides={flashDeals.length}
+        totalSlides={(flashDeals.slice(1,8)).length}
         visibleSlides={visibleSlides}
         infinite={true}
       >
-        {flashDeals.map((item, ind) => (
+        {flashDeals.slice(1,8).map((item, ind) => (
           <Box py={0.5} key={ind}>
             <ProductCard1
               id={item.id}

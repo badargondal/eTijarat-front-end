@@ -5,7 +5,6 @@ import MobileNavigationBar from "components/mobile-navigation/MobileNavigationBa
 import Navbar from "components/navbar/Navbar";
 import SaleNavbar from "components/navbar/SaleNavbar";
 import Sticky from "components/sticky/Sticky";
-import Topbar from "components/topbar/Topbar";
 import { Fragment } from "react"; // icons
 
 import BabyFeeder from "components/icons/BabyFeeder";
@@ -29,7 +28,7 @@ import WomenDress from "components/icons/WomenDress";
 // =============================================================
 const SaleLayout = ({ children, title, type }) => (
   <Fragment>
-    <Topbar />
+    
     <Header />
 
     {type === "one" && (
