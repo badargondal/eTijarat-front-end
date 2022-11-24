@@ -60,51 +60,25 @@ const CheckoutForm2 = () => {
   const [addressData, setAddressData] = useState([]);
   const [openEditForm, setOpenEditForm] = useState(false);
   const [selected, setSelected] = useState(false);
-  const [Buyer_email, setBuyer_email] = useState("");
+  
 
-  useEffect(() => {
-    const p = Promise.resolve(buyer_email());
-    p.then((value) => {
-      setBuyer_email(value);
-    });
-  }, []);
 
-  async function getBuyerData() {
-    try {
-      const session_id = localStorage.getItem("sessionId");
 
-      console.log(`sessionID${session_id}`);
-      const response = await axios.get(`http://127.0.0.1:5000/verify_buyer`, {
-        headers: {
-          session_id: session_id,
-        },
-      });
-      return response.data.email;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const buyer_email = async () => {
-    const email = await getBuyerData();
-    return email;
-  };
-
-  console.log("Buyer Email",Buyer_email);
 
   const handleFormSubmit = async (values) => {
     const order = new Object();
-    order.buyer = Buyer_email;
+    order.buyerId = localStorage.getItem("buyerId")
     order.products = cartList;
     order.details = values;
     console.log("orders", order);
     const res = await axios
       .post(
-        "http://127.0.0.1:5000/create_order",
+        "http://localhost:4000/orders/create",
         order,
         {
           headers: {
             "Content-Type": "application/json",
-            session_id: localStorage.getItem("sessionId"),
+            "Authorization" : localStorage.getItem("sessionId"),
           },
         }
       )

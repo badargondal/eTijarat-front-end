@@ -6,7 +6,8 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 // =================================================
-const OrderRow = ({ item }) => {
+const OrderRow = ({ item , index }) => {
+  console.log("item prop",index)
 
   const getColor = (status) => {
     switch (status) {
@@ -30,7 +31,7 @@ const OrderRow = ({ item }) => {
   return (
 
     // <Link href={`orders/${item._id.$oid}`} state={{order_id:item._id.$oid}} >
-    <Link href={`orders/${item._id.$oid}`}>
+    <Link href={`orders/${item._id}`}>
       <a>
         <TableRow
           sx={{
@@ -39,7 +40,7 @@ const OrderRow = ({ item }) => {
           }}
         >
           <H5 m={0.75} textAlign="left">
-            {`${item._id.$oid}`}
+            {`# ${index+1}`}
           </H5>
           <Box m={0.75}>
             <Chip

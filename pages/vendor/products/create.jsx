@@ -2,84 +2,50 @@ import { Box } from "@mui/material";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import { H3 } from "components/Typography";
 import { ProductForm } from "pages-sections/admin";
-import React,{useState} from "react";
+import React from "react";
 import * as yup from "yup";
 import axios from "axios";
 
 const CreateProduct = () => {
-  const [email, setemail] = useState('');
-  
-
-  async function getVendorData() {
-    try {
-      const session_id=localStorage.getItem("sessionId")
-
-      console.log(`sessionID${session_id}`)
-      const response = await axios.get(`http://127.0.0.1:5000/verify_vendor`,{
-        headers: {
-          'session_id': session_id
-        }
-      });
-      return(response.data.email);
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-  const vendor_email = async () => {
-    const email = await getVendorData ();
-    
-    return email
-  };
-  const p = Promise.resolve(vendor_email());
-  p.then((value) => {
-    setemail(value)
-  })
   const initialValues = {
-    name: "",
+    title: "",
     stock: "",
     price: "",
     sale_price: "",
     description: "",
-    vendor_email:"",
     category: "",
-    
+    vendorId: localStorage.getItem("vendorId"),
+    imgUrl: "ads",
   };
 
   const handleFormSubmit = async (values) => {
-    
-    values["vendor_email"] = email
-    delete values["email"]
+    console.log("values", values);
+
     const res = await axios
-      .post(
-        "http://127.0.0.1:5000/add_product",
-        
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            session_id: localStorage.getItem("sessionId"),
-          },
-        }
-      )
+      .post("http://localhost:4000/products/create", values, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      })
       .then(
         (response) => {
           response;
+          console.log("response", response);
         },
         (error) => {
           console.log(error);
         }
       );
-      console.log("data posted to db")
-      return res
-  };
 
+    return res;
+  };
 
   return (
     <Box py={4}>
       <H3 mb={2}>Add New Product</H3>
+
       <ProductForm
-        vendor_email={vendor_email()}
         initialValues={initialValues}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
@@ -93,7 +59,7 @@ CreateProduct.getLayout = function getLayout(page) {
 }; // =============================================================================
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("required"),
+  title: yup.string().required("required"),
   category: yup.string().required("required"),
   description: yup.string().required("required"),
   stock: yup.number().required("required"),

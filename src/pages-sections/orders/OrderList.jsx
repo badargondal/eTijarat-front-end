@@ -11,23 +11,28 @@ import axios from "axios";
 
 const OrderList = () => {
   const [orders, setorders] = useState(null);
-  const [loading,setloading]=useState(true)
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
     orders == null ? getTopCategories() : null;
   }, []);
 
   var getTopCategories = async () => {
-    const response = await axios.get("http://127.0.0.1:5000/buyer/orders", {
-      headers: {
-        "Content-Type": "application/json",
-        session_id: localStorage.getItem("sessionId"),
-      },
-    });
-    setorders(response.data);
-    setloading(false)
+    const buyerId = localStorage.getItem("buyerId");
+    const response = await axios.get(
+      `http://localhost:4000/orders/buyer/${buyerId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response", response);
+    setorders(response.data.orders);
+    setloading(false);
   };
-  console.log("order",orders)
+
   return (
     <Fragment>
       <TableRow
@@ -42,7 +47,7 @@ const OrderList = () => {
         }}
       >
         <H5 color="grey.600" my={0} mx={0.75} textAlign="left">
-          Order #
+          Order No
         </H5>
 
         <H5 color="grey.600" my={0} mx={0.75} textAlign="left">
@@ -59,11 +64,13 @@ const OrderList = () => {
         <H5 flex="0 0 0 !important" color="grey.600" px={2.75} my={0} />
       </TableRow>
 
-      { loading ? <CircularProgress/> :
-      (orders!=null)
-        ? orders.map((item, ind) => <OrderRow item={item} key={ind} />)
-        : false 
-        }
+      {loading ? (
+        <CircularProgress />
+      ) : orders != null ? (
+        orders.map((item, index) => <OrderRow item={item} index={index} />)
+      ) : (
+        false
+      )}
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination

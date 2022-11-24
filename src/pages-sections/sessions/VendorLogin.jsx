@@ -57,16 +57,19 @@ const VendorLogin = () => {
 
   const handleFormSubmit = async (values) => {
     const res = await axios
-      .post("http://127.0.0.1:5000/vendor/login", values, {
+      .post("http://localhost:4000/vendor/login", values, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then(
         (response) => {
-          const session_id = response.data.session_id;
+          console.log("response",response)
+          const session_id = response.data.token;
           !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil
-          router.push('/')
+          const vendorId= response.data.vendorId
+          !vendorId.nil ? localStorage.setItem("vendorId", vendorId) : nil
+          router.push('/vendor/dashboard')
         },
         (error) => {
           console.log(error);

@@ -59,15 +59,18 @@ const Login = () => {
 
   const handleFormSubmit = async (values) => {
     const res = await axios
-      .post("http://127.0.0.1:5000/buyer/login", values, {
+      .post("http://localhost:4000/buyer/login", values, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then(
         (response) => {
-          const session_id = response.data.session_id;
+          console.log("response",response)
+          const session_id = response.data.token;
           !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil
+          const buyerId= response.data.buyerId
+          !buyerId.nil ? localStorage.setItem("buyerId", buyerId) : nil
           router.push('/')
         },
         (error) => {

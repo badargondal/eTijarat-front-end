@@ -9,8 +9,9 @@ import * as yup from "yup";
 import EyeToggleButton from "./EyeToggleButton";
 import { Wrapper } from "./Login";
 import SocialButtons from "./SocialButtons";
-
+import  {useRouter}  from 'next/router';
 const Signup = () => {
+  const router = useRouter()
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
@@ -19,13 +20,18 @@ const Signup = () => {
   const handleFormSubmit = async (values) => {
     // console.log(values);
 
-    return fetch("http://127.0.0.1:5000/buyer/signup", {
+    return fetch("http://localhost:4000/buyer/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    }).then((data) => console.log(data.json()));
+    }).then((res) => res.json())
+    .then((data) => {
+      console.log("data", data.message);
+      router.push('/login')
+      
+    });
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =

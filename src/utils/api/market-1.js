@@ -20,10 +20,16 @@ const getCarBrands = async () => {
   return response.data;
 };
 
+
 const getCarList = async () => {
-  const response = await axios.get("http://127.0.0.1:5000/product/search/automotive");
+  const response = await axios.get("/api/market-1/car-list");
   return response.data;
 };
+
+// const getCarList = async () => {
+//   const response = await axios.get("http://127.0.0.1:5000/product/search/automotive");
+//   return response.data;
+// };
 
 const getMobileBrands = async () => {
   const response = await axios.get("/api/market-1/mobile-brand-list");
@@ -36,9 +42,14 @@ const getMobileShops = async () => {
 };
 
 const getMobileList = async () => {
-  const response = await axios.get("http://127.0.0.1:5000/product/search/electronics");
+  const response = await axios.get("/api/market-1/mobile-list");
   return response.data;
 };
+
+// const getMobileList = async () => {
+//   const response = await axios.get("http://127.0.0.1:5000/product/search/electronics");
+//   return response.data;
+// };
 
 const getOpticsBrands = async () => {
   const response = await axios.get("/api/market-1/optics/watch-brands");
@@ -76,9 +87,14 @@ const getMainCarousel = async () => {
 };
 
 const getFlashDeals = async () => {
-  const response = await axios.get("http://127.0.0.1:5000/products");
+  const response = await axios.get("/api/market-1/flash-deals");
   return response.data;
 };
+
+// const getFlashDeals = async () => {
+//   const response = await axios.get("http://127.0.0.1:5000/products");
+//   return response.data;
+// };
 
 const getTopCategories = async () => {
   const response = await axios.get("/api/market-1/top-categories");

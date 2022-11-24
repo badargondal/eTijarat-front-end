@@ -1,20 +1,9 @@
 import { Button, Card, Grid, MenuItem, TextField } from "@mui/material";
 import DropZone from "components/DropZone";
 import { Formik } from "formik";
-import React,{useState}from "react";
-
-// ================================================================
-
+import React from "react";
 const ProductForm = (props) => {
-  const [email, setemail] = useState('');
-  const p = Promise.resolve(props.vendor_email);
-  p.then((value) => {
-    setemail(value)
-  })
-  // console.log(props.json());
-  // console.log(props)
-  const { initialValues, validationSchema, handleFormSubmit } =
-    props;
+  const { initialValues, validationSchema, handleFormSubmit } = props;
   return (
     <Card
       sx={{
@@ -39,16 +28,16 @@ const ProductForm = (props) => {
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
-                  name="name"
-                  label="Name"
+                  name="title"
+                  label="Title"
                   color="info"
                   size="medium"
-                  placeholder="Name"
-                  value={values.name}
+                  placeholder="Title"
+                  value={values.title}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  error={!!touched.name && !!errors.name}
-                  helperText={touched.name && errors.name}
+                  error={!!touched.title && !!errors.title}
+                  helperText={touched.title && errors.title}
                 />
               </Grid>
               <Grid item sm={6} xs={12}>
@@ -107,22 +96,21 @@ const ProductForm = (props) => {
                   helperText={touched.stock && errors.stock}
                 />
               </Grid>
-              <Grid item sm={6} xs={12}>
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
-                  disabled
-                  name="vendor"
-                  label="Vendor Name"
+                  name="tags"
+                  label="Tags"
                   color="info"
                   size="medium"
-                  placeholder="Vendor"
+                  placeholder="Tags"
                   onBlur={handleBlur}
-                  value={email}
+                  value={values.tags}
                   onChange={handleChange}
-                  error={!!touched.vendor && !!errors.vendor}
-                  helperText={touched.vendor && errors.vendor}
+                  error={!!touched.tags && !!errors.tags}
+                  helperText={touched.tags && errors.tags}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
@@ -132,9 +120,9 @@ const ProductForm = (props) => {
                   type="number"
                   onBlur={handleBlur}
                   value={values.price}
-                  label="Regular Price"
+                  label="Price"
                   onChange={handleChange}
-                  placeholder="Regular Price"
+                  placeholder="Price"
                   error={!!touched.price && !!errors.price}
                   helperText={touched.price && errors.price}
                 />

@@ -24,6 +24,7 @@ import { layoutConstant } from "utils/constants";
 import SearchBox from "../search-box/SearchBox"; // styled component
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { H5 } from "components/Typography";
 
 export const HeaderWrapper = styled(Box)(({ theme }) => ({
   zIndex: 3,
@@ -38,7 +39,7 @@ export const HeaderWrapper = styled(Box)(({ theme }) => ({
 
 // ==============================================================
 const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
-  console.log("props", props.session_id);
+  // console.log("props", props.session_id);
   const theme = useTheme();
   const { state } = useAppContext();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -86,9 +87,11 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
           }}
         >
           <Link href="/">
-            <a>
+            {/* <a>
               <Image height={44} src="/assets/images/logo2.svg" alt="logo" />
-            </a>
+            </a> */}
+            
+            <h2>E TIJARAT</h2>
           </Link>
 
           {isFixed && (

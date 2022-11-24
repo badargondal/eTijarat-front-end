@@ -63,9 +63,9 @@ const OrderDetails = () => {
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(true);
   const fetchData = async (id) => {
-    const data = await fetch(`http://127.0.0.1:5000/buyer/order/${id}`, {
+    const data = await fetch(`http://localhost:4000/buyer/order/${id}`, {
       headers: {
-        session_id: localStorage.getItem("sessionId"),
+        "Authorization": localStorage.getItem("sessionId"),
       },
     });
     const json = await data.json();
@@ -222,7 +222,7 @@ const OrderDetails = () => {
             <Box py={1}>
               {/* {productDatabase.slice(179, 182).map((item) => ( */}
 
-              {data[0].products.map((item) => (
+              {data.order.products.map((item) => (
                 <FlexBox
                   px={2}
                   py={1}
@@ -274,7 +274,7 @@ const OrderDetails = () => {
                 </H5>
 
                 <Paragraph fontSize={14} my={0}>
-                  {data[0].details.address}
+                  {data.order.details.address}
                 </Paragraph>
               </Card>
             </Grid>
@@ -293,7 +293,7 @@ const OrderDetails = () => {
                   <Typography fontSize={14} color="grey.600">
                     Subtotal: 
                   </Typography>
-                  <H6 my="0px">${data[0].products
+                  <H6 my="0px">${data.order.products
                       .map((item) => item.price * item.qty)
                       .reduce((acc, amount) => acc + amount)}</H6>
                 </FlexBetween>
@@ -320,7 +320,7 @@ const OrderDetails = () => {
 
                 <FlexBetween mb={2}>
                   <H6 my="0px">Total</H6>
-                  <H6 my="0px">${data[0].products
+                  <H6 my="0px">${data.order.products
                       .map((item) => item.price * item.qty)
                       .reduce((acc, amount) => acc + amount)}</H6>
                 </FlexBetween>

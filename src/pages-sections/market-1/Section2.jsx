@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"; // ================================
 // =============================================================
 const Section2 = ({ flashDeals }) => {
   // {(flashDeals.slice(1,3)).map(item => console.log(item))}
-  {flashDeals.slice(1,3).map(item => console.log("item",item))}
+  // {flashDeals.slice(1,3).map(item => console.log("item",item))}
   const [visibleSlides, setVisibleSlides] = useState(4);
   const width = useWindowSize();
   useEffect(() => {

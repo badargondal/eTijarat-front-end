@@ -43,12 +43,20 @@ const App = ({ Component, pageProps }) => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+       
         <OpenGraphTags />
       </Head>
 
       <SettingsProvider>
         <AppProvider>
           <MuiTheme>
+          {/* <df-messenger
+          intent="WELCOME"
+          chat-title="UrduChatBot"
+          agent-id="aebf41bc-ea6b-4303-9d8c-9d30f4fdaab7"
+          language-code="en"
+        ></df-messenger> */}
             <RTL>{getLayout(<AnyComponent {...pageProps} />)}</RTL>
           </MuiTheme>
         </AppProvider>
