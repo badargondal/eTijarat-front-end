@@ -27,6 +27,7 @@ import * as yup from "yup";
 import EditAddressForm from "./EditAddressForm";
 import NewAddressForm from "./NewAddressForm";
 import axios from "axios";
+import {BASE_URL,ORDERS} from "../../../src/apiRoutes"
 // ====================================================================
 // date types
 
@@ -73,7 +74,7 @@ const CheckoutForm2 = () => {
     console.log("orders", order);
     const res = await axios
       .post(
-        "http://localhost:4000/orders/create",
+        `${BASE_URL+ORDERS}/create`,
         order,
         {
           headers: {

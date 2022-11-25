@@ -9,10 +9,10 @@ import * as yup from "yup";
 import EyeToggleButton from "./EyeToggleButton";
 import { Wrapper } from "./Login";
 import SocialButtons from "./SocialButtons";
-import  {useRouter}  from 'next/router';
-
+import { useRouter } from "next/router";
+import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
 const VendorSignup = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
@@ -21,7 +21,7 @@ const VendorSignup = () => {
 
   const handleFormSubmit = async (values) => {
     console.log(values);
-    return fetch("http://localhost:4000/vendor/register", {
+    return fetch(`${BASE_URL + VENDOR}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +31,7 @@ const VendorSignup = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data.message);
-        router.push('/vendor/login')
-        
+        router.push("/vendor/login");
       });
   };
 

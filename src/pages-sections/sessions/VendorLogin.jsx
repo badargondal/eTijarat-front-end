@@ -10,7 +10,7 @@ import * as yup from "yup";
 import EyeToggleButton from "./EyeToggleButton";
 import SocialButtons from "./SocialButtons";
 import axios from "axios";
-
+import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
 import Router , {useRouter}  from 'next/router';
 
 
@@ -57,7 +57,7 @@ const VendorLogin = () => {
 
   const handleFormSubmit = async (values) => {
     const res = await axios
-      .post("http://localhost:4000/vendor/login", values, {
+      .post(`${BASE_URL + VENDOR}/login`, values, {
         headers: {
           "Content-Type": "application/json",
         },

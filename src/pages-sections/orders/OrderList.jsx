@@ -5,6 +5,7 @@ import { H5 } from "components/Typography";
 import { Fragment, useState, useEffect } from "react";
 import OrderRow from "./OrderRow";
 import axios from "axios";
+import {BASE_URL,BUYER} from "../../../src/apiRoutes"
 // ============================================================
 
 // ============================================================
@@ -20,11 +21,12 @@ const OrderList = () => {
   var getTopCategories = async () => {
     const buyerId = localStorage.getItem("buyerId");
     const response = await axios.get(
-      `http://localhost:4000/orders/buyer/${buyerId}`,
+      `${BASE_URL + BUYER}/orders`,
+
       {
         headers: {
           "Content-Type": "application/json",
-          // "Authorization": localStorage.getItem("sessionId"),
+          Authorization: localStorage.getItem("sessionId"),
         },
       }
     );

@@ -10,6 +10,7 @@ import EyeToggleButton from "./EyeToggleButton";
 import { Wrapper } from "./Login";
 import SocialButtons from "./SocialButtons";
 import  {useRouter}  from 'next/router';
+import { BASE_URL, BUYER } from "../../../src/apiRoutes";
 const Signup = () => {
   const router = useRouter()
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -20,7 +21,7 @@ const Signup = () => {
   const handleFormSubmit = async (values) => {
     // console.log(values);
 
-    return fetch("http://localhost:4000/buyer/register", {
+    return fetch(`${BASE_URL+BUYER}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

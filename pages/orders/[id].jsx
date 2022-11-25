@@ -27,6 +27,8 @@ import { useState, useEffect } from "react";
 // import ReactLoading from "react-loading";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
+
+import { BASE_URL, BUYER } from "../../../src/apiRoutes";
 const StyledFlexbox = styled(FlexBetween)(({ theme }) => ({
   flexWrap: "wrap",
   marginTop: "2rem",
@@ -63,7 +65,7 @@ const OrderDetails = () => {
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(true);
   const fetchData = async (id) => {
-    const data = await fetch(`http://localhost:4000/buyer/order/${id}`, {
+    const data = await fetch(`${BASE_URL+BUYER}/order/${id}`, {
       headers: {
         "Authorization": localStorage.getItem("sessionId"),
       },
@@ -291,11 +293,14 @@ const OrderDetails = () => {
 
                 <FlexBetween mb={1}>
                   <Typography fontSize={14} color="grey.600">
-                    Subtotal: 
+                    Subtotal:
                   </Typography>
-                  <H6 my="0px">${data.order.products
+                  <H6 my="0px">
+                    $
+                    {data.order.products
                       .map((item) => item.price * item.qty)
-                      .reduce((acc, amount) => acc + amount)}</H6>
+                      .reduce((acc, amount) => acc + amount)}
+                  </H6>
                 </FlexBetween>
 
                 <FlexBetween mb={1}>
@@ -317,12 +322,14 @@ const OrderDetails = () => {
                     mb: 1,
                   }}
                 />
-
                 <FlexBetween mb={2}>
                   <H6 my="0px">Total</H6>
-                  <H6 my="0px">${data.order.products
+                  <H6 my="0px">
+                    $
+                    {data.order.products
                       .map((item) => item.price * item.qty)
-                      .reduce((acc, amount) => acc + amount)}</H6>
+                      .reduce((acc, amount) => acc + amount)}
+                  </H6>
                 </FlexBetween>
 
                 <Typography fontSize={14}>Paid by Credit/Debit Card</Typography>
