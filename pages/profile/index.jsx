@@ -8,9 +8,39 @@ import TableRow from "components/TableRow";
 import { H3, H5, Small } from "components/Typography";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { CircularProgress, Pagination } from "@mui/material";
+import { BASE_URL, BUYER } from "../../src/apiRoutes";
 
 const Profile = () => {
-  return (
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getBuyer() : null;
+  }, []);
+
+  var getBuyer = async () => {
+    const buyerId = localStorage.getItem("buyerId");
+    const response = await axios.get(
+      `${BASE_URL + BUYER}/profile`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+
+  return loading ? (
+    <CircularProgress />
+  ) : (
     <CustomerDashboardLayout>
       <UserDashboardHeader
         icon={Person}
@@ -53,7 +83,7 @@ const Profile = () => {
               <Box ml={1.5} flex="1 1 0">
                 <FlexBetween flexWrap="wrap">
                   <div>
-                    <H5 my="0px">Ralph Edwards</H5>
+                    <H5 my="0px">{data.buyer.name}</H5>
                     <FlexBox alignItems="center">
                       <Typography color="grey.600">Balance:</Typography>
                       <Typography ml={0.5} color="primary.main">
@@ -107,7 +137,7 @@ const Profile = () => {
           <Small color="grey.600" mb={0.5} textAlign="left">
             First Name
           </Small>
-          <span>Ralph</span>
+          <span>{data.buyer.name}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p={1}>
@@ -121,14 +151,14 @@ const Profile = () => {
           <Small color="grey.600" mb={0.5} textAlign="left">
             Email
           </Small>
-          <span>ralfedwards@email.com</span>
+          <span>{data.buyer.email}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p={1}>
           <Small color="grey.600" mb={0.5} textAlign="left">
             Phone
           </Small>
-          <span>+1983649392983</span>
+          <span>+{data.buyer.phone}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p={1}>

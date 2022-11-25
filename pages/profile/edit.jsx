@@ -12,10 +12,26 @@ import CustomerDashboardNavigation from "components/layouts/customer-dashboard/N
 import { Formik } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
+import { useRouter } from "next/router";
+import { BASE_URL, BUYER} from "../../src/apiRoutes";
 
 const ProfileEditor = () => {
+  const router = useRouter();
   const handleFormSubmit = async (values) => {
     console.log(values);
+    return fetch(`${BASE_URL}/buyer/profile/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("sessionId"),
+      },
+      body: JSON.stringify(values),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data.message);
+        router.push("/profile");
+      });
   };
 
   return (

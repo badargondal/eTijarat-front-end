@@ -15,10 +15,10 @@ const OrderList = () => {
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    orders == null ? getTopCategories() : null;
+    orders == null ? getOrders() : null;
   }, []);
 
-  var getTopCategories = async () => {
+  var getOrders = async () => {
     const buyerId = localStorage.getItem("buyerId");
     const response = await axios.get(
       `${BASE_URL + BUYER}/orders`,
@@ -26,7 +26,7 @@ const OrderList = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("sessionId"),
+          "Authorization": localStorage.getItem("sessionId"),
         },
       }
     );
