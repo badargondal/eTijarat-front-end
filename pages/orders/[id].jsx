@@ -23,12 +23,11 @@ import productDatabase from "data/product-database";
 import { format } from "date-fns";
 import useWindowSize from "hooks/useWindowSize";
 import { Fragment } from "react";
+
 import { useState, useEffect } from "react";
-// import ReactLoading from "react-loading";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
-
-import { BASE_URL, BUYER } from "../../../src/apiRoutes";
+import { BASE_URL ,BUYER} from "../../src/apiRoutes";
 const StyledFlexbox = styled(FlexBetween)(({ theme }) => ({
   flexWrap: "wrap",
   marginTop: "2rem",

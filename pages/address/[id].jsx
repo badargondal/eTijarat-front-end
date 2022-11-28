@@ -8,17 +8,37 @@ import { Formik } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
 
+import { useRouter } from "next/router";
+import { BASE_URL, BUYER} from "../../src/apiRoutes";
+
+
 const AddressEditor = () => {
-  // handle form submit
+  const router = useRouter();
+  const  id  = router.query.id
+  console.log("pid", id)
   const handleFormSubmit = async (values) => {
     console.log(values);
+      return fetch(`${BASE_URL+BUYER}/address/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("sessionId"),
+      },
+      body: JSON.stringify(values),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data.message);
+        router.push("/address");
+      });
   };
+
 
   return (
     <CustomerDashboardLayout>
       <UserDashboardHeader
         icon={Place}
-        title="Add New Address"
+        title="Edit Address"
         navigation={<CustomerDashboardNavigation />}
         button={
           <Link href="/address" passHref>

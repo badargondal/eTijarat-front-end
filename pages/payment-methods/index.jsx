@@ -16,7 +16,52 @@ import TableRow from "components/TableRow";
 import { H5 } from "components/Typography";
 import Link from "next/link";
 
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import { BASE_URL, BUYER } from "../../src/apiRoutes";
+import { useRouter } from "next/router";
+
+
 const AddressList = () => {
+  const router = useRouter();
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getCards() : null;
+  }, []);
+
+  var getCards = async () => {
+    const response = await axios.get(
+      `${BASE_URL + BUYER}/cards`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of cards", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+  const deleteCard = async (id) => {
+    const response = await axios.delete(
+      `${BASE_URL + BUYER}/card/${id}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of deleted card", response.data);
+    location.reload();
+  };
+
   return (
     <CustomerDashboardLayout>
       <UserDashboardHeader
@@ -38,53 +83,56 @@ const AddressList = () => {
           </Link>
         }
       />
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        data.cards.map((item, ind) => (
+          <TableRow
+            sx={{
+              my: "1rem",
+              padding: "6px 18px",
+            }}
+            key={ind}
+          >
+            <FlexBox alignItems="center" m={0.75}>
+              <Card
+                sx={{
+                  width: "42px",
+                  height: "28px",
+                  mr: "10px",
+                  borderRadius: "2px",
+                }}
+              >
+                <img
+                  src={`/assets/images/payment-methods/Visa.svg`}
+                  alt={item.payment_method}
+                  width="100%"
+                />
+              </Card>
+              <H5 whiteSpace="pre" m={0.75}>
+                {item.name}
+              </H5>
+            </FlexBox>
+            <Typography whiteSpace="pre" m={0.75}>
+              {item.number}
+            </Typography>
+            <Typography whiteSpace="pre" m={0.75}>
+              {item.expiryYear}
+            </Typography>
 
-      {orderList.map((item, ind) => (
-        <TableRow
-          sx={{
-            my: "1rem",
-            padding: "6px 18px",
-          }}
-          key={ind}
-        >
-          <FlexBox alignItems="center" m={0.75}>
-            <Card
-              sx={{
-                width: "42px",
-                height: "28px",
-                mr: "10px",
-                borderRadius: "2px",
-              }}
-            >
-              <img
-                src={`/assets/images/payment-methods/${item.payment_method}.svg`}
-                alt={item.payment_method}
-                width="100%"
-              />
-            </Card>
-            <H5 whiteSpace="pre" m={0.75}>
-              Ralf Edward
-            </H5>
-          </FlexBox>
-          <Typography whiteSpace="pre" m={0.75}>
-            {item.card_no}
-          </Typography>
-          <Typography whiteSpace="pre" m={0.75}>
-            {item.exp}
-          </Typography>
-
-          <Typography whiteSpace="pre" textAlign="center" color="grey.600">
-            <Link href="/payment-methods/xkssThds6h37sd" passHref>
-              <IconButton>
-                <Edit fontSize="small" color="inherit" />
+            <Typography whiteSpace="pre" textAlign="center" color="grey.600">
+              <Link href={`/payment-methods/${item._id}`} passHref>
+                <IconButton>
+                  <Edit fontSize="small" color="inherit" />
+                </IconButton>
+              </Link>
+              <IconButton onClick={() => deleteCard(item._id)  }>
+                <Delete fontSize="small" color="inherit" />
               </IconButton>
-            </Link>
-            <IconButton onClick={(e) => e.stopPropagation()}>
-              <Delete fontSize="small" color="inherit" />
-            </IconButton>
-          </Typography>
-        </TableRow>
-      ))}
+            </Typography>
+          </TableRow>
+        ))
+      )}
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination

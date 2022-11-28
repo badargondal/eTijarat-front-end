@@ -7,59 +7,114 @@ import CustomerDashboardNavigation from "components/layouts/customer-dashboard/N
 import TableRow from "components/TableRow";
 import Link from "next/link";
 
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import { BASE_URL, BUYER } from "../../src/apiRoutes";
+import { useRouter } from "next/router";
+
 const AddressList = () => {
+
+  const router = useRouter();
+  const [data, setdata] = useState(null);
+  
+  const [loading, setloading] = useState(true);
+
+  
+  useEffect(() => {
+    data == null ? getAddresses() : null;
+    
+  }, []);
+
+  var getAddresses = async () => {
+    const response = await axios.get(
+      `${BASE_URL + BUYER}/addresses`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of addresses", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+
+
+
+
+  const deleteAddress = async (id) => {
+    const response = await axios.delete(
+      `${BASE_URL + BUYER}/address/${id}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of deleted address", response.data);
+    location.reload();
+  };
+
   return (
     <CustomerDashboardLayout>
       <UserDashboardHeader
         icon={Place}
         title="My Addresses"
         navigation={<CustomerDashboardNavigation />}
-        button={
-          <Button
-            color="primary"
-            sx={{
-              bgcolor: "primary.light",
-              px: 4,
-            }}
-          >
-            Add New Address
-          </Button>
-        }
+        // button={
+        //   <Button
+        //     color="primary"
+        //     sx={{
+        //       bgcolor: "primary.light",
+        //       px: 4,
+        //     }}
+        //   >
+        //     Add New Addresses
+        //   </Button>
+        // }
       />
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        data.address.map((item, ind) => (
+          <TableRow
+            sx={{
+              my: 2,
+              padding: "6px 18px",
+            }}
+            key={ind}
+          >
+            <Typography whiteSpace="pre" m={0.75} textAlign="left">
+              {item.name}
+            </Typography>
 
-      {orderList.map((_, ind) => (
-        <TableRow
-          sx={{
-            my: 2,
-            padding: "6px 18px",
-          }}
-          key={ind}
-        >
-          <Typography whiteSpace="pre" m={0.75} textAlign="left">
-            Ralf Edward
-          </Typography>
+            <Typography flex="1 1 260px !important" m={0.75} textAlign="left">
+              {item.address}
+            </Typography>
 
-          <Typography flex="1 1 260px !important" m={0.75} textAlign="left">
-            777 Brockton Avenue, Abington MA 2351
-          </Typography>
+            <Typography whiteSpace="pre" m={0.75} textAlign="left">
+              {item.phone}
+            </Typography>
 
-          <Typography whiteSpace="pre" m={0.75} textAlign="left">
-            +1927987987498
-          </Typography>
+            <Typography whiteSpace="pre" textAlign="center" color="grey.600">
+              <Link href={`/address/${item._id}`} passHref>
+                <IconButton>
+                  <Edit fontSize="small" color="inherit" />
+                </IconButton>
+              </Link>
 
-          <Typography whiteSpace="pre" textAlign="center" color="grey.600">
-            <Link href="/address/xkssThds6h37sd" passHref>
-              <IconButton>
-                <Edit fontSize="small" color="inherit" />
+              <IconButton onClick={() => deleteAddress(item._id)}>
+                <Delete fontSize="small" color="inherit" />
               </IconButton>
-            </Link>
-
-            <IconButton onClick={(e) => e.stopPropagation()}>
-              <Delete fontSize="small" color="inherit" />
-            </IconButton>
-          </Typography>
-        </TableRow>
-      ))}
+            </Typography>
+          </TableRow>
+        ))
+      )}
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination count={5} onChange={(data) => console.log(data)} />

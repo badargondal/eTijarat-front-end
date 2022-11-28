@@ -9,6 +9,9 @@ import {
 import { useFormik } from "formik";
 import React, { Fragment, useState } from "react";
 import * as yup from "yup";
+
+import { BASE_URL, BUYER} from "../../../src/apiRoutes";
+
 const checkoutSchema = yup.object({
   street2: yup.string(),
   name: yup.string().required("required"),
@@ -20,13 +23,14 @@ const checkoutSchema = yup.object({
   zip: yup.number().required("required"),
 });
 const initialValues = {
-  name: "UI Lib",
+  name: "",
   street1: "321, Subid Bazaar",
   street2: "",
-  phone: "01789123456",
+  phone: "",
   city: "Sylhet",
   state: "Sylhet",
   country: "Bangladesh",
+  address: "Pakistan",
   zip: 4336,
 }; // ==================================================================
 
@@ -37,11 +41,28 @@ const NewAddressForm = ({ setNewAddress }) => {
     initialValues: initialValues,
     validationSchema: checkoutSchema,
     onSubmit: (values, { resetForm }) => {
+      
       setNewAddress(values);
+      
 
       if (values) {
         setAddCardForm(false);
         resetForm(initialValues);
+        console.log("add new address",values);
+        return fetch(`${BASE_URL+BUYER}/address`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("sessionId"),
+          },
+          body: JSON.stringify(values),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("data", data.message);
+            location.reload()
+          });
+        
       }
     },
   });
@@ -80,7 +101,7 @@ const NewAddressForm = ({ setNewAddress }) => {
                   error={touched.name && Boolean(errors.name)}
                 />
               </Grid>
-              <Grid item sm={6} xs={12}>
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   type="text"
@@ -91,9 +112,22 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.street1 && errors.street1}
                   error={touched.street1 && Boolean(errors.street1)}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item sm={6} xs={12}>
+                <TextField
+                  fullWidth
+                  type="text"
+                  name="address"
+                  label="Address line 1"
+                  value={values.address}
+                  onChange={handleChange}
+                  helperText={touched.address && errors.address}
+                  error={touched.address && Boolean(errors.address)}
+                />
+              </Grid>
+
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   type="text"
@@ -104,7 +138,7 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.street2 && errors.street2}
                   error={touched.street2 && Boolean(errors.street2)}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item sm={6} xs={12}>
                 <TextField
@@ -118,7 +152,7 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.phone && errors.phone}
                 />
               </Grid>
-
+{/* 
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
@@ -129,9 +163,9 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.city && errors.city}
                   error={touched.city && Boolean(errors.city)}
                 />
-              </Grid>
+              </Grid> */}
 
-              <Grid item sm={6} xs={12}>
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="state"
@@ -141,8 +175,8 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.state && errors.state}
                   error={touched.state && Boolean(errors.state)}
                 />
-              </Grid>
-
+              </Grid> */}
+{/* 
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
@@ -154,9 +188,9 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.zip && errors.zip}
                   error={touched.zip && Boolean(errors.zip)}
                 />
-              </Grid>
+              </Grid> */}
 
-              <Grid item sm={6} xs={12}>
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="country"
@@ -166,7 +200,7 @@ const NewAddressForm = ({ setNewAddress }) => {
                   helperText={touched.country && errors.country}
                   error={touched.country && Boolean(errors.country)}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item sm={6} xs={12}>
                 <Button color="primary" variant="contained" type="submit">

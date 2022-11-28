@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   Checkbox,
+  CircularProgress,
   Grid,
   MenuItem,
   Typography,
@@ -27,7 +28,7 @@ import * as yup from "yup";
 import EditAddressForm from "./EditAddressForm";
 import NewAddressForm from "./NewAddressForm";
 import axios from "axios";
-import {BASE_URL,ORDERS} from "../../../src/apiRoutes"
+import { BASE_URL, ORDERS, BUYER } from "../../../src/apiRoutes";
 // ====================================================================
 // date types
 
@@ -54,45 +55,87 @@ const CheckoutForm2 = () => {
   const { state } = useAppContext();
   const cartList = state.cart;
 
-  const router = useRouter();
   const [hasVoucher, setHasVoucher] = useState(false);
   const [newAddress, setNewAddress] = useState("");
   const [dateList, setDateList] = useState([]);
   const [addressData, setAddressData] = useState([]);
   const [openEditForm, setOpenEditForm] = useState(false);
   const [selected, setSelected] = useState(false);
-  
 
+  const router = useRouter();
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
 
+  const [cardData, setcardData] = useState(null);
+  const [cardLoading, setcardLoading] = useState(true);
+  useEffect(() => {
+    data == null ? getAddresses() : null;
+    cardData == null ? getCards() : null;
+  }, []);
 
+  var getAddresses = async () => {
+    const response = await axios.get(
+      `${BASE_URL + BUYER}/addresses`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of all addresses", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+  var getCards = async () => {
+    const response = await axios.get(
+      `${BASE_URL + BUYER}/cards`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of all cards", response.data);
+    setcardData(response.data);
+    setcardLoading(false);
+  };
 
   const handleFormSubmit = async (values) => {
     const order = new Object();
-    order.buyerId = localStorage.getItem("buyerId")
+    order.buyerId = localStorage.getItem("buyerId");
     order.products = cartList;
     order.details = values;
     console.log("orders", order);
+
+
+
     const res = await axios
-      .post(
-        `${BASE_URL+ORDERS}/create`,
-        order,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization" : localStorage.getItem("sessionId"),
-          },
-        }
-      )
+      .post(`http://localhost:4000/orders/create`, order, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("sessionId"),
+        },
+      })
       .then(
         (response) => {
           response;
+          // console.log("response from order",response.data)
+          console.log(response.data.message);
+          router.push("/order-confirmation");
         },
         (error) => {
           console.log(error);
         }
       );
-    console.log("Order successfully created");
-    router.push("/order-confirmation")
+
+
+    
+    
+    // console.log("res",res)
     return res;
   };
 
@@ -138,7 +181,7 @@ const CheckoutForm2 = () => {
   };
 
   const initialValues = {
-    card: "",
+    // f
     date: "",
     time: "",
     address: "",
@@ -227,82 +270,89 @@ const CheckoutForm2 = () => {
             </FlexBetween>
 
             <Typography mb={1.5}>Delivery Address</Typography>
-            <Grid container spacing={3}>
-              {addressData.map((item, ind) => (
-                <Grid item md={4} sm={6} xs={12} key={ind}>
-                  <Card
-                    sx={{
-                      padding: 2,
-                      boxShadow: "none",
-                      cursor: "pointer",
-                      border: "1px solid",
-                      position: "relative",
-                      backgroundColor: "grey.100",
-                      borderColor:
-                        item.street1 === values.address
-                          ? "primary.main"
-                          : "transparent",
-                    }}
-                    onClick={handleFieldValueChange(
-                      item.street1,
-                      "address",
-                      setFieldValue
-                    )}
-                  >
-                    <FlexBox
-                      justifyContent="flex-end"
+
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Grid container spacing={3}>
+                {data.address.map((item, ind) => (
+                  <Grid item md={4} sm={6} xs={12} key={ind}>
+                    {/* {console.log("item", item)} */}
+                    <Card
                       sx={{
-                        position: "absolute",
-                        top: 5,
-                        right: 5,
+                        padding: 2,
+                        boxShadow: "none",
+                        cursor: "pointer",
+                        border: "1px solid",
+                        position: "relative",
+                        backgroundColor: "grey.100",
+                        borderColor:
+                          item.address === values.address
+                            ? "primary.main"
+                            : "transparent",
                       }}
-                    >
-                      {selected && (
-                        <EditAddressForm
-                          selected={selected}
-                          addressData={addressData}
-                          openEditForm={openEditForm}
-                          setOpenEditForm={setOpenEditForm}
-                          setAddressData={setAddressData}
-                        />
+                      onClick={handleFieldValueChange(
+                        item.address,
+                        "address",
+                        setFieldValue
                       )}
-
-                      <IconButton
-                        size="small"
+                    >
+                      <FlexBox
+                        justifyContent="flex-end"
                         sx={{
-                          mr: 1,
+                          position: "absolute",
+                          top: 5,
+                          right: 5,
                         }}
-                        onClick={() => editHandler(item.name)}
                       >
-                        <ModeEditOutline
-                          sx={{
-                            fontSize: 20,
-                          }}
-                        />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        color="error"
-                        onClick={() => deleteAddress(item.name)}
-                      >
-                        <DeleteOutline
-                          sx={{
-                            fontSize: 20,
-                          }}
-                        />
-                      </IconButton>
-                    </FlexBox>
+                        {selected && (
+                          <EditAddressForm
+                            selected={selected}
+                            addressData={addressData}
+                            openEditForm={openEditForm}
+                            setOpenEditForm={setOpenEditForm}
+                            setAddressData={setAddressData}
+                          />
+                        )}
 
-                    <H6 mb={0.5}>{item.name}</H6>
-                    <Paragraph color="grey.700">{item.street1}</Paragraph>
-                    {item.street2 && (
-                      <Paragraph color="grey.700">{item.address2}</Paragraph>
-                    )}
-                    <Paragraph color="grey.700">{item.phone}</Paragraph>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+                        {/* <IconButton
+                          size="small"
+                          sx={{
+                            mr: 1,
+                          }}
+                          onClick={() => editHandler(item.name)}
+                        >
+                          <ModeEditOutline
+                            sx={{
+                              fontSize: 20,
+                            }}
+                          />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => deleteAddress(item.name)}
+                         >
+                          <DeleteOutline
+                            sx={{
+                              fontSize: 20,
+                            }}
+                            />
+                        </IconButton> */}
+                      </FlexBox>
+
+                      <H6 mb={0.5}>{item.name}</H6>
+                      <Paragraph color="grey.700">{item.street1}</Paragraph>
+                      {item.street2 && (
+                        <Paragraph color="grey.700">{item.address2}</Paragraph>
+                      )}
+                      <Paragraph color="grey.700">{item.address}</Paragraph>
+                      <Paragraph color="grey.700">{item.phone}</Paragraph>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
           </Card1>
 
           <Card1
@@ -391,56 +441,61 @@ const CheckoutForm2 = () => {
                   </Box>
                 </Grid>
               </Grid>
-              <FormControlLabel
+              {/* <FormControlLabel
                 sx={{
                   mt: 1,
                 }}
                 control={<Checkbox />}
                 label="Save this card"
-              />
+              /> */}
             </Box>
 
-            <Box>
+            {/* <Box>
               <Typography mb={1.5}>Saved Cards</Typography>
 
-              <Grid container spacing={3}>
-                {paymentMethodList.map((item) => (
-                  <Grid item md={4} sm={6} xs={12} key={item.last4Digits}>
-                    <Card
-                      sx={{
-                        padding: 2,
-                        boxShadow: "none",
-                        cursor: "pointer",
-                        border: "1px solid",
-                        backgroundColor: "grey.100",
-                        borderColor:
-                          item.last4Digits === values.card
-                            ? "primary.main"
-                            : "transparent",
-                      }}
-                      onClick={handleFieldValueChange(
-                        item.last4Digits,
-                        "card",
-                        setFieldValue
-                      )}
-                    >
-                      <Box height={24} width={36} position="relative" mb={1}>
-                        <LazyImage
-                          layout="fill"
-                          objectFit="contain"
-                          src={`/assets/images/payment-methods/${item.cardType}.svg`}
-                        />
-                      </Box>
+              {cardLoading ? (
+                <CircularProgress />
+               ) : (
+                <Grid container spacing={3}>
+                  {paymentMethodList.map((item,index) => (
+                    <Grid item md={4} sm={6} xs={12} key={index}>
+                      {console.log("item", item)}
+                      <Card
+                        sx={{
+                          padding: 2,
+                          boxShadow: "none",
+                          cursor: "pointer",
+                          border: "1px solid",
+                          backgroundColor: "grey.100",
+                          borderColor:
+                            item.last4Digits === values.card
+                              ? "primary.main"
+                              : "transparent",
+                        }}
+                        onClick={handleFieldValueChange(
+                          item.last4Digits,
+                          "card",
+                          setFieldValue
+                        )}
+                      >
+                        <Box height={24} width={36} position="relative" mb={1}>
+                          <LazyImage
+                            layout="fill"
+                            objectFit="contain"
+                            src={`/assets/images/payment-methods/Visa.svg`}
+                          />
+                        </Box>
 
-                      <Paragraph color="grey.700">
-                        **** **** **** {item.last4Digits}
-                      </Paragraph>
-                      <Paragraph color="grey.700">{item.name}</Paragraph>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
+                        <Paragraph color="grey.700">
+                          **** **** **** {item.last4Digits}
+                        </Paragraph>
+                        <Paragraph color="grey.700">{item.name}</Paragraph>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
+            </Box> */}
 
             <Button
               sx={{
@@ -542,7 +597,7 @@ const timeList = [
   },
 ];
 const checkoutSchema = yup.object().shape({
-  card: yup.string().required("required"),
+  // card: yup.string().required("required"),
   date: yup.string().required("required"),
   time: yup.string().required("required"),
   address: yup.string().required("required"),

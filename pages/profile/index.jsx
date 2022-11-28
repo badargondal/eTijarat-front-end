@@ -8,9 +8,10 @@ import TableRow from "components/TableRow";
 import { H3, H5, Small } from "components/Typography";
 import { format } from "date-fns";
 import Link from "next/link";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { CircularProgress, Pagination } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { BASE_URL, BUYER } from "../../src/apiRoutes";
 
 const Profile = () => {
@@ -29,7 +30,7 @@ const Profile = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("sessionId"),
+          "Authorization": localStorage.getItem("sessionId"),
         },
       }
     );
@@ -38,9 +39,7 @@ const Profile = () => {
     setloading(false);
   };
 
-  return loading ? (
-    <CircularProgress />
-  ) : (
+  return (
     <CustomerDashboardLayout>
       <UserDashboardHeader
         icon={Person}
@@ -60,116 +59,120 @@ const Profile = () => {
           </Link>
         }
       />
-
-      <Box mb={4}>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <Card
-              sx={{
-                display: "flex",
-                p: "14px 32px",
-                height: "100%",
-                alignItems: "center",
-              }}
-            >
-              <Avatar
-                src="/assets/images/faces/ralph.png"
-                sx={{
-                  height: 64,
-                  width: 64,
-                }}
-              />
-
-              <Box ml={1.5} flex="1 1 0">
-                <FlexBetween flexWrap="wrap">
-                  <div>
-                    <H5 my="0px">{data.buyer.name}</H5>
-                    <FlexBox alignItems="center">
-                      <Typography color="grey.600">Balance:</Typography>
-                      <Typography ml={0.5} color="primary.main">
-                        $500
-                      </Typography>
-                    </FlexBox>
-                  </div>
-
-                  <Typography color="grey.600" letterSpacing="0.2em">
-                    SILVER USER
-                  </Typography>
-                </FlexBetween>
-              </Box>
-            </Card>
-          </Grid>
-
-          <Grid item md={6} xs={12}>
-            <Grid container spacing={4}>
-              {infoList.map((item) => (
-                <Grid item lg={3} sm={6} xs={6} key={item.subtitle}>
-                  <Card
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <Box mb={4}>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <Card
+                  sx={{
+                    display: "flex",
+                    p: "14px 32px",
+                    height: "100%",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    src="/assets/images/faces/ralph.png"
                     sx={{
-                      height: "100%",
-                      display: "flex",
-                      p: "1rem 1.25rem",
-                      alignItems: "center",
-                      flexDirection: "column",
+                      height: 64,
+                      width: 64,
                     }}
-                  >
-                    <H3 color="primary.main" my={0} fontWeight={600}>
-                      {item.title}
-                    </H3>
+                  />
 
-                    <Small color="grey.600" textAlign="center">
-                      {item.subtitle}
-                    </Small>
-                  </Card>
+                  <Box ml={1.5} flex="1 1 0">
+                    <FlexBetween flexWrap="wrap">
+                      <div>
+                        <H5 my="0px">{data.buyer.name}</H5>
+                        <FlexBox alignItems="center">
+                          <Typography color="grey.600">Balance:</Typography>
+                          <Typography ml={0.5} color="primary.main">
+                            $500
+                          </Typography>
+                        </FlexBox>
+                      </div>
+
+                      <Typography color="grey.600" letterSpacing="0.2em">
+                        SILVER USER
+                      </Typography>
+                    </FlexBetween>
+                  </Box>
+                </Card>
+              </Grid>
+
+              <Grid item md={6} xs={12}>
+                <Grid container spacing={4}>
+                  {infoList.map((item) => (
+                    <Grid item lg={3} sm={6} xs={6} key={item.subtitle}>
+                      <Card
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          p: "1rem 1.25rem",
+                          alignItems: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <H3 color="primary.main" my={0} fontWeight={600}>
+                          {item.title}
+                        </H3>
+
+                        <Small color="grey.600" textAlign="center">
+                          {item.subtitle}
+                        </Small>
+                      </Card>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      </Box>
+          </Box>
+          <TableRow
+            sx={{
+              p: "0.75rem 1.5rem",
+            }}
+          >
+            <FlexBox flexDirection="column" p={1}>
+              <Small color="grey.600" mb={0.5} textAlign="left">
+                First Name
+              </Small>
+              <span>{data.buyer.name}</span>
+            </FlexBox>
 
-      <TableRow
-        sx={{
-          p: "0.75rem 1.5rem",
-        }}
-      >
-        <FlexBox flexDirection="column" p={1}>
-          <Small color="grey.600" mb={0.5} textAlign="left">
-            First Name
-          </Small>
-          <span>{data.buyer.name}</span>
-        </FlexBox>
+            <FlexBox flexDirection="column" p={1}>
+              <Small color="grey.600" mb={0.5} textAlign="left">
+                Last Name
+              </Small>
+              <span>Edwards</span>
+            </FlexBox>
 
-        <FlexBox flexDirection="column" p={1}>
-          <Small color="grey.600" mb={0.5} textAlign="left">
-            Last Name
-          </Small>
-          <span>Edwards</span>
-        </FlexBox>
+            <FlexBox flexDirection="column" p={1}>
+              <Small color="grey.600" mb={0.5} textAlign="left">
+                Email
+              </Small>
+              <span>{data.buyer.email}</span>
+            </FlexBox>
 
-        <FlexBox flexDirection="column" p={1}>
-          <Small color="grey.600" mb={0.5} textAlign="left">
-            Email
-          </Small>
-          <span>{data.buyer.email}</span>
-        </FlexBox>
+            <FlexBox flexDirection="column" p={1}>
+              <Small color="grey.600" mb={0.5} textAlign="left">
+                Phone
+              </Small>
+              <span>+{1983649392983}</span>
+            </FlexBox>
 
-        <FlexBox flexDirection="column" p={1}>
-          <Small color="grey.600" mb={0.5} textAlign="left">
-            Phone
-          </Small>
-          <span>+{data.buyer.phone}</span>
-        </FlexBox>
-
-        <FlexBox flexDirection="column" p={1}>
-          <Small color="grey.600" mb={0.5}>
-            Birth date
-          </Small>
-          <span className="pre">
-            {format(new Date(1996 / 11 / 16), "dd MMM, yyyy")}
-          </span>
-        </FlexBox>
-      </TableRow>
+            <FlexBox flexDirection="column" p={1}>
+              <Small color="grey.600" mb={0.5}>
+                Birth date
+              </Small>
+              <span className="pre">
+                {format(new Date(1996 / 11 / 16), "dd MMM, yyyy")}
+              </span>
+            </FlexBox>
+          </TableRow>
+        </>
+      )}
     </CustomerDashboardLayout>
   );
 };

@@ -6,9 +6,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 // =================================================
-const OrderRow = ({ item , index }) => {
-  console.log("item prop",index)
-
+const OrderRow = ({ item, index }) => {
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -29,7 +27,6 @@ const OrderRow = ({ item , index }) => {
   };
 
   return (
-
     // <Link href={`orders/${item._id.$oid}`} state={{order_id:item._id.$oid}} >
     <Link href={`orders/${item._id}`}>
       <a>
@@ -40,7 +37,7 @@ const OrderRow = ({ item , index }) => {
           }}
         >
           <H5 m={0.75} textAlign="left">
-            {`# ${index+1}`}
+            {`# ${index + 1}`}
           </H5>
           <Box m={0.75}>
             <Chip

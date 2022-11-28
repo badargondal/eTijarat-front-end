@@ -19,7 +19,7 @@ const ProfileEditor = () => {
   const router = useRouter();
   const handleFormSubmit = async (values) => {
     console.log(values);
-    return fetch(`${BASE_URL}/buyer/profile/update`, {
+    return fetch(`${BASE_URL+BUYER}/profile/update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

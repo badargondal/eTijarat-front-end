@@ -1,5 +1,5 @@
 import CreditCard from "@mui/icons-material/CreditCard";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, MenuItem } from "@mui/material";
 import Card1 from "components/Card1";
 import UserDashboardHeader from "components/header/UserDashboardHeader";
 import CustomerDashboardLayout from "components/layouts/customer-dashboard";
@@ -8,13 +8,46 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import * as yup from "yup";
 
+import { BASE_URL, BUYER } from "../../src/apiRoutes";
+import { months, years } from "data/months-years";
+
 const PaymentMethodEditor = () => {
+  const router = useRouter();
   const {
     query: { id },
   } = useRouter();
 
   const handleFormSubmit = async (values) => {
     console.log(values);
+    if (id == "add") {
+      return fetch(`${BASE_URL + BUYER}/card`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data", data.message);
+          router.push("/payment-methods");
+        });
+    } else {
+      return fetch(`${BASE_URL + BUYER}/card/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data", data.message);
+          router.push("/payment-methods");
+        });
+    }
   };
 
   return (
@@ -80,16 +113,44 @@ const PaymentMethodEditor = () => {
                   </Grid>
                   <Grid item md={6} xs={12}>
                     <TextField
-                      name="exp"
-                      label="Exp. Date"
+                      select
                       fullWidth
-                      onBlur={handleBlur}
+                      type="number"
+                      name="exp"
                       onChange={handleChange}
-                      value={values.exp || ""}
+                      onBlur={handleBlur}
+                      label="Expire Card Month"
+                      value={values.exp}
                       error={!!touched.exp && !!errors.exp}
                       helperText={touched.exp && errors.exp}
-                    />
+                    >
+                      {months.map((item) => (
+                        <MenuItem value={item} key={item}>
+                          {item}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   </Grid>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                      select
+                      fullWidth
+                      type="number"
+                      name="cardYear"
+                      onChange={handleChange}
+                      label="Expire Card Year"
+                      value={values.cardYear}
+                      error={!!touched.cardYear && !!errors.cardYear}
+                      helperText={touched.cardYear && errors.cardYear}
+                    >
+                      {years.map((item) => (
+                        <MenuItem value={item} key={item}>
+                          {item}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+
                   <Grid item md={6} xs={12}>
                     <TextField
                       name="cvc"
@@ -121,6 +182,7 @@ const initialValues = {
   name: "",
   exp: "",
   cvc: "",
+  cardYear: "",
 };
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
