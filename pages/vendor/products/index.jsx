@@ -1,4 +1,11 @@
-import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Stack,
+  Table,
+  TableContainer,
+} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import SearchArea from "components/dashboard/SearchArea";
 import TableHeader from "components/data-table/TableHeader";
@@ -10,11 +17,15 @@ import useMuiTable from "hooks/useMuiTable";
 import { ProductRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard";
-import  {useRouter}  from 'next/router';
+
+import { useRouter } from "next/router";
+import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import { useState, useEffect } from "react";
+import axios from "axios";
 const tableHeading = [
   {
-    id: "name",
-    label: "Name",
+    id: "title",
+    label: "title",
     align: "left",
   },
   {
@@ -22,19 +33,19 @@ const tableHeading = [
     label: "Category",
     align: "left",
   },
-  {
-    id: "brand",
-    label: "Brand",
-    align: "left",
-  },
+  // {
+  //   id: "brand",
+  //   label: "Brand",
+  //   align: "left",
+  // },
   {
     id: "price",
     label: "Price",
     align: "left",
   },
   {
-    id: "published",
-    label: "Published",
+    id: "stock",
+    label: "stock",
     align: "left",
   },
   {
@@ -49,9 +60,30 @@ ProductList.getLayout = function getLayout(page) {
 }; // =============================================================================
 
 // =============================================================================
-export default function ProductList(props) {
-  const router = useRouter()
-  const { products } = props;
+export default function ProductList() {
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getProducts() : null;
+  }, []);
+
+  var getProducts = async () => {
+    const response = await axios.get(
+      `${BASE_URL + VENDOR}/products`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+  const router = useRouter();
   const {
     order,
     orderBy,
@@ -61,7 +93,7 @@ export default function ProductList(props) {
     handleChangePage,
     handleRequestSort,
   } = useMuiTable({
-    listData: products,
+    listData: data?.products,
   });
   return (
     <Box py={4}>
@@ -69,42 +101,48 @@ export default function ProductList(props) {
 
       <SearchArea
         handleSearch={() => {}}
-        buttonText="Add Product"
-        handleBtnClick={() => {router.push('/vendor/products/create')}}
+        // buttonText="Add Product"
+        handleBtnClick={() => {
+          router.push("/vendor/products/create");
+        }}
         searchPlaceholder="Search Product..."
       />
 
       <Card>
         <Scrollbar>
-          <TableContainer
-            sx={{
-              minWidth: 900,
-            }}
-          >
-            <Table>
-              <TableHeader
-                order={order}
-                hideSelectBtn
-                orderBy={orderBy}
-                heading={tableHeading}
-                rowCount={products.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-              />
-
-              <TableBody>
-                {filteredList.map((product, index) => (
-                  <ProductRow product={product} key={index} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <TableContainer
+              sx={{
+                minWidth: 900,
+              }}
+            >
+              <Table>
+                <TableHeader
+                  order={order}
+                  hideSelectBtn
+                  orderBy={orderBy}
+                  heading={tableHeading}
+                  // rowCount={products.length}
+                  rowCount={data.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                />
+                <TableBody>
+                  {data.map((product, index) => (
+                    <ProductRow product={product} key={index} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Scrollbar>
 
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
-            count={Math.ceil(products.length / rowsPerPage)}
+            count={Math.ceil(data?.length / rowsPerPage)}
           />
         </Stack>
       </Card>

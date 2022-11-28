@@ -3,6 +3,7 @@ import DropZone from "components/DropZone";
 import { Formik } from "formik";
 import React from "react";
 const ProductForm = (props) => {
+
   const { initialValues, validationSchema, handleFormSubmit } = props;
   return (
     <Card
