@@ -5,7 +5,7 @@ import { ProductForm } from "pages-sections/admin";
 import React from "react";
 import * as yup from "yup";
 import axios from "axios";
-import {PRODUCTS,BASE_URL} from "../../../src/apiRoutes"
+import {PRODUCTS,BASE_URL,VENDOR} from "../../../src/apiRoutes"
 
 
 const CreateProduct = () => {
@@ -24,7 +24,7 @@ const CreateProduct = () => {
     console.log("values", values);
     console.log("Baseurl", BASE_URL+PRODUCTS);
     const res = await axios
-      .post(`${BASE_URL}${PRODUCTS}/create`, values, {
+      .post(`${BASE_URL+VENDOR}/product`, values, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": localStorage.getItem("sessionId"),

@@ -11,21 +11,24 @@ import {
 
 // ========================================================================
 const OrderRow = ({ order }) => {
-  const { amount, id, qty, purchaseDate, billingAddress, status } = order;
+  console.log("order", order);
+  const {_id, qty, status, products, details } = order;
   const router = useRouter();
+  let counter=0
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
-      <StyledTableCell align="left">{id}</StyledTableCell>
-      <StyledTableCell align="left">{qty}</StyledTableCell>
+      <StyledTableCell align="left">{_id}</StyledTableCell>
+      
+      <StyledTableCell align="left">5{qty}</StyledTableCell>
 
-      <StyledTableCell
+      {/* <StyledTableCell
         align="left"
         sx={{
           fontWeight: 400,
         }}
       >
         {purchaseDate}
-      </StyledTableCell>
+      </StyledTableCell> */}
 
       <StyledTableCell
         align="left"
@@ -33,14 +36,20 @@ const OrderRow = ({ order }) => {
           fontWeight: 400,
         }}
       >
-        {billingAddress}
+        {details.address}
       </StyledTableCell>
 
       <StyledTableCell align="left">
-        {currency(amount, {
-          separator: ",",
-          precision: 0,
-        }).format()}
+        {products
+          .map((item) => item.price)
+          .reduce((acc, amount) => acc + amount)}
+        {/*           
+        {products.map((item) =>
+          currency(item.price, {
+            separator: ",",
+            precision: 0,
+          }).format()
+        )} */}
       </StyledTableCell>
 
       <StyledTableCell align="left">
@@ -48,12 +57,8 @@ const OrderRow = ({ order }) => {
       </StyledTableCell>
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/admin/orders/${id}`)}>
+        <StyledIconButton onClick={() => router.push(`/vendor/orders/${_id}`)}>
           <RemoveRedEye />
-        </StyledIconButton>
-
-        <StyledIconButton>
-          <Delete />
         </StyledIconButton>
       </StyledTableCell>
     </StyledTableRow>

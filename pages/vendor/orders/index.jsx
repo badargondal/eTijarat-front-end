@@ -1,4 +1,11 @@
-import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Stack,
+  Table,
+  TableContainer,
+} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import SearchArea from "components/dashboard/SearchArea";
 import TableHeader from "components/data-table/TableHeader";
@@ -11,6 +18,11 @@ import { OrderRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
 
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+
 const tableHeading = [
   {
     id: "id",
@@ -22,11 +34,11 @@ const tableHeading = [
     label: "Qty",
     align: "left",
   },
-  {
-    id: "purchaseDate",
-    label: "Purchase Date",
-    align: "left",
-  },
+  // {
+  //   id: "purchaseDate",
+  //   label: "Purchase Date",
+  //   align: "left",
+  // },
   {
     id: "billingAddress",
     label: "Billing Address",
@@ -55,6 +67,30 @@ OrderList.getLayout = function getLayout(page) {
 
 // =============================================================================
 export default function OrderList({ orders }) {
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getOrders() : null;
+  }, []);
+
+  var getOrders = async () => {
+    const response = await axios.get(
+      `${BASE_URL + VENDOR}/orders`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+  const router = useRouter();
+
   const {
     order,
     orderBy,
@@ -65,7 +101,7 @@ export default function OrderList({ orders }) {
     handleRequestSort,
   } = useMuiTable({
     listData: orders,
-    defaultSort: "purchaseDate",
+    // defaultSort: "purchaseDate",
     defaultOrder: "desc",
   });
   return (
@@ -78,41 +114,44 @@ export default function OrderList({ orders }) {
         handleBtnClick={() => {}}
         searchPlaceholder="Search Order..."
       />
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Card>
+          <Scrollbar>
+            <TableContainer
+              sx={{
+                minWidth: 900,
+              }}
+            >
+              <Table>
+                <TableHeader
+                  order={order}
+                  hideSelectBtn
+                  orderBy={orderBy}
+                  heading={tableHeading}
+                  rowCount={orders.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                />
 
-      <Card>
-        <Scrollbar>
-          <TableContainer
-            sx={{
-              minWidth: 900,
-            }}
-          >
-            <Table>
-              <TableHeader
-                order={order}
-                hideSelectBtn
-                orderBy={orderBy}
-                heading={tableHeading}
-                rowCount={orders.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-              />
+                <TableBody>
+                  {data.map((order, index) => (
+                    <OrderRow order={order} key={index} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
 
-              <TableBody>
-                {filteredList.map((order, index) => (
-                  <OrderRow order={order} key={index} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(orders.length / rowsPerPage)}
-          />
-        </Stack>
-      </Card>
+          <Stack alignItems="center" my={4}>
+            <TablePagination
+              onChange={handleChangePage}
+              count={Math.ceil(orders.length / rowsPerPage)}
+            />
+          </Stack>
+        </Card>
+      )}
     </Box>
   );
 }

@@ -60,7 +60,6 @@ const OrderDetails = () => {
   const router = useRouter();
   var { id } = router.query;
   console.log("params id", id);
-
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(true);
   const fetchData = async (id) => {

@@ -19,7 +19,6 @@ const OrderList = () => {
   }, []);
 
   var getOrders = async () => {
-    const buyerId = localStorage.getItem("buyerId");
     const response = await axios.get(
       `${BASE_URL + BUYER}/orders`,
 

@@ -7,7 +7,7 @@ import React from "react";
 const OrderEdit = () => {
   return (
     <Box py={4}>
-      <H3 mb={2}>Order Details</H3>
+      <H3 mb={2}>Edit Order Details</H3>
 
       <OrderDetails />
     </Box>

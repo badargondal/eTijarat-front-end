@@ -40,7 +40,7 @@ export default function EditProduct() {
     var id = url.substring(url.lastIndexOf("/") + 1);
     console.log("id", id);
     const response = await axios.get(
-      `${BASE_URL}/products/${id}`,
+      `${BASE_URL+VENDOR}/product/${id}`,
 
       {
         headers: {
