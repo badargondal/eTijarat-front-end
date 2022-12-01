@@ -12,14 +12,14 @@ import {
 // ========================================================================
 const OrderRow = ({ order }) => {
   console.log("order", order);
-  const {_id, qty, status, products, details } = order;
+  const { _id, qty, status, products, details } = order;
   const router = useRouter();
-  let counter=0
+  let counter = 0;
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
       <StyledTableCell align="left">{_id}</StyledTableCell>
-      
-      <StyledTableCell align="left">5{qty}</StyledTableCell>
+
+      <StyledTableCell align="left">5{products.qty}</StyledTableCell>
 
       {/* <StyledTableCell
         align="left"
@@ -43,8 +43,8 @@ const OrderRow = ({ order }) => {
         {products
           .map((item) => item.price)
           .reduce((acc, amount) => acc + amount)}
-        {/*           
-        {products.map((item) =>
+
+        {/*  {products.map((item) =>
           currency(item.price, {
             separator: ",",
             precision: 0,
@@ -53,7 +53,7 @@ const OrderRow = ({ order }) => {
       </StyledTableCell>
 
       <StyledTableCell align="left">
-        <StatusWrapper status={status}>{status}</StatusWrapper>
+        <StatusWrapper status={status} defaultValue="Processing">{status}</StatusWrapper>
       </StyledTableCell>
 
       <StyledTableCell align="center">

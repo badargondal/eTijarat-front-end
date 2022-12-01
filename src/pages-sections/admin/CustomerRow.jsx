@@ -12,12 +12,13 @@ import {
 
 // ========================================================================
 const CustomerRow = ({ customer }) => {
-  const { email, name, phone, image, balance, orders } = customer;
+  const { email, name, phone, balance, orders } = customer;
+
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
       <StyledTableCell align="left">
         <FlexBox alignItems="center" gap={1.5}>
-          <Avatar src={image} sx={{}} />
+          <Avatar src="/assets/images/avatars/001-man.svg" sx={{}} />
           <Paragraph>{name}</Paragraph>
         </FlexBox>
       </StyledTableCell>
@@ -28,7 +29,7 @@ const CustomerRow = ({ customer }) => {
           fontWeight: 400,
         }}
       >
-        {phone}
+        +12345678910
       </StyledTableCell>
 
       <StyledTableCell
@@ -46,7 +47,7 @@ const CustomerRow = ({ customer }) => {
           fontWeight: 400,
         }}
       >
-        {currency(balance, {
+        {currency(7,250.36, {
           separator: ",",
         }).format()}
       </StyledTableCell>
@@ -57,7 +58,7 @@ const CustomerRow = ({ customer }) => {
           fontWeight: 400,
         }}
       >
-        {orders}
+        03
       </StyledTableCell>
 
       <StyledTableCell align="center">

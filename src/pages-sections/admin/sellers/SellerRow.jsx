@@ -13,10 +13,11 @@ import {
 
 // ========================================================================
 const SellerRow = ({ seller }) => {
+  console.log("seller",seller)
   const {
     name,
     phone,
-    image,
+    email,
     balance,
     published,
     shopName,
@@ -27,7 +28,7 @@ const SellerRow = ({ seller }) => {
     <StyledTableRow tabIndex={-1} role="checkbox">
       <StyledTableCell align="left">
         <FlexBox alignItems="center" gap={1.5}>
-          <Avatar src={image} alt={name} />
+          <Avatar src="/assets/images/avatars/001-man.svg" alt={name} />
           <Box>
             <Paragraph>{name}</Paragraph>
             <Small color="grey.600">{phone}</Small>
@@ -35,7 +36,7 @@ const SellerRow = ({ seller }) => {
         </FlexBox>
       </StyledTableCell>
 
-      <StyledTableCell align="left">{shopName}</StyledTableCell>
+      {/* <StyledTableCell align="left">TheBeauty</StyledTableCell> */}
 
       <StyledTableCell
         align="left"
@@ -43,7 +44,7 @@ const SellerRow = ({ seller }) => {
           fontWeight: 400,
         }}
       >
-        {sellerPackage}
+        {email}
       </StyledTableCell>
 
       <StyledTableCell

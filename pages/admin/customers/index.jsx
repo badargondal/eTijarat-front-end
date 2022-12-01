@@ -1,4 +1,11 @@
-import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Stack,
+  Table,
+  TableContainer,
+} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import SearchArea from "components/dashboard/SearchArea";
 import TableHeader from "components/data-table/TableHeader";
@@ -10,6 +17,10 @@ import useMuiTable from "hooks/useMuiTable";
 import { CustomerRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
+
+import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const tableHeading = [
   {
@@ -50,6 +61,28 @@ CustomerList.getLayout = function getLayout(page) {
 
 // =============================================================================
 export default function CustomerList({ customers }) {
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getBuyers() : null;
+  }, []);
+
+  var getBuyers = async () => {
+    const response = await axios.get(
+      `${BASE_URL + ADMIN}/buyers`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+
   const {
     order,
     orderBy,
@@ -63,7 +96,7 @@ export default function CustomerList({ customers }) {
   });
   return (
     <Box py={4}>
-      <H3 mb={2}>Customers</H3>
+      <H3 mb={2}>Buyers</H3>
 
       <SearchArea
         handleSearch={() => {}}
@@ -71,41 +104,44 @@ export default function CustomerList({ customers }) {
         handleBtnClick={() => {}}
         searchPlaceholder="Search Customer..."
       />
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Card>
+          <Scrollbar>
+            <TableContainer
+              sx={{
+                minWidth: 900,
+              }}
+            >
+              <Table>
+                <TableHeader
+                  order={order}
+                  hideSelectBtn
+                  orderBy={orderBy}
+                  heading={tableHeading}
+                  rowCount={customers.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                />
 
-      <Card>
-        <Scrollbar>
-          <TableContainer
-            sx={{
-              minWidth: 900,
-            }}
-          >
-            <Table>
-              <TableHeader
-                order={order}
-                hideSelectBtn
-                orderBy={orderBy}
-                heading={tableHeading}
-                rowCount={customers.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-              />
+                <TableBody>
+                  {data.map((customer, index) => (
+                    <CustomerRow customer={customer} key={index} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
 
-              <TableBody>
-                {filteredList.map((customer, index) => (
-                  <CustomerRow customer={customer} key={index} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(customers.length / rowsPerPage)}
-          />
-        </Stack>
-      </Card>
+          <Stack alignItems="center" my={4}>
+            <TablePagination
+              onChange={handleChangePage}
+              count={Math.ceil(customers.length / rowsPerPage)}
+            />
+          </Stack>
+        </Card>
+      )}
     </Box>
   );
 }

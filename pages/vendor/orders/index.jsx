@@ -18,7 +18,6 @@ import { OrderRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
 
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
@@ -67,6 +66,7 @@ OrderList.getLayout = function getLayout(page) {
 
 // =============================================================================
 export default function OrderList({ orders }) {
+
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(true);
 
@@ -89,7 +89,6 @@ export default function OrderList({ orders }) {
     setdata(response.data);
     setloading(false);
   };
-  const router = useRouter();
 
   const {
     order,

@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
+import { Box, Card, CircularProgress, Stack, Table, TableContainer } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import SearchArea from "components/dashboard/SearchArea";
 import TableHeader from "components/data-table/TableHeader";
@@ -10,6 +10,12 @@ import useMuiTable from "hooks/useMuiTable";
 import { ProductRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard";
+
+import { useRouter } from "next/router";
+import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const tableHeading = [
   {
     id: "name",
@@ -21,11 +27,11 @@ const tableHeading = [
     label: "Category",
     align: "left",
   },
-  {
-    id: "brand",
-    label: "Brand",
-    align: "left",
-  },
+  // {
+  //   id: "brand",
+  //   label: "Brand",
+  //   align: "left",
+  // },
   {
     id: "price",
     label: "Price",
@@ -48,8 +54,29 @@ ProductList.getLayout = function getLayout(page) {
 }; // =============================================================================
 
 // =============================================================================
-export default function ProductList(props) {
-  const { products } = props;
+export default function ProductList() {
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getProducts() : null;
+  }, []);
+
+  var getProducts = async () => {
+    const response = await axios.get(
+      `${BASE_URL + ADMIN}/products`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
+  const router = useRouter();
   const {
     order,
     orderBy,
@@ -59,8 +86,12 @@ export default function ProductList(props) {
     handleChangePage,
     handleRequestSort,
   } = useMuiTable({
-    listData: products,
+    listData: data?.products,
   });
+  if (loading){
+    return <CircularProgress/>
+  }
+  else{
   return (
     <Box py={4}>
       <H3 mb={2}>Product List</H3>
@@ -85,13 +116,13 @@ export default function ProductList(props) {
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
-                rowCount={products.length}
+                rowCount={data.length}
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
               />
 
               <TableBody>
-                {filteredList.map((product, index) => (
+                {data.map((product, index) => (
                   <ProductRow product={product} key={index} />
                 ))}
               </TableBody>
@@ -102,12 +133,14 @@ export default function ProductList(props) {
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
-            count={Math.ceil(products.length / rowsPerPage)}
+            count={Math.ceil(data.length / rowsPerPage)}
           />
         </Stack>
       </Card>
     </Box>
   );
+  }
+
 }
 export const getStaticProps = async () => {
   const products = await api.products();
