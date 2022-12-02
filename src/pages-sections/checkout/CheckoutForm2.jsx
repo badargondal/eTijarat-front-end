@@ -104,6 +104,36 @@ const CheckoutForm2 = () => {
     setcardLoading(false);
   };
 
+  // const handleFormSubmit = async (values) => {
+  //   const order = new Object();
+  //   order.buyerId = localStorage.getItem("buyerId");
+  //   order.products = cartList;
+  //   order.details = values;
+  //   console.log("orders", order);
+
+  //   const res = await axios
+  //     .post(`${BASE_URL + BUYER}/order/create`, order, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: localStorage.getItem("sessionId"),
+  //       },
+  //     })
+  //     .then(
+  //       (response) => {
+  //         response;
+  //         // console.log("response from order",response.data)
+  //         console.log(response.data.message);
+  //         router.push("/order-confirmation");
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //     );
+
+  //   // console.log("res",res)
+  //   return res;
+  // };
+
   const handleFormSubmit = async (values) => {
     const order = new Object();
     order.buyerId = localStorage.getItem("buyerId");
@@ -111,30 +141,25 @@ const CheckoutForm2 = () => {
     order.details = values;
     console.log("orders", order);
 
-
-
     const res = await axios
-      .post(`${BASE_URL+BUYER}/order/create`, order, {
+      .post(`${BASE_URL + BUYER}/create-checkout-session`, order, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("sessionId"),
+
+          Authorization: localStorage.getItem("sessionId"),
         },
       })
       .then(
         (response) => {
-          response;
-          // console.log("response from order",response.data)
-          console.log(response.data.message);
-          router.push("/order-confirmation");
+          if (response.data.url) {
+            window.location.href = response.data.url;
+          }
         },
         (error) => {
           console.log(error);
         }
       );
 
-
-    
-    
     // console.log("res",res)
     return res;
   };
@@ -523,7 +548,7 @@ const CheckoutForm2 = () => {
               </FlexBox>
             )}
 
-            <Button
+            {/* <Button
               fullWidth
               type="submit"
               color="primary"
@@ -533,6 +558,17 @@ const CheckoutForm2 = () => {
               }}
             >
               Place Order
+            </Button> */}
+            <Button
+              fullWidth
+              type="submit"
+              color="primary"
+              variant="contained"
+              sx={{
+                mt: 3,
+              }}
+            >
+              Checkout
             </Button>
           </Card1>
         </form>
@@ -598,14 +634,15 @@ const timeList = [
 ];
 const checkoutSchema = yup.object().shape({
   // card: yup.string().required("required"),
-  date: yup.string().required("required"),
-  time: yup.string().required("required"),
-  address: yup.string().required("required"),
-  cardHolderName: yup.string().required("required"),
-  cardNumber: yup.number().required("required"),
-  cardMonth: yup.string().required("required"),
-  cardYear: yup.number().required("required"),
-  cardCVC: yup.number().required("required"),
-  voucher: yup.string(),
+  
+  // date: yup.string().required("required"),
+  // time: yup.string().required("required"),
+  // address: yup.string().required("required"),
+  // cardHolderName: yup.string().required("required"),
+  // cardNumber: yup.number().required("required"),
+  // cardMonth: yup.string().required("required"),
+  // cardYear: yup.number().required("required"),
+  // cardCVC: yup.number().required("required"),
+  // voucher: yup.string(),
 });
 export default CheckoutForm2;
