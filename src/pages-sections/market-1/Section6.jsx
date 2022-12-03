@@ -16,6 +16,9 @@ const Section6 = ({ carList, carBrands }) => {
 
     return "";
   };
+  carList.map((item) => {
+    console.log("item", item);
+  });
 
   return (
     <Container
@@ -67,7 +70,7 @@ const Section6 = ({ carList, carBrands }) => {
           <CategorySectionHeader title="Cars" seeMoreLink="#" />
 
           <Grid container spacing={3}>
-            {carList.map((item, ind) => (
+            {carList.slice(0,9).map((item, ind) => (
               <Grid item lg={4} sm={6} xs={12} key={ind}>
                 <ProductCard1 hoverEffect {...item} />
               </Grid>

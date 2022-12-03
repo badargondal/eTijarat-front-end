@@ -15,7 +15,7 @@ import { FlexBox, FlexRowCenter } from "../flex-box"; // =======================
 
 // ================================================================
 const ProductIntro = ({ product }) => {
-  const { id, price, title, imgGroup } = product;
+  const { id, price, title, imgGroup, vendorId } = product;
   const router = useRouter();
   const routerId = router.query.id;
   const [selectedImage, setSelectedImage] = useState(0);
@@ -130,7 +130,7 @@ const ProductIntro = ({ product }) => {
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               ${price.toFixed(2)}
             </H2>
-            <Box color="inherit">Stock Available</Box>
+            <Box color="inherit">Available</Box>
           </Box>
 
           {!cartItem?.qty ? (
@@ -180,9 +180,9 @@ const ProductIntro = ({ product }) => {
 
           <FlexBox alignItems="center" mb={2}>
             <Box>Sold By:</Box>
-            <Link href="/shops/fdfdsa">
+            <Link href={`/shops/${vendorId._id}`}>
               <a>
-                <H6 ml={1}>Mobile Store</H6>
+                <H6 ml={1}>{vendorId.name}</H6>
               </a>
             </Link>
           </FlexBox>

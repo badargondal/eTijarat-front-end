@@ -10,30 +10,54 @@ import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
+import { BASE_URL } from "apiRoutes";
+import axios from "axios";
 
 // import Box from "@mui/material";
 // ========================================================
 const ProductCard1List = () => {
-  const [category, setCategory] = useState(null);
-  const [loading, setloading] = useState(true);
   const router = useRouter();
-  const { id } = router.query;
 
-  const fetchData = (id) => {
-    return fetch(`http://127.0.0.1:5000/product/search/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setCategory(data);
-        setloading(false);
-      });
-  };
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
 
-  if (category == null) {
-    if (id != undefined) {
-      fetchData(id);
+  useEffect(() => {
+    data == null ? getSearchProduct() : null;
+  }, []);
+
+  var getSearchProduct = async () => {
+    var url = location.pathname;
+    var id = url.substring(url.lastIndexOf("/") + 1);
+    console.log("id", typeof id);
+    console.log("url", typeof url, url);
+    let response;
+    if (url.includes("search")) {
+      response = await axios.get(
+        `${BASE_URL}/products/search/${id}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("sessionId"),
+          },
+        }
+      );
+    } else if (url.includes("shops")) {
+      response = await axios.get(
+        `${BASE_URL}/products/vendor/${id}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("sessionId"),
+          },
+        }
+      );
     }
-  }
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
 
   return (
     <Fragment>
@@ -42,8 +66,8 @@ const ProductCard1List = () => {
       ) : (
         <>
           <Grid container spacing={3}>
-            {category.length >= 1 ? (
-              category.map((item, ind) => (
+            {data.length >= 1 ? (
+              data.map((item, ind) => (
                 <Grid item lg={4} sm={6} xs={12} key={ind}>
                   <ProductCard1 {...item} />
                 </Grid>
@@ -51,17 +75,17 @@ const ProductCard1List = () => {
             ) : (
               <>
                 <FlexBetween flexWrap="wrap" mt={4}>
-                  <Span color="grey.600">No product found of category {id}</Span>
+                  <Span color="grey.600">
+                    No product found of category {id}
+                  </Span>
                 </FlexBetween>
               </>
             )}
-            
           </Grid>
           <FlexBetween flexWrap="wrap" mt={4}>
             <Span color="grey.600">Showing 1-9 of 1.3k Products</Span>
             <Pagination count={10} variant="outlined" color="primary" />
           </FlexBetween>
-
         </>
       )}
     </Fragment>

@@ -15,6 +15,7 @@ import {
   getFrequentlyBought,
   getRelatedProducts,
 } from "utils/api/related-products";
+import { BASE_URL } from "../../src/apiRoutes";
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   minHeight: 0,
   marginTop: 80,
@@ -26,11 +27,6 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
     textTransform: "capitalize",
   },
 })); // ===============================================================
-
-
-
-
-
 
 // ===============================================================
 const ProductDetails = (props) => {
@@ -48,32 +44,27 @@ const ProductDetails = (props) => {
    *    The code is commented if want to call it just uncomment code and put the server url
    */
 
+  var order_id = null;
+  const router = useRouter();
+  var { id } = router.query;
+  console.log("params id", id);
 
-
-
-   var order_id = null;
-   const router = useRouter();
-   var { id } = router.query;
-   console.log("params id", id);
- 
   //  const [data, setData] = useState(null);
-   const [loading, setloading] = useState(true);
-   const fetchData = async (id) => {
-     const data = await fetch(`http://127.0.0.1:5000/product/${id}`, {
-       headers: {
-         session_id: localStorage.getItem("sessionId"),
-       },
-     });
-     const json = await data.json();
-     console.log(json);
-     setProduct(json);
-     setloading(false);
-   };
+  const [loading, setloading] = useState(true);
+  const fetchData = async (id) => {
+    const data = await fetch(`${BASE_URL}/products/${id}`, {
+      headers: {
+        session_id: localStorage.getItem("sessionId"),
+      },
+    });
+    const json = await data.json();
+    console.log(json);
+    setProduct(json);
+    setloading(false);
+  };
   useEffect(() => {
     getRelatedProducts().then((data) => setRelatedProducts(data));
     getFrequentlyBought().then((data) => setFrequentlyBought(data));
- 
-
   }, []);
   if (product == null) {
     if (id != undefined) {
@@ -90,8 +81,14 @@ const ProductDetails = (props) => {
           my: 4,
         }}
       >
-        {product ? <ProductIntro product={product} /> : <><H2>Loading...</H2>
-        <CircularProgress /> </>}
+        {product ? (
+          <ProductIntro product={product} />
+        ) : (
+          <>
+            <H2>Loading...</H2>
+            <CircularProgress />
+          </>
+        )}
 
         <StyledTabs
           textColor="primary"
@@ -101,12 +98,29 @@ const ProductDetails = (props) => {
         >
           <Tab className="inner-tab" label="Description" />
           <Tab className="inner-tab" label="Review (3)" />
+          <Tab className="inner-tab" label="Technical Details" />
+          <Tab className="inner-tab" label="Non Technical Details " />
         </StyledTabs>
 
-        <Box mb={6}>
-          {selectedOption === 0 && <ProductDescription />}
-          {selectedOption === 1 && <ProductReview />}
-        </Box>
+        {product ? (
+          <Box mb={6}>
+            {selectedOption === 0 && (
+              <ProductDescription description={product?.description} />
+            )}
+
+            {selectedOption === 1 && <ProductReview />}
+            {selectedOption === 2 && (
+              <ProductDescription description={product?.description.slice(0,100)} />
+            )}
+            {selectedOption === 3 && (
+              <ProductDescription description={product?.description.slice(100,200)} />
+            )}
+          </Box>
+        ) : (
+          <>
+            <CircularProgress />
+          </>
+        )}
 
         {frequentlyBought && (
           <FrequentlyBought productsData={frequentlyBought} />

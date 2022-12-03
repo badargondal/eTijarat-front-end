@@ -18,7 +18,7 @@ import Card1 from "components/Card1";
 import { FlexBetween, FlexBox } from "components/flex-box";
 import LazyImage from "components/LazyImage";
 import { H6, Paragraph } from "components/Typography";
-import { months, years } from "data/months-years";
+import { currency, months, years } from "data/months-years";
 import { format } from "date-fns";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
@@ -33,6 +33,7 @@ import { BASE_URL, BUYER } from "../../../src/apiRoutes";
 // date types
 
 // ====================================================================
+
 const Heading = ({ number, title }) => {
   return (
     <FlexBox gap={1.5} alignItems="center" mb={3.5}>
@@ -385,84 +386,30 @@ const CheckoutForm2 = () => {
               mb: 3,
             }}
           >
-            <Heading number={3} title="Payment Details" />
+            <Heading number={3} title="Currency " />
 
             <Box mb={3.5}>
-              <Typography mb={1.5}>Enter Card Information</Typography>
+              <Typography mb={1.5}>Enter Currency for payment</Typography>
               <Grid container spacing={3}>
-                <Grid item sm={6} xs={12}>
-                  <TextField
-                    fullWidth
-                    type="text"
-                    name="cardHolderName"
-                    onChange={handleChange}
-                    label="Enter Your Name"
-                    value={values.cardHolderName}
-                    error={!!touched.cardHolderName && !!errors.cardHolderName}
-                    helperText={touched.cardHolderName && errors.cardHolderName}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <TextField
-                    fullWidth
-                    type="number"
-                    name="cardNumber"
-                    onChange={handleChange}
-                    label="Enter Your Card Number"
-                    value={values.cardNumber}
-                    error={!!touched.cardNumber && !!errors.cardNumber}
-                    helperText={touched.cardNumber && errors.cardNumber}
-                  />
-                </Grid>
                 <Grid item sm={12} xs={12}>
                   <Box display="flex" justifyContent="space-between">
                     <TextField
                       select
                       fullWidth
                       type="number"
-                      name="cardMonth"
+                      name="currency"
                       onChange={handleChange}
-                      label="Expire Card Month"
-                      value={values.cardMonth}
-                      error={!!touched.cardMonth && !!errors.cardMonth}
-                      helperText={touched.cardMonth && errors.cardMonth}
+                      label="Enter Currency to select"
+                      value={values.currency}
+                      error={!!touched.currency && !!errors.currency}
+                      helperText={touched.currency && errors.currency}
                     >
-                      {months.map((item) => (
+                      {currency.map((item) => (
                         <MenuItem value={item} key={item}>
                           {item}
                         </MenuItem>
                       ))}
                     </TextField>
-                    <TextField
-                      select
-                      fullWidth
-                      type="number"
-                      name="cardYear"
-                      onChange={handleChange}
-                      label="Expire Card Year"
-                      value={values.cardYear}
-                      error={!!touched.cardYear && !!errors.cardYear}
-                      helperText={touched.cardYear && errors.cardYear}
-                      sx={{
-                        mx: 3,
-                      }}
-                    >
-                      {years.map((item) => (
-                        <MenuItem value={item} key={item}>
-                          {item}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      name="cardCVC"
-                      label="CVC/CVV"
-                      onChange={handleChange}
-                      value={values.cardCVC}
-                      error={!!touched.cardCVC && !!errors.cardCVC}
-                      helperText={touched.cardCVC && errors.cardCVC}
-                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -634,7 +581,6 @@ const timeList = [
 ];
 const checkoutSchema = yup.object().shape({
   // card: yup.string().required("required"),
-  
   // date: yup.string().required("required"),
   // time: yup.string().required("required"),
   // address: yup.string().required("required"),

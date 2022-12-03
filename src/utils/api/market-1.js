@@ -1,3 +1,4 @@
+import { BASE_URL } from "apiRoutes";
 import axios from "axios";
 
 const getTopRatedProduct = async () => {
@@ -21,15 +22,15 @@ const getCarBrands = async () => {
 };
 
 
-const getCarList = async () => {
-  const response = await axios.get("/api/market-1/car-list");
-  return response.data;
-};
-
 // const getCarList = async () => {
-//   const response = await axios.get("http://127.0.0.1:5000/product/search/automotive");
+//   const response = await axios.get("/api/market-1/car-list");
 //   return response.data;
 // };
+
+const getCarList = async () => {
+  const response = await axios.get(`${BASE_URL}/products/search/automotive`);
+  return response.data;
+};
 
 const getMobileBrands = async () => {
   const response = await axios.get("/api/market-1/mobile-brand-list");
