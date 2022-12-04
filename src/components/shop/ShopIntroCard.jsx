@@ -9,7 +9,8 @@ import { H3, Small, Span } from "components/Typography";
 import React from "react"; // =======================================================
 
 // =======================================================
-const ShopIntroCard = () => {
+const ShopIntroCard = ({ vendor }) => {
+  console.log("vendor", vendor);
   return (
     <Card
       sx={{
@@ -54,7 +55,7 @@ const ShopIntroCard = () => {
               bgcolor="secondary.main"
             >
               <H3 fontWeight="600" color="grey.100">
-                Scarlett Beauty
+                {vendor.name}
               </H3>
             </Box>
 
@@ -106,11 +107,11 @@ const ShopIntroCard = () => {
                     mt: "2px",
                   }}
                 />
-                <Span color="grey.600">(613) 343-9004</Span>
+                <Span color="grey.600">{vendor.name}</Span>
               </FlexBox>
             </Box>
 
-            <a href="mailto:scarletbeauty@xmail.com">
+            <a href={`mailto:${vendor.email}`}>
               <Button
                 variant="outlined"
                 color="primary"

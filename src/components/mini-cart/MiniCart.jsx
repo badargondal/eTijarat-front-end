@@ -180,7 +180,7 @@ const MiniCart = ({ toggleSidenav }) => {
             </BazaarButton>
           </Link>
 
-          <Link href="/cart" passHref>
+          {/* <Link href="/cart" passHref>
             <BazaarButton
               fullWidth
               color="primary"
@@ -192,7 +192,7 @@ const MiniCart = ({ toggleSidenav }) => {
             >
               View Cart
             </BazaarButton>
-          </Link>
+          </Link> */}
         </Box>
       )}
     </Box>

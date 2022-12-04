@@ -16,7 +16,6 @@ const CreateProduct = () => {
     sale_price: "",
     description: "",
     category: "",
-    // vendorId: localStorage.getItem("vendorId"),
     imgUrl: "ads",
   };
 

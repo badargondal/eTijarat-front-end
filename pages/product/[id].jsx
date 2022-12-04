@@ -35,6 +35,7 @@ const ProductDetails = (props) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [frequentlyBought, setFrequentlyBought] = useState([]);
+
   /**
    * Note:
    * ==============================================================
@@ -47,10 +48,9 @@ const ProductDetails = (props) => {
   var order_id = null;
   const router = useRouter();
   var { id } = router.query;
-  console.log("params id", id);
-
-  //  const [data, setData] = useState(null);
   const [loading, setloading] = useState(true);
+
+  const [loadingRelatedproducts, setloadingRelatedproducts] = useState(true);
   const fetchData = async (id) => {
     const data = await fetch(`${BASE_URL}/products/${id}`, {
       headers: {
@@ -58,13 +58,13 @@ const ProductDetails = (props) => {
       },
     });
     const json = await data.json();
-    console.log(json);
     setProduct(json);
     setloading(false);
   };
   useEffect(() => {
-    getRelatedProducts().then((data) => setRelatedProducts(data));
-    getFrequentlyBought().then((data) => setFrequentlyBought(data));
+    getRelatedProducts()
+      .then((data) => setRelatedProducts(data))
+      .then(() => setloadingRelatedproducts(false));
   }, []);
   if (product == null) {
     if (id != undefined) {
@@ -110,10 +110,14 @@ const ProductDetails = (props) => {
 
             {selectedOption === 1 && <ProductReview />}
             {selectedOption === 2 && (
-              <ProductDescription description={product?.description.slice(0,100)} />
+              <ProductDescription
+                description={product?.description.slice(0, 100)}
+              />
             )}
             {selectedOption === 3 && (
-              <ProductDescription description={product?.description.slice(100,200)} />
+              <ProductDescription
+                description={product?.description.slice(100, 200)}
+              />
             )}
           </Box>
         ) : (
@@ -122,13 +126,16 @@ const ProductDetails = (props) => {
           </>
         )}
 
-        {frequentlyBought && (
+        {/* {frequentlyBought && (
           <FrequentlyBought productsData={frequentlyBought} />
+        )} */}
+
+        {/* <AvailableShops /> */}
+        {loadingRelatedproducts ? (
+          <CircularProgress />
+        ) : (
+          relatedProducts && <RelatedProducts productsData={relatedProducts} />
         )}
-
-        <AvailableShops />
-
-        {relatedProducts && <RelatedProducts productsData={relatedProducts} />}
       </Container>
     </ShopLayout1>
   );

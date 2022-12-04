@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 
 const ProductSearchResult = () => {
+  
   const router =useRouter()
   const {id}=router.query
   // console.log("parmas",{id})

@@ -5,6 +5,8 @@ import React from "react"; // ==================================================
 
 // ===================================================
 const RelatedProducts = ({ productsData }) => {
+  console.log("productsData",productsData)
+  
   return (
     <Box mb={7.5}>
       <H3 mb={3}>Realted Products</H3>

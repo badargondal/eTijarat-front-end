@@ -6,8 +6,17 @@ const BUYER = "/buyer";
 
 const PRODUCTS = "/products";
 const ORDER = "/orders";
+const RECOMMENDED_PRODUCTS = "https://019a-111-119-191-1.ap.ngrok.io";
 
-export { BASE_URL, PRODUCTS, ADMIN, VENDOR, BUYER, ORDER };
+export {
+  BASE_URL,
+  PRODUCTS,
+  ADMIN,
+  VENDOR,
+  BUYER,
+  ORDER,
+  RECOMMENDED_PRODUCTS,
+};
 
 // const PATHS = {
 

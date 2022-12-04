@@ -26,6 +26,7 @@ const ProductCard1List = () => {
   }, []);
 
   var getSearchProduct = async () => {
+    
     var url = location.pathname;
     var id = url.substring(url.lastIndexOf("/") + 1);
     console.log("id", typeof id);
@@ -76,7 +77,7 @@ const ProductCard1List = () => {
               <>
                 <FlexBetween flexWrap="wrap" mt={4}>
                   <Span color="grey.600">
-                    No product found of category {id}
+                    No product found of this category 
                   </Span>
                 </FlexBetween>
               </>

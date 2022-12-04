@@ -114,17 +114,15 @@ const ProductCard1 = ({
           </IconButton>
         </HoverIconWrapper>
 
-        <Link href={`/product/${id}`}>
-          <a>
-            <LazyImage
-              src={imgUrl}
-              width={0}
-              height={0}
-              layout="responsive"
-              alt={title}
-            />
-          </a>
-        </Link>
+        <a href={`/product/${id}`}>
+          <LazyImage
+            src={imgUrl}
+            width={0}
+            height={0}
+            layout="responsive"
+            alt={title}
+          />
+        </a>
       </ImageWrapper>
 
       <ProductViewDialog
@@ -185,7 +183,7 @@ const ProductCard1 = ({
             className="add-cart"
             flexDirection="column-reverse"
             justifyContent={!!cartItem?.qty ? "space-between" : "flex-start"}
-           >
+          >
             <Button
               color="primary"
               variant="outlined"
