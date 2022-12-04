@@ -73,8 +73,12 @@ export const navigations = [
     icon: duotone.Seller,
     children: [
       {
-        name: "Seller List",
+        name: "Vendor List",
         path: "/admin/sellers",
+      },
+      {
+        name: "Approval Request",
+        path: "/admin/sellers/approval-request",
       },
       {
         name: "Seller Package",
