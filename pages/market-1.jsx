@@ -19,7 +19,7 @@ import api from "utils/api/market-1"; // =======================================
 const MarketShop = (props) => {
   return (
     <ShopLayout1>
-      <SEO title="Market v1" />
+      <SEO title="E-Tijarat" />
 
       {/* HERO SLIDER SECTION */}
       <Section1 carouselData={props.mainCarouselData} />

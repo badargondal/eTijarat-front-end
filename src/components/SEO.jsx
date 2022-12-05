@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 
-const SEO = ({ title, description, sitename = "Bazaar Next.js Ecommerce" }) => {
+const SEO = ({ title, description, sitename = "E-Commerce" }) => {
   return (
     <Head>
       <title>

@@ -25,7 +25,9 @@ const PaymentMethodEditor = () => {
     const container = document.getElementById('messagesPage');
     container.scrollTop = container.scrollHeight**2;
     console.dir(container);
-    const vendorId = localStorage.getItem('chatVendorId');
+
+    var url = location.pathname;
+    const vendorId = url.substring(url.lastIndexOf("/") + 1);
     const buyerId = localStorage.getItem('buyerId');
     axios.post(`${BASE_URL}/chat/messages`,
       { vendorId, buyerId },
@@ -42,9 +44,10 @@ const PaymentMethodEditor = () => {
 
   const handleFormSubmit = async () => {
     const messageString = document.getElementById('chatbox');
-
+    var url = location.pathname;
+    const vendorId = url.substring(url.lastIndexOf("/") + 1);
     const body = {
-      vendorId: localStorage.getItem('chatVendorId'),
+      vendorId: vendorId,
       buyerId: localStorage.getItem('buyerId'),
       sender: localStorage.getItem('buyerId'),
       message: messageString.value.trim()
@@ -82,7 +85,7 @@ const PaymentMethodEditor = () => {
         navigation={<CustomerDashboardNavigation />}
       /> */}
 
-      <div id="messagesPage" style={{maxHeight: "13%", overflow: "auto" }}>
+      <div id="messagesPage" style={{maxHeight: 290, overflow: "auto" }}>
         {loading ? <CircularProgress /> :
           data.map((item, ind) => {
             if (item.sender == item.buyerId._id) {
