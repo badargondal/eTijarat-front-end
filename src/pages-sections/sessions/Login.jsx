@@ -71,7 +71,7 @@ const Login = () => {
           !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil
           const buyerId= response.data.buyerId
           !buyerId.nil ? localStorage.setItem("buyerId", buyerId) : nil
-          router.push('/')
+          router.push('/profile')
         },
         (error) => {
           console.log(error);
@@ -89,7 +89,7 @@ const Login = () => {
     <Wrapper elevation={3} passwordVisibility={passwordVisibility}>
       <form onSubmit={handleSubmit}>
         <H3 textAlign="center" mb={1}>
-          Welcome To Ecommerce
+          Welcome To E-Tijarat
         </H3>
         <Small
           mb={4.5}

@@ -90,7 +90,7 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
             {/* <a>
               <Image height={44} src="/assets/images/logo2.svg" alt="logo" />
             </a> */}
-            
+
             <h2>E TIJARAT</h2>
           </Link>
 
@@ -120,33 +120,26 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
             },
           }}
         >
-          {props.session_id === undefined ? (
-            <>
-              <Box
-                component={IconButton}
-                p={1.25}
-                bgcolor="grey.200"
-                onClick={toggleDialog}
-              >
-                <PersonOutline/>
-              </Box>
-              <Box
-                component={IconButton}
-                p={1.25}
-                bgcolor="grey.200"
-                // onClick={toggleDialog}
-              >
-                <LogoutIcon
-                  onClick={() => {
-                    console.log(localStorage.removeItem("sessionId"));
-                    router.push("/");
-                  }}
-                />
-              </Box>
-            </>
-          ) : (
-            false
-          )}
+          <Box
+            component={IconButton}
+            p={1.25}
+            bgcolor="grey.200"
+            onClick={toggleDialog}
+          >
+            <PersonOutline />
+          </Box>
+          {typeof window !== "undefined"
+            ? window.localStorage.getItem("session_id") && (
+                <Box component={IconButton} p={1.25} bgcolor="grey.200">
+                  <LogoutIcon
+                    onClick={() => {
+                      localStorage.clear();
+                      router.push("/");
+                    }}
+                  />
+                </Box>
+              )
+            : false}
 
           <Badge badgeContent={state.cart.length} color="primary">
             <Box
@@ -167,8 +160,7 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
           scroll="body"
           onClose={toggleDialog}
         >
-          < Login />
-
+          <Login />
         </Dialog>
 
         <Drawer open={sidenavOpen} anchor="right" onClose={toggleSidenav}>

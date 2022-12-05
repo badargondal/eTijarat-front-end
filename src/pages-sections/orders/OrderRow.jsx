@@ -56,8 +56,7 @@ const OrderRow = ({ item, index }) => {
             />
           </Box>
           <Typography className="pre" m={0.75} textAlign="left">
-            {/* {format(new Date(item.details.date), "MMM dd, yyyy")} */}
-            
+            {format(new Date(item.createdAt), "MMM dd, yyyy")}
           </Typography>
 
           <Typography m={0.75} textAlign="left">

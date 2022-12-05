@@ -161,7 +161,6 @@ const CheckoutForm2 = () => {
         }
       );
 
-    // console.log("res",res)
     return res;
   };
 

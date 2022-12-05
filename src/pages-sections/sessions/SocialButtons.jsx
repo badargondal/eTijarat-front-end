@@ -10,7 +10,7 @@ const SocialButtons = (props) => {
   const { redirect = "/login", redirectText = "Login" } = props;
   return (
     <Fragment>
-      <Box mb={2} mt={3.3}>
+      {/* <Box mb={2} mt={3.3}>
         <Box width="200px" mx="auto">
           <Divider />
         </Box>
@@ -20,9 +20,9 @@ const SocialButtons = (props) => {
             or
           </Box>
         </FlexBox>
-      </Box>
+      </Box> */}
 
-      <BazaarButton
+      {/* <BazaarButton
         className="facebookButton"
         size="medium"
         fullWidth
@@ -51,7 +51,7 @@ const SocialButtons = (props) => {
         <Box fontSize="12px" ml={1}>
           Continue with Google
         </Box>
-      </BazaarButton>
+      </BazaarButton> */}
 
       <FlexRowCenter my="1.25rem">
         <Box>Don&apos;t have account?</Box>
