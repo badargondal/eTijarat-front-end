@@ -25,7 +25,6 @@ const initialState = {
     //   id: "9573201630529315",
     //   qty: 1,
     // },
-    
   ],
 };
 const AppContext = createContext({
