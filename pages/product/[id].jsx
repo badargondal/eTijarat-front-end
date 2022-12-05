@@ -63,11 +63,11 @@ const ProductDetails = (props) => {
     setloading(false);
   };
 
-  // useEffect(() => {
-  //   getRelatedProducts()
-  //     .then((data) => setRelatedProducts(data))
-  //     .then(() => setloadingRelatedproducts(false));
-  // }, []);
+  useEffect(() => {
+    getRelatedProducts()
+      .then((data) => setRelatedProducts(data))
+      .then(() => setloadingRelatedproducts(false));
+  }, []);
 
   if (product == null) {
     if (id != undefined) {
@@ -135,15 +135,11 @@ const ProductDetails = (props) => {
 
         {/* <AvailableShops /> */}
 
-
-
-        {/* {loadingRelatedproducts ? (
+        {loadingRelatedproducts ? (
           <CircularProgress />
         ) : (
           relatedProducts && <RelatedProducts productsData={relatedProducts} />
-        )} */}
-
-
+        )}
       </Container>
     </ShopLayout1>
   );
