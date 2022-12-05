@@ -93,14 +93,12 @@ const Navbar = ({ navListOpen, hideCategories, elevation, border }) => {
       if (isRoot) {
         // show megamenu
         if (nav.megaMenu) {
-          //@ts-ignore
           return (
             <MegaMenu key={nav.title} title={nav.title} menuList={nav.child} />
           );
-        } // show megamenu with sub
+        }
 
         if (nav.megaMenuWithSub) {
-          //@ts-ignore
           return (
             <MegaMenu2 key={nav.title} title={nav.title} menuList={nav.child} />
           );
@@ -130,7 +128,8 @@ const Navbar = ({ navListOpen, hideCategories, elevation, border }) => {
               }}
             >
               <FlexBox alignItems="flex-end" gap={0.3} sx={navLinkStyle}>
-                {nav.title}{" "}
+                {nav.title}
+                {/* {console.log("item", nav.title)} */}
                 <KeyboardArrowDown
                   sx={{
                     color: "grey.500",

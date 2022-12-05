@@ -17,15 +17,16 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 const ProductForm = (props) => {
   const { initialValues, validationSchema, handleFormSubmit } = props;
-  // const [imgUrl, setimgUrl] = useState();
+  const [imgUrl, setimgUrl] = useState();
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(true);
-  const getImageKeywords = async (imgUrl) => {
-    console.log("imgUrl", imgUrl);
+
+  const getImageKeywords = async (Url) => {
+    console.log("imgUrl in get imGE KEY WORDS", Url);
     const response = await axios.post(
       `${RECOMMENDED_PRODUCTS}/seodata`,
       {
-        url: imgUrl,
+        url: Url,
       },
       {
         headers: {
@@ -35,6 +36,7 @@ const ProductForm = (props) => {
     );
     console.log("response", response.data);
     setdata(response.data);
+    setimgUrl(Url);
     setloading(false);
   };
 
@@ -93,6 +95,7 @@ const ProductForm = (props) => {
 
               <Grid item xs={12}>
                 <DropZone
+                  name="image"
                   onChange={() => {
                     const url =
                       "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
@@ -113,12 +116,16 @@ const ProductForm = (props) => {
                       })
                       .then((data) => {
                         console.log("img", data.url);
-                        // setimgUrl(data.url);
-
+                        setimgUrl(data.url);
+                        values.imgUrl = data.url;
                         getImageKeywords(data.url);
                       });
                   }}
+                  value={values.image}
                 />
+                {imgUrl && (
+                  <img src={imgUrl} alt="uploadedImage" height="200" />
+                )}
               </Grid>
               <Grid item sm={6} xs={12}>
                 <TextField
@@ -146,6 +153,12 @@ const ProductForm = (props) => {
                   <MenuItem value="Health & Beauty">Health $ Beauty</MenuItem>
                 </TextField>
               </Grid>
+              <input
+                type="text"
+                hidden
+                name="imgUrl"
+                value={(values.imgUrl = imgUrl)}
+              />
 
               <Grid item sm={6} xs={12}>
                 <h3>
@@ -163,7 +176,6 @@ const ProductForm = (props) => {
 
               <Grid item xs={12}>
                 <h3>
-                  
                   {/* <span
                     style={{ marginRight: 20, fontWeight: 600, fontSize: 14 ,}}
                   >

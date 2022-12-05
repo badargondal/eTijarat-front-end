@@ -169,6 +169,20 @@ export const navigations = [
     ],
   },
   {
+    name: "Assitants",
+    icon: duotone.Customers,
+    children: [
+      {
+        name: "Assitants List",
+        path: "/vendor/assistants",
+      },
+      {
+        name: "Assistants Create",
+        path: "/vendor/assistants/create",
+      },
+    ],
+  },
+  {
     name: "Chat",
     icon: duotone.Review,
     path: "/vendor/chat",

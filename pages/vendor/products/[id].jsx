@@ -40,7 +40,7 @@ export default function EditProduct() {
     var id = url.substring(url.lastIndexOf("/") + 1);
     console.log("id", id);
     const response = await axios.get(
-      `${BASE_URL+VENDOR}/product/${id}`,
+      `${BASE_URL}/products/${id}`,
 
       {
         headers: {
@@ -62,7 +62,7 @@ export default function EditProduct() {
     description: data?.description,
     stock: data?.stock,
     category: data?.category,
-    imgUrl: "ads",
+    imgUrl: data?.imgUrl,
   };
 
   const handleFormSubmit = async (values) => {
@@ -70,7 +70,7 @@ export default function EditProduct() {
     const url = location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const res = await axios
-      .put(`${BASE_URL+VENDOR}/product/${id}`, values, {
+      .put(`${BASE_URL + VENDOR}/product/${id}`, values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("sessionId"),
@@ -80,7 +80,7 @@ export default function EditProduct() {
         (response) => {
           response;
           console.log("response", response);
-          router.push("/vendor/products")
+          router.push("/vendor/products");
         },
         (error) => {
           console.log(error);

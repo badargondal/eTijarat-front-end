@@ -14,38 +14,38 @@ import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import Scrollbar from "components/Scrollbar";
 import { H3 } from "components/Typography";
 import useMuiTable from "hooks/useMuiTable";
-import { ProductRow } from "pages-sections/admin";
+import { CustomerRow } from "pages-sections/admin";
 import React from "react";
-import api from "utils/api/dashboard";
+import api from "utils/api/dashboard"; // table column list
 
-import { useRouter } from "next/router";
-import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 const tableHeading = [
   {
-    id: "title",
-    label: "title",
+    id: "name",
+    label: "Name",
     align: "left",
   },
   {
-    id: "category",
-    label: "Category",
-    align: "left",
-  },
-  // {
-  //   id: "brand",
-  //   label: "Brand",
-  //   align: "left",
-  // },
-  {
-    id: "price",
-    label: "Price",
+    id: "phone",
+    label: "Phone",
     align: "left",
   },
   {
-    id: "stock",
-    label: "stock",
+    id: "email",
+    label: "Email",
+    align: "left",
+  },
+  {
+    id: "balance",
+    label: "Wallet Balance",
+    align: "left",
+  },
+  {
+    id: "orders",
+    label: "No Of Orders",
     align: "left",
   },
   {
@@ -55,27 +55,26 @@ const tableHeading = [
   },
 ]; // =============================================================================
 
-ProductList.getLayout = function getLayout(page) {
+CustomerList.getLayout = function getLayout(page) {
   return <VendorDashboardLayout>{page}</VendorDashboardLayout>;
 }; // =============================================================================
 
 // =============================================================================
-export default function ProductList() {
+export default function CustomerList({ customers }) {
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    data == null ? getProducts() : null;
+    data == null ? getBuyers() : null;
   }, []);
 
-  var getProducts = async () => {
+  var getBuyers = async () => {
     const response = await axios.get(
-      `${BASE_URL + VENDOR}/products`,
+      `${BASE_URL + ADMIN}/buyers`,
 
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("sessionId"),
         },
       }
     );
@@ -83,7 +82,7 @@ export default function ProductList() {
     setdata(response.data);
     setloading(false);
   };
-  const router = useRouter();
+
   const {
     order,
     orderBy,
@@ -93,25 +92,23 @@ export default function ProductList() {
     handleChangePage,
     handleRequestSort,
   } = useMuiTable({
-    listData: data?.products,
+    listData: customers,
   });
   return (
     <Box py={4}>
-      <H3 mb={2}>Product List</H3>
+      <H3 mb={2}>Assistants</H3>
 
       <SearchArea
         handleSearch={() => {}}
-        handleBtnClick={() => {
-          router.push("/vendor/products/create");
-        }}
-        searchPlaceholder="Search Product..."
+        buttonText="Add Customer"
+        handleBtnClick={() => {}}
+        searchPlaceholder="Search Assistant..."
       />
-
-      <Card>
-        <Scrollbar>
-          {loading ? (
-            <CircularProgress />
-          ) : (
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Card>
+          <Scrollbar>
             <TableContainer
               sx={{
                 minWidth: 900,
@@ -123,36 +120,36 @@ export default function ProductList() {
                   hideSelectBtn
                   orderBy={orderBy}
                   heading={tableHeading}
-                  // rowCount={products.length}
-                  rowCount={data.length}
+                  rowCount={customers.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                 />
+
                 <TableBody>
-                  {data.map((product, index) => (
-                    <ProductRow product={product} getProducts={getProducts} key={index} />
+                  {data.map((customer, index) => (
+                    <CustomerRow customer={customer} key={index} />
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-        </Scrollbar>
+          </Scrollbar>
 
-        <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(data?.length / rowsPerPage)}
-          />
-        </Stack>
-      </Card>
+          <Stack alignItems="center" my={4}>
+            <TablePagination
+              onChange={handleChangePage}
+              count={Math.ceil(customers.length / rowsPerPage)}
+            />
+          </Stack>
+        </Card>
+      )}
     </Box>
   );
 }
 export const getStaticProps = async () => {
-  const products = await api.products();
+  const customers = await api.customers();
   return {
     props: {
-      products,
+      customers,
     },
   };
 };

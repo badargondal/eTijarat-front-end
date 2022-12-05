@@ -1,6 +1,6 @@
 import { Delete, Edit, RemoveRedEye } from "@mui/icons-material";
 import { Avatar, Box } from "@mui/material";
-import { BASE_URL,VENDOR } from "apiRoutes";
+import { BASE_URL, VENDOR } from "apiRoutes";
 import BazaarSwitch from "components/BazaarSwitch";
 import { FlexBox } from "components/flex-box";
 import { Paragraph, Small } from "components/Typography";
@@ -16,13 +16,11 @@ import {
 } from "../StyledComponents"; // ========================================================================
 
 // ========================================================================
-const ProductRow = ({ product }) => {
+const ProductRow = ({ product ,getProducts}) => {
   const { category, title, price, imgUrl, stock, brand, _id, published } =
     product; // state
-
   const router = useRouter();
   const [productPulish, setProductPublish] = useState(published);
-
 
   const deleteAddress = async (id) => {
     const response = await axios.delete(
@@ -36,9 +34,8 @@ const ProductRow = ({ product }) => {
       }
     );
     console.log("response of deleted product", response.data);
-    location.reload();
+    getProducts();
   };
-
 
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
@@ -60,7 +57,7 @@ const ProductRow = ({ product }) => {
       <StyledTableCell align="left">
         <CategoryWrapper>{category}</CategoryWrapper>
       </StyledTableCell>
-{/* 
+      {/* 
       <StyledTableCell align="left">
         <Avatar
           src={brand}
@@ -88,7 +85,9 @@ const ProductRow = ({ product }) => {
       </StyledTableCell> */}
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/vendor/products/${_id}`)}>
+        <StyledIconButton
+          onClick={() => router.push(`/vendor/products/${_id}`)}
+        >
           <Edit />
         </StyledIconButton>
 

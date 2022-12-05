@@ -36,7 +36,7 @@ const App = ({ Component, pageProps }) => {
     <Fragment>
       <Head>
         <meta charSet="utf-8" />
-        <title>Bazaar - Next.js Ecommerce Template</title>
+        <title>E-Tijarat - Next.js Ecommerce </title>
         <meta
           name="description"
           content="React Next.js ecommerce template. Build SEO friendly Online store, delivery app and Multivendor store"
@@ -64,7 +64,9 @@ const App = ({ Component, pageProps }) => {
       </SettingsProvider>
     </Fragment>
   );
-}; // Only uncomment this method if you have blocking data requirements for
+};
+
+// Only uncomment this method if you have blocking data requirements for
 // every single page in your application. This disables the ability to
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.

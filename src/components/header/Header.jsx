@@ -44,6 +44,7 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
   const { state } = useAppContext();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [sidenavOpen, setSidenavOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
 
@@ -65,111 +66,108 @@ const Header = ({ isFixed, className, searchBoxType = "type1" }, props) => {
   // console.log("sessionID",session_id)
 
   return (
-    <HeaderWrapper className={clsx(className)}>
-      <Container
-        sx={{
-          gap: 2,
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <FlexBox
-          mr={2}
-          minWidth="170px"
-          alignItems="center"
+    <>
+      <HeaderWrapper className={clsx(className)}>
+        <Container
           sx={{
-            display: {
-              xs: "none",
-              md: "flex",
-            },
+            gap: 2,
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <Link href="/">
-            {/* <a>
-              <Image height={44} src="/assets/images/logo2.svg" alt="logo" />
-            </a> */}
-
-            <h2>E TIJARAT</h2>
-          </Link>
-
-          {isFixed && (
-            <CategoryMenu>
-              <FlexBox color="grey.600" alignItems="center" ml={2}>
-                <BazaarButton color="inherit">
-                  <Category fontSize="small" color="inherit" />
-                  <KeyboardArrowDown fontSize="small" color="inherit" />
-                </BazaarButton>
-              </FlexBox>
-            </CategoryMenu>
-          )}
-        </FlexBox>
-
-        <FlexBox justifyContent="center" flex="1 1 0">
-          {searchBoxType === "type1" && <SearchBox />}
-          {searchBoxType === "type2" && <GrocerySearchBox />}
-        </FlexBox>
-
-        <FlexBox
-          alignItems="center"
-          sx={{
-            display: {
-              xs: "none",
-              md: "flex",
-            },
-          }}
-        >
-          <Box
-            component={IconButton}
-            p={1.25}
-            bgcolor="grey.200"
-            onClick={toggleDialog}
+          <FlexBox
+            mr={2}
+            minWidth="170px"
+            alignItems="center"
+            sx={{
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
           >
-            <PersonOutline />
-          </Box>
-          {typeof window !== "undefined"
-            ? window.localStorage.getItem("session_id") && (
+            <a href="/">
+              <h2>E TIJARAT</h2>
+            </a>
+
+            {isFixed && (
+              <CategoryMenu>
+                <FlexBox color="grey.600" alignItems="center" ml={2}>
+                  <BazaarButton color="inherit">
+                    <Category fontSize="small" color="inherit" />
+                    <KeyboardArrowDown fontSize="small" color="inherit" />
+                  </BazaarButton>
+                </FlexBox>
+              </CategoryMenu>
+            )}
+          </FlexBox>
+          <FlexBox justifyContent="center" flex="1 1 0">
+            {searchBoxType === "type1" && <SearchBox />}
+            {searchBoxType === "type2" && <GrocerySearchBox />}
+          </FlexBox>
+          <FlexBox
+            alignItems="center"
+            sx={{
+              display: {
+                xs: "none",
+                md: "flex",
+              },
+            }}
+          >
+            {typeof window !== "undefined" &&
+              !window.localStorage.getItem("sessionId") && (
+                <Box
+                  component={IconButton}
+                  p={1.25}
+                  bgcolor="grey.200"
+                  onClick={toggleDialog}
+                >
+                  <PersonOutline />
+                </Box>
+              )}
+
+            {typeof window !== "undefined" &&
+              window.localStorage.getItem("sessionId") && (
                 <Box component={IconButton} p={1.25} bgcolor="grey.200">
                   <LogoutIcon
                     onClick={() => {
                       localStorage.clear();
                       router.push("/");
+                      location.reload();
                     }}
                   />
                 </Box>
-              )
-            : false}
+              )}
 
-          <Badge badgeContent={state.cart.length} color="primary">
-            <Box
-              ml={2.5}
-              p={1.25}
-              bgcolor="grey.200"
-              component={IconButton}
-              onClick={toggleSidenav}
-            >
-              <ShoppingBagOutlined />
-            </Box>
-          </Badge>
-        </FlexBox>
-
-        <Dialog
-          open={dialogOpen}
-          fullWidth={isMobile}
-          scroll="body"
-          onClose={toggleDialog}
-        >
-          <Login />
-        </Dialog>
-
-        <Drawer open={sidenavOpen} anchor="right" onClose={toggleSidenav}>
-          <MiniCart />
-        </Drawer>
-
-        {downMd && <MobileMenu />}
-      </Container>
-    </HeaderWrapper>
+            <Badge badgeContent={state.cart.length} color="primary">
+              <Box
+                ml={2.5}
+                p={1.25}
+                bgcolor="grey.200"
+                component={IconButton}
+                onClick={toggleSidenav}
+              >
+                <ShoppingBagOutlined />
+              </Box>
+            </Badge>
+          </FlexBox>
+          <Dialog
+            open={dialogOpen}
+            fullWidth={isMobile}
+            scroll="body"
+            onClose={toggleDialog}
+          >
+            <Login />
+          </Dialog>
+          <Drawer open={sidenavOpen} anchor="right" onClose={toggleSidenav}>
+            <MiniCart />
+          </Drawer>
+          {downMd && <MobileMenu />}
+        </Container>
+      </HeaderWrapper>
+    </>
   );
 };
 
