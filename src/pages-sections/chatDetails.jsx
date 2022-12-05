@@ -63,7 +63,7 @@ const PaymentMethodEditor = () => {
 
   return (
     <>
-      <div id="messagesPage" style={{ maxHeight: 376, overflow: "auto" }}>
+      <div id="messagesPage" style={{ maxHeight: 500, overflow: "auto" }}>
         {loading ? <CircularProgress /> :
           data.map((item, ind) => {
             if (item.sender == item.buyerId._id) {
