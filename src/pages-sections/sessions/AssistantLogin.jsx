@@ -52,8 +52,9 @@ const VendorLogin = () => {
   }, []);
 
   const handleFormSubmit = async (values) => {
+    console.log("Values", values);
     const res = await axios
-      .post(`${BASE_URL + VENDOR}/login`, values, {
+      .post(`${BASE_URL}/assistant/login`, values, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -63,9 +64,11 @@ const VendorLogin = () => {
           console.log("response", response);
           const session_id = response.data.token;
           !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil;
-          const vendorId = response.data.vendorId;
-          !vendorId.nil ? localStorage.setItem("vendorId", vendorId) : nil;
-          router.push("/vendor/dashboard");
+          const assistantId = response.data.assistantId;
+          !assistantId.nil
+            ? localStorage.setItem("assistantId", assistantId)
+            : nil;
+          router.push("/vendor/assistant");
         },
         (error) => {
           console.log(error);

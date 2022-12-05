@@ -18,7 +18,7 @@ import { CustomerRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
 
-import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
+import { ADMIN, BASE_URL, VENDOR } from "../../../src/apiRoutes";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -39,8 +39,8 @@ const tableHeading = [
     align: "left",
   },
   {
-    id: "balance",
-    label: "Wallet Balance",
+    id: "revenue",
+    label: "revenue",
     align: "left",
   },
   {
@@ -65,16 +65,17 @@ export default function CustomerList({ customers }) {
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    data == null ? getBuyers() : null;
+    data == null ? getAssistants() : null;
   }, []);
 
-  var getBuyers = async () => {
+  var getAssistants = async () => {
     const response = await axios.get(
-      `${BASE_URL + ADMIN}/buyers`,
+      `${BASE_URL + VENDOR}/assistants`,
 
       {
         headers: {
           "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
         },
       }
     );

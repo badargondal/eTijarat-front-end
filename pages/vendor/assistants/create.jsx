@@ -8,9 +8,11 @@ import permissions from "../../../src/data/permissions";
 import { Formik } from "formik";
 import React, { Fragment } from "react";
 import * as yup from "yup"; // upload button
-
+import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import axios from "axios";
+import { useRouter } from 'next/router'
 const accountSchema = yup.object().shape({
-  country: yup.mixed().required("Country is required"),
+  permission: yup.mixed().required("permission is required"),
   name: yup.string().required("First name is required"),
   email: yup.string().email("Invalid Email").required("Email is required"),
 }); // =============================================================================
@@ -20,19 +22,37 @@ AccountSetting.getLayout = function getLayout(page) {
 }; // =============================================================================
 
 export default function AccountSetting() {
+  const router = useRouter();
   const initialValues = {
     email: "",
-    country: null,
+    permission: null,
     name: "",
   };
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    const res = await axios
+      .post(`${BASE_URL + VENDOR}/assistant/create`, values, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      })
+      .then(
+        (response) => {
+          response;
+          console.log("response", response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    router.push("/vendor/assistants");
+    return res;
   };
 
   return (
     <Box py={4}>
-      <H3 mb={2}>Account Setting</H3>
+      <H3 mb={2}>Create Assistants</H3>
 
       <Card
         sx={{
@@ -85,25 +105,40 @@ export default function AccountSetting() {
                       helperText={touched.email && errors.email}
                     />
                   </Grid>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                      fullWidth
+                      color="info"
+                      name="password"
+                      type="password"
+                      label="password"
+                      size="medium"
+                      onBlur={handleBlur}
+                      value={values.password}
+                      onChange={handleChange}
+                      error={!!touched.password && !!errors.password}
+                      helperText={touched.password && errors.password}
+                    />
+                  </Grid>
 
                   <Grid item md={6} xs={12}>
                     <Autocomplete
                       fullWidth
                       disablePortal
                       options={permissions}
-                      value={values.permissions}
+                      value={values.permission}
                       getOptionLabel={(option) => option.label}
                       onChange={(_, value) =>
-                        setFieldValue("permissions", value)
+                        setFieldValue("permission", value)
                       }
                       renderInput={(params) => (
                         <TextField
                           color="info"
-                          label="permissions"
+                          label="permission"
                           variant="outlined"
-                          placeholder="Select permissions"
-                          error={!!touched.permissions && !!errors.permissions}
-                          helperText={touched.permissions && errors.permissions}
+                          placeholder="Select permission"
+                          error={!!touched.permission && !!errors.permission}
+                          helperText={touched.permission && errors.permission}
                           {...params}
                           size="medium"
                         />
