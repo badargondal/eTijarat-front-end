@@ -14,7 +14,6 @@ import { useState } from "react";
 import axios from "axios";
 
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 const ProductForm = (props) => {
   const { initialValues, validationSchema, handleFormSubmit } = props;
   // const [imgUrl, setimgUrl] = useState();

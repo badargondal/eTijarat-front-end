@@ -7,7 +7,7 @@ import * as yup from "yup";
 import axios from "axios";
 import {PRODUCTS,BASE_URL,VENDOR} from "../../../src/apiRoutes"
 
-
+  
 const CreateProduct = () => {
   const initialValues = {
     title: "",

@@ -16,21 +16,21 @@ import { isConstructorDeclaration } from "typescript";
 // =======================================================
 const ShopIntroCard = ({ vendor }) => {
   const router = useRouter();
-  const createChat = (vendorId) => {
+  const createChat = async (vendorId) => {
     console.log('checking data', { vendorId, buyerId: localStorage.getItem('buyerId') } );
-    // const response = await axios.post(
-    //   `${BASE_URL}/chat/create`,
-    //   {
-    //     vendorId: vendorId,
-    //     buyerId: localStorage.getItem('buyerId')
-    //   },
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // console.log(response.data);
+    const response = await axios.post(
+      `${BASE_URL}/chat/create`,
+      {
+        vendorId: vendorId,
+        buyerId: localStorage.getItem('buyerId')
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data);
     localStorage.setItem('chatVendorId', vendorId );
     router.push(`/support-tickets/${vendorId}`);
   }

@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Divider } from "@mui/material";
 import React, { useCallback } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { H5, Small } from "./Typography";
 
 const DropZone = ({ onChange, title, imageSize }) => {
+  const [paths, setPaths] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     if (onChange) onChange(acceptedFiles);
-  }, []);
+    setPaths(acceptedFiles.map(file => URL.createObjectURL(file)))
+  }, [setPaths]);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
     accept: ".jpeg,.jpg,.png,.gif",
-    maxFiles: 10,
+    maxFiles: 10,  
   });
   return (
     <Box
