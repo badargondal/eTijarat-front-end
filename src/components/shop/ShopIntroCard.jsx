@@ -1,5 +1,7 @@
 import { Call, Place } from "@mui/icons-material";
 import { Avatar, Box, Button, Card, Rating } from "@mui/material";
+import { BASE_URL } from "apiRoutes";
+import axios from "axios";
 import { FlexBetween, FlexBox } from "components/flex-box";
 import FacebookFilled from "components/icons/FacebookFilled";
 import InstagramFilled from "components/icons/InstagramFilled";
@@ -7,9 +9,31 @@ import TwitterFilled from "components/icons/TwitterFilled";
 import YoutubeFilled from "components/icons/YoutubeFilled";
 import { H3, Small, Span } from "components/Typography";
 import React from "react"; // =======================================================
+import { Link } from "react-scroll";
+import { useRouter } from "next/router";
+import { isConstructorDeclaration } from "typescript";
 
 // =======================================================
 const ShopIntroCard = ({ vendor }) => {
+  const router = useRouter();
+  const createChat = async (vendorId) => {
+    console.log('checking data', { vendorId, buyerId: localStorage.getItem('buyerId') } );
+    const response = await axios.post(
+      `${BASE_URL}/chat/create`,
+      {
+        vendorId: vendorId,
+        buyerId: localStorage.getItem('buyerId')
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data);
+    localStorage.setItem('chatVendorId', vendorId );
+    router.push(`/support-tickets/${response.data.chat._id}`);
+  }
   console.log("vendor", vendor);
   return (
     <Card
@@ -111,17 +135,32 @@ const ShopIntroCard = ({ vendor }) => {
               </FlexBox>
             </Box>
 
-            <a href={`mailto:${vendor.email}`}>
-              <Button
-                variant="outlined"
-                color="primary"
-                sx={{
-                  my: 1.5,
-                }}
-              >
-                Contact Vendor
-              </Button>
-            </a>
+            <FlexBox gap={1}>
+              <a href={`mailto:${vendor.email}`}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    my: 1.5,
+                  }}
+                >
+                  Send Email
+                </Button>
+              </a>
+
+              <Link href="http://localhost:3000/support-tickets/newChat">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    my: 1.5,
+                  }}
+                  onClick={() => createChat(vendor._id)}
+                >
+                  Chat
+                </Button>
+              </Link>
+            </FlexBox>
           </FlexBetween>
         </Box>
       </FlexBox>

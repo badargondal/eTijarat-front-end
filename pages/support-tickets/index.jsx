@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { FlexBox } from "components/flex-box";
 import UserDashboardHeader from "components/header/UserDashboardHeader";
-import CustomerService from "components/icons/CustomerService";
+import Telegram from "components/icons/Telegram";
 import CustomerDashboardLayout from "components/layouts/customer-dashboard";
 import CustomerDashboardNavigation from "components/layouts/customer-dashboard/Navigations";
 import TableRow from "components/TableRow";
@@ -31,8 +31,8 @@ const TicketList = () => {
   return (
     <CustomerDashboardLayout>
       <UserDashboardHeader
-        title="Support Ticket"
-        icon={CustomerService}
+        title="Messages"
+        icon={Telegram}
         navigation={<CustomerDashboardNavigation />}
       />
 
@@ -82,7 +82,7 @@ const TicketList = () => {
 
       <FlexBox justifyContent="center" mt={5}>
         <Pagination
-          count={5}
+          count={1}
           color="primary"
           variant="outlined"
           onChange={(data) => console.log(data)}
