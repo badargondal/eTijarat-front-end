@@ -33,7 +33,7 @@ const ShopIntroCard = ({ vendor }) => {
     console.log(response.data);
     localStorage.setItem('chatVendorId', vendorId );
     router.push(`/support-tickets/${vendorId}`);
-  }
+  };
   console.log("vendor", vendor);
   return (
     <Card

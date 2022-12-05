@@ -5,10 +5,10 @@ import { ProductForm } from "pages-sections/admin";
 import React from "react";
 import * as yup from "yup";
 import axios from "axios";
-import {PRODUCTS,BASE_URL,VENDOR} from "../../../src/apiRoutes"
-
-  
+import { PRODUCTS, BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import { useRouter } from "next/router";
 const CreateProduct = () => {
+  const router = useRouter();
   const initialValues = {
     title: "",
     stock: "",
@@ -16,17 +16,16 @@ const CreateProduct = () => {
     sale_price: "",
     description: "",
     category: "",
-    imgUrl: "ads",
+    imgUrl: "",
   };
 
   const handleFormSubmit = async (values) => {
-    console.log("values", values);
-    console.log("Baseurl", BASE_URL+PRODUCTS);
+    console.log("Images", values);
     const res = await axios
-      .post(`${BASE_URL+VENDOR}/product`, values, {
+      .post(`${BASE_URL + VENDOR}/product`, values, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("sessionId"),
+          Authorization: localStorage.getItem("sessionId"),
         },
       })
       .then(
@@ -38,7 +37,7 @@ const CreateProduct = () => {
           console.log(error);
         }
       );
-
+    router.push("/vendor/products");
     return res;
   };
 
@@ -61,6 +60,7 @@ CreateProduct.getLayout = function getLayout(page) {
 
 const validationSchema = yup.object().shape({
   title: yup.string().required("required"),
+  imgUrl: yup.string().required("required"),
   category: yup.string().required("required"),
   description: yup.string().required("required"),
   stock: yup.number().required("required"),
