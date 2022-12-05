@@ -242,51 +242,51 @@ export const opticsBrandList = [
 export const opticsShopList = ["herman miller", "zeiss", "hatil", "steelcase"];
 export const bottomCategoryList = [
   {
-    name: "Automobile",
+    name: "automotive",
     imgUrl: bazaarReactDatabase[13 + 100].imgUrl,
   },
   {
-    name: "Car",
+    name: "bikes",
     imgUrl: bazaarReactDatabase[2 * 13 + 100].imgUrl,
   },
   {
-    name: "Fashion",
+    name: "fashion",
     imgUrl: bazaarReactDatabase[3 * 13 + 100].imgUrl,
   },
   {
-    name: "Mobile",
+    name: "music",
     imgUrl: bazaarReactDatabase[4 * 13 + 100].imgUrl,
   },
   {
-    name: "Laptop",
+    name: "home&garden",
     imgUrl: bazaarReactDatabase[5 * 13 + 100].imgUrl,
   },
   {
-    name: "Desktop",
+    name: "bikes",
     imgUrl: bazaarReactDatabase[6 * 13 + 100].imgUrl,
   },
   {
-    name: "Tablet",
+    name: "health&beauty",
     imgUrl: bazaarReactDatabase[7 * 13 + 100].imgUrl,
   },
   {
-    name: "Fashion",
+    name: "fashion",
     imgUrl: bazaarReactDatabase[8 * 13 + 100].imgUrl,
   },
   {
-    name: "Electronics",
+    name: "electronics",
     imgUrl: bazaarReactDatabase[9 * 13 + 100].imgUrl,
   },
   {
-    name: "Furniture",
+    name: "groceries",
     imgUrl: bazaarReactDatabase[10 * 13 + 100].imgUrl,
   },
   {
-    name: "Camera",
+    name: "music",
     imgUrl: bazaarReactDatabase[11 * 13 + 100].imgUrl,
   },
   {
-    name: "Electronics",
+    name: "electronics",
     imgUrl: bazaarReactDatabase[100].imgUrl,
   },
 ];

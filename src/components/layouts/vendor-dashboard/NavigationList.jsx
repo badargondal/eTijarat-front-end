@@ -50,7 +50,7 @@ export const navigations = [
     ],
   },
   {
-    name: "Customers",
+    name: "Buyers",
     icon: duotone.Customers,
     path: "/admin/customers",
   },
@@ -69,7 +69,7 @@ export const navigations = [
     ],
   },
   {
-    name: "Sellers",
+    name: "Vendors",
     icon: duotone.Seller,
     children: [
       {
@@ -169,6 +169,11 @@ export const navigations = [
     ],
   },
   {
+    name: "Chat",
+    icon: duotone.Review,
+    path: "/vendor/chat",
+  },
+  {
     name: "Refund Request",
     icon: duotone.Refund,
     path: "/vendor/refund-request",
@@ -183,11 +188,7 @@ export const navigations = [
     icon: duotone.SiteSetting,
     path: "/vendor/shop-settings",
   },
-  {
-    name: "Support Tickets",
-    icon: duotone.ElementHub,
-    path: "/vendor/support-tickets",
-  },
+
   {
     name: "Account Setting",
     icon: duotone.AccountSetting,

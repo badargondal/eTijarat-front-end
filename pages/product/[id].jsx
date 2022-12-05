@@ -49,8 +49,8 @@ const ProductDetails = (props) => {
   const router = useRouter();
   var { id } = router.query;
   const [loading, setloading] = useState(true);
-
   const [loadingRelatedproducts, setloadingRelatedproducts] = useState(true);
+
   const fetchData = async (id) => {
     const data = await fetch(`${BASE_URL}/products/${id}`, {
       headers: {
@@ -58,14 +58,17 @@ const ProductDetails = (props) => {
       },
     });
     const json = await data.json();
+    console.log("json", json);
     setProduct(json);
     setloading(false);
   };
-  useEffect(() => {
-    getRelatedProducts()
-      .then((data) => setRelatedProducts(data))
-      .then(() => setloadingRelatedproducts(false));
-  }, []);
+
+  // useEffect(() => {
+  //   getRelatedProducts()
+  //     .then((data) => setRelatedProducts(data))
+  //     .then(() => setloadingRelatedproducts(false));
+  // }, []);
+
   if (product == null) {
     if (id != undefined) {
       fetchData(id);
@@ -111,12 +114,12 @@ const ProductDetails = (props) => {
             {selectedOption === 1 && <ProductReview />}
             {selectedOption === 2 && (
               <ProductDescription
-                description={product?.description.slice(0, 100)}
+                description={product?.description.slice(0, 500)}
               />
             )}
             {selectedOption === 3 && (
               <ProductDescription
-                description={product?.description.slice(100, 200)}
+                description={product?.description.slice(100, 500)}
               />
             )}
           </Box>
@@ -131,11 +134,16 @@ const ProductDetails = (props) => {
         )} */}
 
         {/* <AvailableShops /> */}
-        {loadingRelatedproducts ? (
+
+
+
+        {/* {loadingRelatedproducts ? (
           <CircularProgress />
         ) : (
           relatedProducts && <RelatedProducts productsData={relatedProducts} />
-        )}
+        )} */}
+
+
       </Container>
     </ShopLayout1>
   );

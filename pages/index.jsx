@@ -26,8 +26,11 @@ const IndexPage = (props) => {
       {/* FLASH DEALS SECTION */}
       <Section2 flashDeals={props.flashDealsData} />
 
+      {/* CATEGORIES */}
+      <Section10 categories={props.bottomCategories} />
+
       {/* TOP CATEGORIES */}
-      <Section3 categoryList={props.topCategories} />
+      {/* <Section3 categoryList={props.topCategories} /> */}
 
       {/* TOP RATED PRODUCTS */}
       <Section4
@@ -62,9 +65,6 @@ const IndexPage = (props) => {
         brands={props.opticsBrands}
         productList={props.opticsList}
       />
-
-      {/* CATEGORIES */}
-      <Section10 categories={props.bottomCategories} />
 
       {/* MORE FOR YOU */}
       <Section11 moreItems={props.moreItems} />

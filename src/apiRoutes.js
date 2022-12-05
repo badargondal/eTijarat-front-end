@@ -6,7 +6,8 @@ const BUYER = "/buyer";
 
 const PRODUCTS = "/products";
 const ORDER = "/orders";
-const RECOMMENDED_PRODUCTS = "https://019a-111-119-191-1.ap.ngrok.io";
+const RECOMMENDED_PRODUCTS =
+  "https://a269-2407-d000-a-4e8b-1c36-2659-c6f6-2880.ap.ngrok.io";
 
 export {
   BASE_URL,

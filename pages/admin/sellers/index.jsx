@@ -40,14 +40,14 @@ const tableHeading = [
   },
   {
     id: "balance",
-    label: "Current Balance",
+    label: "Balance",
     align: "left",
   },
-  {
-    id: "published",
-    label: "Shop Published",
-    align: "left",
-  },
+  // {
+  //   id: "published",
+  //   label: "Shop Published",
+  //   align: "left",
+  // },
   {
     id: "action",
     label: "Action",

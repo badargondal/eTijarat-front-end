@@ -1,5 +1,8 @@
 import { Delete, Edit, RemoveRedEye } from "@mui/icons-material";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { Avatar, Box } from "@mui/material";
+import { ADMIN, BASE_URL, VENDOR } from "apiRoutes";
+import axios from "axios";
 import BazaarSwitch from "components/BazaarSwitch";
 import { FlexBox } from "components/flex-box";
 import { Paragraph, Small } from "components/Typography";
@@ -13,16 +16,37 @@ import {
 
 // ========================================================================
 const SellerRow = ({ seller }) => {
-  console.log("seller",seller)
-  const {
-    name,
-    phone,
-    email,
-    balance,
-    published,
-    shopName,
-    package: sellerPackage,
-  } = seller;
+  const approveVendor = async (id) => {
+    const response = await axios.put(
+      `${BASE_URL + ADMIN + VENDOR}/approve/${id}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of approved vendor", response.data);
+    location.reload();
+  };
+  const deleteVendor = async (id) => {
+    const response = await axios.delete(
+      `${BASE_URL + ADMIN + VENDOR}/delete/${id}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response of delete vendor", response.data);
+    location.reload();
+  };
+
+  console.log("seller", seller);
+  const { _id, name, phone, email, balance, published } = seller;
   const [shopPulish, setShopPublish] = useState(published);
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
@@ -53,30 +77,24 @@ const SellerRow = ({ seller }) => {
           fontWeight: 400,
         }}
       >
-        {currency(balance, {
-          separator: ",",
-        }).format()}
+        $1000
       </StyledTableCell>
 
-      <StyledTableCell align="left">
+      {/* <StyledTableCell align="left">
         <BazaarSwitch
           color="info"
           checked={shopPulish}
           onChange={() => setShopPublish((state) => !state)}
         />
-      </StyledTableCell>
+      </StyledTableCell> */}
 
       <StyledTableCell align="center">
-        <StyledIconButton>
-          <Edit />
+        <StyledIconButton onClick={() => approveVendor(_id)}>
+          <VerifiedIcon />
         </StyledIconButton>
 
         <StyledIconButton>
-          <RemoveRedEye />
-        </StyledIconButton>
-
-        <StyledIconButton>
-          <Delete />
+          <Delete onClick={() => deleteVendor(_id)} />
         </StyledIconButton>
       </StyledTableCell>
     </StyledTableRow>

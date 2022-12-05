@@ -40,14 +40,14 @@ const tableHeading = [
   },
   {
     id: "balance",
-    label: "Current Balance",
+    label: "Balance",
     align: "left",
   },
-  {
-    id: "published",
-    label: "Shop Published",
-    align: "left",
-  },
+  // {
+  //   id: "published",
+  //   label: "Shop Published",
+  //   align: "left",
+  // },
   {
     id: "action",
     label: "Action",
@@ -70,7 +70,7 @@ export default function SellerList({ sellers }) {
 
   var getVendors = async () => {
     const response = await axios.get(
-      `${BASE_URL + ADMIN}/vendors`,
+      `${BASE_URL + ADMIN}/vendors/approval-requests`,
 
       {
         headers: {

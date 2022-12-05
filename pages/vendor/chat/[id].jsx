@@ -14,7 +14,7 @@ import {
   StyledTableRow,
 } from "pages-sections/admin";
 import React from "react";
-import Chat from "../../src/pages-sections/chat"
+import ChatDetails from "../../../src/pages-sections/chatDetails";
 const tableHeading = [
   {
     id: "information",
@@ -63,14 +63,7 @@ export default function SupportTickets() {
   return (
     <>
       <Box py={4}>
-        <SearchInput
-          placeholder="Search Chat"
-          sx={{
-            mb: 4,
-          }}
-        />
-
-        <Chat />
+        <ChatDetails />
       </Box>
     </>
   );

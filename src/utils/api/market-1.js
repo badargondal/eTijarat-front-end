@@ -12,7 +12,7 @@ const getTopRatedBrand = async () => {
 };
 
 const getNewArrivalList = async () => {
-  const response = await axios.get("/api/market-1/new-arrivals");
+  const response = await axios.get(`${BASE_URL}/products/random`);
   return response.data;
 };
 
@@ -20,7 +20,6 @@ const getCarBrands = async () => {
   const response = await axios.get("/api/market-1/car-brand-list");
   return response.data;
 };
-
 
 // const getCarList = async () => {
 //   const response = await axios.get("/api/market-1/car-list");
@@ -43,7 +42,7 @@ const getMobileShops = async () => {
 };
 
 const getMobileList = async () => {
-  const response = await axios.get("/api/market-1/mobile-list");
+  const response = await axios.get(`${BASE_URL}/products/search/electronics`);
   return response.data;
 };
 
@@ -63,7 +62,7 @@ const getOpticsShops = async () => {
 };
 
 const getOpticsList = async () => {
-  const response = await axios.get("/api/market-1/optics-list");
+  const response = await axios.get(`${BASE_URL}/products/search/fashion`);
   return response.data;
 };
 
@@ -73,7 +72,7 @@ const getCategories = async () => {
 };
 
 const getMoreItems = async () => {
-  const response = await axios.get("/api/market-1/get-more-items");
+  const response = await axios.get(`${BASE_URL}/products/random`);
   return response.data;
 };
 
@@ -88,7 +87,7 @@ const getMainCarousel = async () => {
 };
 
 const getFlashDeals = async () => {
-  const response = await axios.get("/api/market-1/flash-deals");
+  const response = await axios.get(`${BASE_URL}/products/random`);
   return response.data;
 };
 
@@ -105,7 +104,7 @@ const getTopCategories = async () => {
 const getBigDiscountList = async () => {
   const response = await axios.get("/api/market-1/big-discounts");
   return response.data;
-}; 
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 
 export default {
