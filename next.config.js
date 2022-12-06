@@ -5,6 +5,6 @@ module.exports = {
     theme: "DEFAULT",
   },
   images: {
-    domains: ['bazar-react.vercel.app'],
-  }
+    domains: ["bazar-react.vercel.app", "res.cloudinary.com"],
+  },
 };

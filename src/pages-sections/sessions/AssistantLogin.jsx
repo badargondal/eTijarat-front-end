@@ -44,7 +44,7 @@ export const Wrapper = styled(({ children, passwordVisibility, ...rest }) => (
     marginBottom: 24,
   },
 }));
-const VendorLogin = () => {
+const AssistantLogin = () => {
   const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
@@ -52,8 +52,9 @@ const VendorLogin = () => {
   }, []);
 
   const handleFormSubmit = async (values) => {
+    console.log("Values", values);
     const res = await axios
-      .post(`${BASE_URL + VENDOR}/login`, values, {
+      .post(`${BASE_URL}/badar/login`, values, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -63,9 +64,11 @@ const VendorLogin = () => {
           console.log("response", response);
           const session_id = response.data.token;
           !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil;
-          const vendorId = response.data.vendorId;
-          !vendorId.nil ? localStorage.setItem("vendorId", vendorId) : nil;
-          router.push("/vendor/dashboard");
+          const assistantId = response.data.assistantId;
+          !assistantId.nil
+            ? localStorage.setItem("assistantId", assistantId)
+            : nil;
+          router.push("/vendor/assistants");
         },
         (error) => {
           console.log(error);
@@ -164,4 +167,4 @@ const formSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
   email: yup.string().email("invalid email").required("Email is required"),
 });
-export default VendorLogin;
+export default AssistantLogin;
