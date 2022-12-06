@@ -3,13 +3,13 @@ import React, { createContext, useContext, useMemo, useReducer } from "react"; /
 // =================================================================================
 const initialState = {
   cart: [
-    {
-      price: 250,
-      name: "Ford 2019",
-      imgUrl: "/assets/images/products/Automotive/1.Ford2019.png",
-      id: "7222243834583537",
-      qty: 1,
-    },
+    // {
+    //   price: 250,
+    //   name: "Ford 2019",
+    //   imgUrl: "/assets/images/products/Automotive/1.Ford2019.png",
+    //   id: "7222243834583537",
+    //   qty: 1,
+    // },
     // {
     //   price: 250,
     //   name: "Porsche 2020",
