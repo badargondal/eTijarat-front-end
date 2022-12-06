@@ -68,6 +68,8 @@ export const navigations = [
       },
     ],
   },
+
+
   {
     name: "Vendors",
     icon: duotone.Seller,
@@ -117,14 +119,6 @@ export const navigations = [
       {
         name: "Create Product",
         path: "/vendor/products/create",
-      },
-      {
-        name: "Category",
-        path: "/vendor/categories",
-      },
-      {
-        name: "Brand",
-        path: "/vendor/brands",
       },
       {
         name: "Review",
@@ -186,6 +180,20 @@ export const navigations = [
     name: "Chat",
     icon: duotone.Review,
     path: "/vendor/chat",
+  },
+  {
+    name: "Coupens",
+    icon: duotone.Products,
+    children: [
+      {
+        name: "Coupens List", 
+        path: "/vendor/coupens",
+      },
+      {
+        name: "Generate Coupen",
+        path: "/vendor/coupens/create",
+      },
+    ],
   },
   {
     name: "Refund Request",
