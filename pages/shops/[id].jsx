@@ -27,7 +27,7 @@ const Shop = () => {
     var id = url.substring(url.lastIndexOf("/") + 1);
     console.log("id", id);
     const response = await axios.get(
-      `${BASE_URL}/vendor/${id}`,
+      `${BASE_URL}/products/vendor/${id}`,
 
       {
         headers: {

@@ -20,7 +20,7 @@ import api from "utils/api/dashboard"; // table column list
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import { ADMIN, BASE_URL, VENDOR } from "../../../src/apiRoutes";
 
 const tableHeading = [
   {
@@ -66,7 +66,6 @@ OrderList.getLayout = function getLayout(page) {
 
 // =============================================================================
 export default function OrderList({ orders }) {
-
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(true);
 
@@ -76,7 +75,7 @@ export default function OrderList({ orders }) {
 
   var getOrders = async () => {
     const response = await axios.get(
-      `${BASE_URL + VENDOR}/orders`,
+      `${BASE_URL + ADMIN}/orders`,
 
       {
         headers: {
@@ -135,7 +134,7 @@ export default function OrderList({ orders }) {
                 />
 
                 <TableBody>
-                  {data.map((order, index) => (
+                  {data.orders.map((order, index) => (
                     <OrderRow order={order} key={index} />
                   ))}
                 </TableBody>

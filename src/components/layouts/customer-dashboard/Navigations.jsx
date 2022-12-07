@@ -81,15 +81,15 @@ const linkList = [
         icon: ShoppingBagOutlined,
         count: 5,
       },
-      {
-        href: "/wish-list",
-        title: "Wishlist",
-        icon: FavoriteBorder,
-        count: 19,
-      },
+      // {
+      //   href: "/wish-list",
+      //   title: "Wishlist",
+      //   icon: FavoriteBorder,
+      //   count: 19,
+      // },
       {
         href: "/support-tickets",
-        title: "Support Tickets",
+        title: "Messages",
         icon: CustomerService,
         count: 1,
       },

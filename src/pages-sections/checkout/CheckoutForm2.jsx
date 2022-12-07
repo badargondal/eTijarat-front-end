@@ -136,6 +136,7 @@ const CheckoutForm2 = () => {
   // };
 
   const handleFormSubmit = async (values) => {
+    console.log("CartList", cartList);
     const order = new Object();
     order.buyerId = localStorage.getItem("buyerId");
     order.products = cartList;
@@ -468,7 +469,7 @@ const CheckoutForm2 = () => {
               )}
             </Box> */}
 
-            <Button
+            {/* <Button
               sx={{
                 color: "primary.main",
                 mt: 3,
@@ -492,7 +493,7 @@ const CheckoutForm2 = () => {
                   Apply
                 </Button>
               </FlexBox>
-            )}
+            )} */}
 
             {/* <Button
               fullWidth

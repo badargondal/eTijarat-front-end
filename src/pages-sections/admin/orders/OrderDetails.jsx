@@ -53,7 +53,6 @@ const products = [
 ];
 
 const updateOrder = async (orderId) => {
-  
   const status = document.getElementById("orderStatus").textContent;
   const res = await axios
     .put(
@@ -70,8 +69,7 @@ const updateOrder = async (orderId) => {
       (response) => {
         response;
         console.log("response", response);
-        window.location.href = 'http://localhost:3000/vendor/orders'
-        
+        window.location.href = "http://localhost:3000/vendor/orders";
       },
       (error) => {
         console.log(error);
@@ -82,7 +80,7 @@ const updateOrder = async (orderId) => {
 
 // const deleteProductfromOrder = async (productId,orderId) => {
 //   console.log("pID",productId)
-  
+
 //   const response = await axios.delete(
 //     `${BASE_URL + VENDOR}/order/product/${orderId}`,{productId},
 //     {
@@ -327,9 +325,10 @@ const OrderDetails = () => {
               <FlexBetween mb={2}>
                 <H6>Total</H6>
                 <H6>
-                  {data.products
-                    .map((item) => item.price)
-                    .reduce((acc, amount) => acc + amount)}
+                  {/* {data.products
+                    .map((item) => item.price * item.qty)
+                    .reduce((acc, amount) => acc + amount)} */}
+                  5000
                 </H6>
               </FlexBetween>
 
@@ -344,6 +343,16 @@ const OrderDetails = () => {
               onClick={() => updateOrder(data._id)}
             >
               Save Changes
+            </Button>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => router.push("/vendor/products/create")}
+            >
+              Add Product Variation
             </Button>
           </Grid>
         </Grid>

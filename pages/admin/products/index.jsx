@@ -1,4 +1,11 @@
-import { Box, Card, CircularProgress, Stack, Table, TableContainer } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Stack,
+  Table,
+  TableContainer,
+} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import SearchArea from "components/dashboard/SearchArea";
 import TableHeader from "components/data-table/TableHeader";
@@ -64,7 +71,7 @@ export default function ProductList() {
 
   var getProducts = async () => {
     const response = await axios.get(
-      `${BASE_URL + ADMIN}/products`,
+      `${BASE_URL}/products/all`,
 
       {
         headers: {
@@ -88,59 +95,57 @@ export default function ProductList() {
   } = useMuiTable({
     listData: data?.products,
   });
-  if (loading){
-    return <CircularProgress/>
+  if (loading) {
+    return <CircularProgress />;
+  } else {
+    return (
+      <Box py={4}>
+        <H3 mb={2}>Product List</H3>
+
+        <SearchArea
+          handleSearch={() => {}}
+          buttonText="Add Product"
+          handleBtnClick={() => {}}
+          searchPlaceholder="Search Product..."
+        />
+
+        <Card>
+          <Scrollbar>
+            <TableContainer
+              sx={{
+                minWidth: 900,
+              }}
+            >
+              <Table>
+                <TableHeader
+                  order={order}
+                  hideSelectBtn
+                  orderBy={orderBy}
+                  heading={tableHeading}
+                  rowCount={data.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                />
+
+                <TableBody>
+                  {data.map((product, index) => (
+                    <ProductRow product={product} key={index} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <Stack alignItems="center" my={4}>
+            <TablePagination
+              onChange={handleChangePage}
+              count={Math.ceil(data.length / rowsPerPage)}
+            />
+          </Stack>
+        </Card>
+      </Box>
+    );
   }
-  else{
-  return (
-    <Box py={4}>
-      <H3 mb={2}>Product List</H3>
-
-      <SearchArea
-        handleSearch={() => {}}
-        buttonText="Add Product"
-        handleBtnClick={() => {}}
-        searchPlaceholder="Search Product..."
-      />
-
-      <Card>
-        <Scrollbar>
-          <TableContainer
-            sx={{
-              minWidth: 900,
-            }}
-          >
-            <Table>
-              <TableHeader
-                order={order}
-                hideSelectBtn
-                orderBy={orderBy}
-                heading={tableHeading}
-                rowCount={data.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-              />
-
-              <TableBody>
-                {data.map((product, index) => (
-                  <ProductRow product={product} key={index} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(data.length / rowsPerPage)}
-          />
-        </Stack>
-      </Card>
-    </Box>
-  );
-  }
-
 }
 export const getStaticProps = async () => {
   const products = await api.products();

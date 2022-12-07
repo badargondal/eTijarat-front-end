@@ -15,14 +15,18 @@ import { isConstructorDeclaration } from "typescript";
 
 // =======================================================
 const ShopIntroCard = ({ vendor }) => {
+  console.log("vendor data 2", vendor[0].vendorId.name);
   const router = useRouter();
   const createChat = async (vendorId) => {
-    console.log('checking data', { vendorId, buyerId: localStorage.getItem('buyerId') } );
+    console.log("checking data", {
+      vendorId,
+      buyerId: localStorage.getItem("buyerId"),
+    });
     const response = await axios.post(
       `${BASE_URL}/chat/create`,
       {
         vendorId: vendorId,
-        buyerId: localStorage.getItem('buyerId')
+        buyerId: localStorage.getItem("buyerId"),
       },
       {
         headers: {
@@ -31,7 +35,7 @@ const ShopIntroCard = ({ vendor }) => {
       }
     );
     console.log(response.data);
-    localStorage.setItem('chatVendorId', vendorId );
+    localStorage.setItem("chatVendorId", vendorId);
     router.push(`/support-tickets/${vendorId}`);
   };
   console.log("vendor", vendor);
@@ -79,7 +83,7 @@ const ShopIntroCard = ({ vendor }) => {
               bgcolor="secondary.main"
             >
               <H3 fontWeight="600" color="grey.100">
-                {vendor.name}
+                {vendor[0].vendorId.name}
               </H3>
             </Box>
 
@@ -131,12 +135,12 @@ const ShopIntroCard = ({ vendor }) => {
                     mt: "2px",
                   }}
                 />
-                <Span color="grey.600">{vendor.name}</Span>
+                <Span color="grey.600">{vendor[0].vendorId.email}</Span>
               </FlexBox>
             </Box>
 
             <FlexBox gap={1}>
-              <a href={`mailto:${vendor.email}`}>
+              <a href={`mailto:${vendor[0].vendorId.email}`}>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -155,7 +159,7 @@ const ShopIntroCard = ({ vendor }) => {
                   sx={{
                     my: 1.5,
                   }}
-                  onClick={() => createChat(vendor._id)}
+                  onClick={() => createChat(vendor[0].vendorId._id)}
                 >
                   Chat
                 </Button>

@@ -42,7 +42,7 @@ const OrderRow = ({ item, index }) => {
           <Box m={0.75}>
             <Chip
               size="small"
-              label={"Pending"}
+              label={item.status}
               sx={{
                 p: "0.25rem 0.5rem",
                 fontSize: 12,

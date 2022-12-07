@@ -52,12 +52,12 @@ const App = ({ Component, pageProps }) => {
       <SettingsProvider>
         <AppProvider>
           <MuiTheme>
-            {/* <df-messenger
-          intent="WELCOME"
-          chat-title="UrduChatBot"
-          agent-id="aebf41bc-ea6b-4303-9d8c-9d30f4fdaab7"
-          language-code="en"
-        ></df-messenger> */}
+            <df-messenger
+              intent="WELCOME"
+              chat-title="UrduChatBot"
+              agent-id="aebf41bc-ea6b-4303-9d8c-9d30f4fdaab7"
+              language-code="en"
+            ></df-messenger>
             <RTL>{getLayout(<AnyComponent {...pageProps} />)}</RTL>
           </MuiTheme>
         </AppProvider>
