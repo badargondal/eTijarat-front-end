@@ -20,25 +20,26 @@ const CreateProduct = () => {
   };
 
   const handleFormSubmit = async (values) => {
-    console.log("Images", values);
-    const res = await axios
-      .post(`${BASE_URL + VENDOR}/product`, values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("sessionId"),
-        },
-      })
-      .then(
-        (response) => {
-          response;
-          console.log("response", response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    router.push("/vendor/products");
-    return res;
+    console.log("Products variation", values);
+    
+    // const res = await axios
+    //   .post(`${BASE_URL + VENDOR}/product`, values, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: localStorage.getItem("sessionId"),
+    //     },
+    //   })
+    //   .then(
+    //     (response) => {
+    //       response;
+    //       console.log("response", response);
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // router.push("/vendor/products");
+    // return res;
   };
 
   return (

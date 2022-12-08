@@ -76,6 +76,11 @@ const ProductCard1 = ({
   hoverEffect,
   discount = 5,
   showProductSize,
+  vendorId,
+  description,
+  category,
+  imgGroup,
+  reviews,
 }) => {
   const { state, dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
@@ -93,6 +98,7 @@ const ProductCard1 = ({
       }),
     []
   );
+  console.log("vendorId", vendorId);
   return (
     <StyledBazaarCard hoverEffect={hoverEffect}>
       <ImageWrapper>
@@ -195,6 +201,10 @@ const ProductCard1 = ({
                 price,
                 imgUrl,
                 name: title,
+                vendorId: vendorId,
+                description: description,
+                category: category,
+                imgGroup: imgGroup,
                 qty: (cartItem?.qty || 0) + 1,
               })}
             >
@@ -218,6 +228,10 @@ const ProductCard1 = ({
                     price,
                     imgUrl,
                     name: title,
+                    vendorId: vendorId,
+                    description: description,
+                    category: category,
+                    imgGroup: imgGroup,
                     qty: (cartItem?.qty || 0) - 1,
                   })}
                 >
