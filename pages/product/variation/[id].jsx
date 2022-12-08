@@ -15,7 +15,8 @@ import {
   getFrequentlyBought,
   getRelatedProducts,
 } from "utils/api/related-products";
-import { BASE_URL } from "../../src/apiRoutes";
+import { BASE_URL } from "../../../src/apiRoutes";
+
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   minHeight: 0,
   marginTop: 80,
@@ -32,6 +33,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 const ProductDetails = (props) => {
   // const { frequentlyBought, relatedProducts } = props;
   const [product, setProduct] = useState(null);
+  const [data, setdata] = useState(null);
   const [selectedOption, setSelectedOption] = useState(0);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [frequentlyBought, setFrequentlyBought] = useState([]);
@@ -45,13 +47,23 @@ const ProductDetails = (props) => {
     useState(true);
 
   const fetchData = async (id) => {
-    const data = await fetch(`${BASE_URL}/products/${id}`, {
+    const data = await fetch(`${BASE_URL}/products/variation/${id}`, {
       headers: {
         session_id: localStorage.getItem("sessionId"),
       },
     });
     const json = await data.json();
-    setProduct(json);
+    const variation = json.variations.filter(
+      (variation) => variation._id == id
+    );
+    variation[0].imgGroup = [variation[0].imgUrl, variation[0].imgUrl];
+    console.log("variation", variation);
+    setProduct(variation[0]);
+
+    const remainingVariations = json.variations.filter(
+      (variation) => variation._id != id
+    );
+    setdata(remainingVariations);
     setloading(false);
   };
 
@@ -121,13 +133,11 @@ const ProductDetails = (props) => {
           </>
         )}
 
-        {product?.variations?.length > 0 ? (
+        {data?.length > 0 ? (
           loadingRelatedproducts ? (
             <CircularProgress />
           ) : (
-            frequentlyBought && (
-              <FrequentlyBought productsData={product.variations} />
-            )
+            frequentlyBought && <FrequentlyBought productsData={data} />
           )
         ) : (
           false

@@ -8,7 +8,8 @@ import React from "react"; // ==================================================
 
 // =======================================================
 const ProductCard8 = (props) => {
-  const { id, imgUrl, price, title, sx = {} } = props;
+  console.log("props p8", props);
+  const { _id, imgUrl, price, title, sx = {} } = props;
   return (
     <BazaarCard
       sx={{
@@ -16,7 +17,7 @@ const ProductCard8 = (props) => {
         ...sx,
       }}
     >
-      <Link href={`/product/${id}`}>
+      <Link href={`/product/variation/${_id}`}>
         <a>
           <HoverBox mb={1.5} borderRadius="8px">
             <LazyImage

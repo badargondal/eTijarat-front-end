@@ -11,8 +11,7 @@ import EyeToggleButton from "./EyeToggleButton";
 import SocialButtons from "./SocialButtons";
 import axios from "axios";
 import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
-import Router , {useRouter}  from 'next/router';
-
+import Router, { useRouter } from "next/router";
 
 const fbStyle = {
   background: "#3B5998",
@@ -47,13 +46,11 @@ export const Wrapper = styled(({ children, passwordVisibility, ...rest }) => (
   },
 }));
 const VendorLogin = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
   }, []);
-
-  
 
   const handleFormSubmit = async (values) => {
     const res = await axios
@@ -64,12 +61,12 @@ const VendorLogin = () => {
       })
       .then(
         (response) => {
-          console.log("response",response)
+          console.log("response", response);
           const session_id = response.data.token;
-          !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil
-          const vendorId= response.data.vendorId
-          !vendorId.nil ? localStorage.setItem("vendorId", vendorId) : nil
-          router.push('/vendor/dashboard')
+          !session_id.nil ? localStorage.setItem("sessionId", session_id) : nil;
+          const vendorId = response.data.vendorId;
+          !vendorId.nil ? localStorage.setItem("vendorId", vendorId) : nil;
+          router.push("/vendor/dashboard");
         },
         (error) => {
           console.log(error);
@@ -87,7 +84,7 @@ const VendorLogin = () => {
     <Wrapper elevation={3} passwordVisibility={passwordVisibility}>
       <form onSubmit={handleSubmit}>
         <H3 textAlign="center" mb={1}>
-        Welcome To E-Tijarat
+          Welcome To E-Tijarat
         </H3>
         <Small
           mb={4.5}

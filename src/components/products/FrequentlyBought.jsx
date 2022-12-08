@@ -15,13 +15,14 @@ const WrapperBox = styled(Box)(({ theme }) => ({
 
 // ============================================================
 const FrequentlyBought = ({ productsData }) => {
+  console.log("productsData variatan", productsData);
   return (
     <WrapperBox mb={7.5}>
-      <H3 mb={3}>Frequently Bought Together</H3>
+      <H3 mb={3}>Products Variation</H3>
 
       <FlexBox className="card-holder" flexWrap="wrap" m={-1}>
-        {productsData.map((item, ind) => (
-          <Fragment key={item.id}>
+        {productsData?.map((item, ind) => (
+          <Fragment key={item._id}>
             <ProductCard8
               sx={{
                 width: "100%",
@@ -38,23 +39,16 @@ const FrequentlyBought = ({ productsData }) => {
               }}
               {...item}
             />
-            {ind < productsData.length - 1 && (
-              <FlexRowCenter>
-                <H2 color="grey.600" mx={1}>
-                  +
-                </H2>
-              </FlexRowCenter>
-            )}
           </Fragment>
         ))}
 
-        <FlexRowCenter>
+        {/* <FlexRowCenter>
           <H2 color="grey.600" mx={3}>
             =
           </H2>
-        </FlexRowCenter>
+        </FlexRowCenter> */}
 
-        <FlexRowCenter
+        {/* <FlexRowCenter
           m={1}
           minWidth={300}
           minHeight={200}
@@ -78,7 +72,7 @@ const FrequentlyBought = ({ productsData }) => {
               Add to List
             </BazaarButton>
           </FlexBox>
-        </FlexRowCenter>
+        </FlexRowCenter> */}
       </FlexBox>
     </WrapperBox>
   );

@@ -37,16 +37,16 @@ const reducer = (state, action) => {
     case "CHANGE_CART_AMOUNT":
       let cartList = state.cart;
       let cartItem = action.payload;
-      let exist = cartList.find((item) => item.id === cartItem.id);
+      let exist = cartList.find((item) => item._id === cartItem._id);
 
       if (cartItem.qty < 1) {
-        const filteredCart = cartList.filter((item) => item.id !== cartItem.id);
+        const filteredCart = cartList.filter((item) => item._id !== cartItem._id);
         return { ...state, cart: filteredCart };
       } // IF PRODUCT ALREADY EXITS IN CART
 
       if (exist) {
         const newCart = cartList.map((item) =>
-          item.id === cartItem.id ? { ...item, qty: cartItem.qty } : item
+          item._id === cartItem._id ? { ...item, qty: cartItem.qty } : item
         );
         return { ...state, cart: newCart };
       }

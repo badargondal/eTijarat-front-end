@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Grid } from "@mui/material";
 import BazaarButton from "components/BazaarButton";
 import BazaarTextField from "components/BazaarTextField";
 import { FlexBox } from "components/flex-box";
@@ -10,17 +10,51 @@ import EyeToggleButton from "./EyeToggleButton";
 import { Wrapper } from "./Login";
 import SocialButtons from "./SocialButtons";
 import { useRouter } from "next/router";
-import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
+import { BASE_URL, RECOMMENDED_PRODUCTS, VENDOR } from "../../../src/apiRoutes";
+import DropZoneVendor from "components/DropZoneVendor";
+import axios from "axios";
 const VendorSignup = () => {
   const router = useRouter();
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [documents, setdocuments] = useState();
+
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
   }, []);
 
+  const verfiedAddress = async (address) => {
+    console.log("Incoming Address", address);
+    const response = await axios.post(
+      `${RECOMMENDED_PRODUCTS}/address`,
+      { address: address },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = response.data;
+    // console.log("respone", response);
+    // console.log("data", data);
+    return data;
+  };
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    const response = await axios.post(
+      `${RECOMMENDED_PRODUCTS}/address`,
+      { address: values.address },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = response.data;
+    console.log("data", data);
+
+    let vendorValues = data[0].name + " , " + data[1].address;
+    values.addressVerification = vendorValues;
+    console.log("values", values);
     return fetch(`${BASE_URL + VENDOR}/register`, {
       method: "POST",
       headers: {
@@ -63,7 +97,7 @@ const VendorSignup = () => {
           fullWidth
           name="name"
           size="small"
-          label="Full Name"
+          label="Shop Name"
           variant="outlined"
           onBlur={handleBlur}
           value={values.name}
@@ -88,6 +122,56 @@ const VendorSignup = () => {
           error={!!touched.email && !!errors.email}
           helperText={touched.email && errors.email}
         />
+        <BazaarTextField
+          mb={1.5}
+          fullWidth
+          name="address"
+          size="small"
+          type="text"
+          variant="outlined"
+          onBlur={handleBlur}
+          value={values.address}
+          onChange={handleChange}
+          label="Address"
+          placeholder="Address"
+          error={!!touched.address && !!errors.address}
+          helperText={touched.address && errors.address}
+        />
+        <Grid item xs={12}>
+          <DropZoneVendor
+            onChange={() => {
+              const url =
+                "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
+              const files = document.querySelector("[type=file]").files;
+              const formData = new FormData();
+
+              let file = files[0];
+              formData.append("file", file);
+              formData.append("upload_preset", "eTijarat");
+
+              fetch(url, {
+                method: "POST",
+                body: formData,
+              })
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log("img", data.url);
+                  setdocuments(data.url);
+                });
+            }}
+          />
+          {documents && (
+            <img src={documents} alt="uploadedImage" height="200" />
+          )}
+          <input
+            type="text"
+            hidden
+            name="documents"
+            value={(values.documents = documents)}
+          />
+        </Grid>
 
         <BazaarTextField
           mb={1.5}

@@ -67,7 +67,7 @@ const ContentWrapper = styled(Box)(() => ({
 
 // ========================================================
 const ProductCard1 = ({
-  id,
+  _id,
   title,
   price,
   imgUrl,
@@ -89,7 +89,7 @@ const ProductCard1 = ({
   const toggleIsFavorite = () => setIsFavorite((fav) => !fav);
 
   const toggleDialog = useCallback(() => setOpenModal((open) => !open), []);
-  const cartItem = state.cart.find((item) => item.id === id);
+  const cartItem = state.cart.find((item) => item._id === _id);
   const handleCartAmountChange = useCallback(
     (product) => () =>
       dispatch({
@@ -120,7 +120,7 @@ const ProductCard1 = ({
           </IconButton>
         </HoverIconWrapper>
 
-        <a href={`/product/${id}`}>
+        <a href={`/product/${_id}`}>
           <LazyImage
             src={imgUrl}
             width={0}
@@ -137,7 +137,7 @@ const ProductCard1 = ({
         product={{
           title,
           price,
-          id,
+          _id,
           imgGroup: [imgUrl, imgUrl],
         }}
       />
@@ -145,7 +145,7 @@ const ProductCard1 = ({
       <ContentWrapper>
         <FlexBox>
           <Box flex="1 1 0" minWidth="0px" mr={1}>
-            <Link href={`/product/${id}`}>
+            <Link href={`/product/${_id}`}>
               <a>
                 <H3
                   mb={1}
@@ -197,7 +197,7 @@ const ProductCard1 = ({
                 padding: "3px",
               }}
               onClick={handleCartAmountChange({
-                id,
+                _id,
                 price,
                 imgUrl,
                 name: title,
@@ -224,7 +224,7 @@ const ProductCard1 = ({
                     padding: "3px",
                   }}
                   onClick={handleCartAmountChange({
-                    id,
+                    _id,
                     price,
                     imgUrl,
                     name: title,

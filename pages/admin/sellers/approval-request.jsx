@@ -18,7 +18,7 @@ import { SellerRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
 
-import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
+import { ADMIN, BASE_URL, RECOMMENDED_PRODUCTS } from "../../../src/apiRoutes";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -43,11 +43,16 @@ const tableHeading = [
     label: "Balance",
     align: "left",
   },
-  // {
-  //   id: "published",
-  //   label: "Shop Published",
-  //   align: "left",
-  // },
+  {
+    id: "address",
+    label: "address",
+    align: "left",
+  },
+  {
+    id: "Verification Address",
+    label: "Verification Address",
+    align: "left",
+  },
   {
     id: "action",
     label: "Action",
@@ -83,6 +88,8 @@ export default function SellerList({ sellers }) {
     setloading(false);
   };
 
+ 
+
   const {
     order,
     orderBy,
@@ -102,7 +109,7 @@ export default function SellerList({ sellers }) {
         handleSearch={() => {}}
         buttonText="Add New Seller"
         handleBtnClick={() => {}}
-        searchPlaceholder="Search Seller..."
+        searchPlaceholder="Search vendor..."
       />
       {loading ? (
         <CircularProgress />

@@ -46,7 +46,8 @@ const SellerRow = ({ seller }) => {
   };
 
   console.log("seller", seller);
-  const { _id, name, phone, email, balance, published } = seller;
+  const { _id, name, phone, email, published, address, addressVerification } =
+    seller;
   const [shopPulish, setShopPublish] = useState(published);
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
@@ -80,6 +81,22 @@ const SellerRow = ({ seller }) => {
         $1000
       </StyledTableCell>
 
+      <StyledTableCell
+        align="left"
+        sx={{
+          fontWeight: 400,
+        }}
+      >
+        {address}
+      </StyledTableCell>
+      <StyledTableCell
+        align="left"
+        sx={{
+          fontWeight: 400,
+        }}
+      >
+        {addressVerification}
+      </StyledTableCell>
       {/* <StyledTableCell align="left">
         <BazaarSwitch
           color="info"
