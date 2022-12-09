@@ -103,10 +103,13 @@ const ProductForm = (props) => {
                     const url =
                       "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
 
-                    const files = document.querySelector("[type=file]").files;
-                    const formData = new FormData();
+                    // const files = document.querySelector("[type=file]").files;
 
-                    let file = files[0];
+                    const myFiles = document.querySelectorAll("[type=file]");
+                    let myArray = Array.from(myFiles)
+                    const file = myArray[0].files[0];
+
+                    const formData = new FormData();
                     formData.append("file", file);
                     formData.append("upload_preset", "eTijarat");
 
@@ -295,11 +298,14 @@ const ProductForm = (props) => {
                         const url =
                           "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
 
-                        const files =
-                          document.querySelector("[type=file]").files;
+                        // const files = document.querySelector("[type=file]").files;
+
+                        const myFiles = document.querySelectorAll("[type=file]");
+                        let myArray = Array.from(myFiles)
+                        const file = myArray[1].files[0];
+
                         const formData = new FormData();
 
-                        let file = files[0];
                         formData.append("file", file);
                         formData.append("upload_preset", "eTijarat");
 
@@ -515,11 +521,13 @@ const ProductForm = (props) => {
                         const url =
                           "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
 
-                        const files =
-                          document.querySelector("[type=file]").files;
-                        const formData = new FormData();
+                        // const files = .querySelector("[type=file]").files;
 
-                        let file = files[0];
+                        const myFiles = document.querySelectorAll("[type=file]");
+                        let myArray = Array.from(myFiles)
+                        const file = myArray[2].files[0];
+
+                        const formData = new FormData();
                         formData.append("file", file);
                         formData.append("upload_preset", "eTijarat");
 
@@ -734,11 +742,13 @@ const ProductForm = (props) => {
                         const url =
                           "https://api.cloudinary.com/v1_1/dphfy8pau/image/upload";
 
-                        const files =
-                          document.querySelector("[type=file]").files;
-                        const formData = new FormData();
+                        // const files = document.querySelector("[type=file]").files;
 
-                        let file = files[0];
+                        const myFiles = document.querySelectorAll("[type=file]");
+                        let myArray = Array.from(myFiles)
+                        const file = myArray[3].files[0];
+
+                        const formData = new FormData();
                         formData.append("file", file);
                         formData.append("upload_preset", "eTijarat");
 
@@ -893,7 +903,7 @@ const ProductForm = (props) => {
                   </Grid>
                 </>
               )}
-              <Grid item sm={6} xs={12} style={{marginTop:60}}>
+              <Grid item sm={6} xs={12} style={{ marginTop: 60 }}>
                 <Button variant="contained" color="info" type="submit">
                   Save product
                 </Button>
