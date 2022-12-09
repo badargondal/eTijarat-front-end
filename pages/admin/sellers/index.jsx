@@ -28,14 +28,15 @@ const tableHeading = [
     label: "Seller Name",
     align: "left",
   },
-  // {
-  //   id: "shopName",
-  //   label: "Shop Name",
-  //   align: "left",
-  // },
+
   {
     id: "email",
     label: "email",
+    align: "left",
+  },
+  {
+    id: "shopName",
+    label: "Shop Name",
     align: "left",
   },
   {

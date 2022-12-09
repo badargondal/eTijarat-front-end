@@ -38,11 +38,7 @@ const tableHeading = [
     label: "email",
     align: "left",
   },
-  {
-    id: "balance",
-    label: "Balance",
-    align: "left",
-  },
+
   {
     id: "address",
     label: "address",
@@ -87,8 +83,6 @@ export default function SellerList({ sellers }) {
     setdata(response.data);
     setloading(false);
   };
-
- 
 
   const {
     order,

@@ -143,26 +143,26 @@ const CheckoutForm2 = () => {
     order.details = values;
     console.log("orders", order);
 
-    const res = await axios
-      .post(`${BASE_URL + BUYER}/create-checkout-session`, order, {
-        headers: {
-          "Content-Type": "application/json",
+    // const res = await axios
+    //   .post(`${BASE_URL + BUYER}/create-checkout-session`, order, {
+    //     headers: {
+    //       "Content-Type": "application/json",
 
-          Authorization: localStorage.getItem("sessionId"),
-        },
-      })
-      .then(
-        (response) => {
-          if (response.data.url) {
-            window.location.href = response.data.url;
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    //       Authorization: localStorage.getItem("sessionId"),
+    //     },
+    //   })
+    //   .then(
+    //     (response) => {
+    //       if (response.data.url) {
+    //         window.location.href = response.data.url;
+    //       }
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
 
-    return res;
+    // return res;
   };
 
   const handleFieldValueChange = (value, fieldName, setFieldValue) => () => {
@@ -206,8 +206,9 @@ const CheckoutForm2 = () => {
     openEditForm ? setOpenEditForm(false) : setOpenEditForm(true);
   };
 
+  
+
   const initialValues = {
-    // f
     date: "",
     time: "",
     address: "",
@@ -486,12 +487,29 @@ const CheckoutForm2 = () => {
                   fullWidth
                   name="voucher"
                   value={values.voucher}
+                  id="voucher"
                   onChange={handleChange}
                   placeholder="Enter voucher code here"
                 />
-                <Button variant="contained" color="primary" type="button">
-                  Apply
-                </Button>
+                {Voucher ? (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    type="button"
+                    onClick={validateVoucher}
+                  >
+                    Applied
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="button"
+                    onClick={validateVoucher}
+                  >
+                    Apply
+                  </Button>
+                )}
               </FlexBox>
             )} */}
 

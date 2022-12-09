@@ -24,15 +24,15 @@ import axios from "axios";
 
 const tableHeading = [
   {
-    id: "coupon",
-    label: " coupon",
+    id: "Coupon Code",
+    label: "Coupon Code",
     align: "left",
   },
-  // {
-  //   id: "shopName",
-  //   label: "Shop Name",
-  //   align: "left",
-  // },
+  {
+    id: "Product Id",
+    label: "Product Id",
+    align: "left",
+  },
   {
     id: "discount",
     label: "discount",
@@ -84,9 +84,9 @@ export default function SellerList({ sellers }) {
   // };
 
   const data = [
-    { name: "coupon1", email: "5%" },
-    { name: "coupon1", email: "5%" },
-    { name: "coupon1", email: "5%" },
+    { name: "coupon1", discount: "5%", productId: "123123" },
+    { name: "coupon1", discount: "5%", productId: "123123" },
+    { name: "coupon1", discount: "5%", productId: "123123" },
   ];
   const {
     order,

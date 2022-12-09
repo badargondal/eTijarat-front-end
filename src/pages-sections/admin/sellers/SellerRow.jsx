@@ -72,14 +72,14 @@ const SellerRow = ({ seller }) => {
         {email}
       </StyledTableCell>
 
-      <StyledTableCell
+      {/* <StyledTableCell
         align="left"
         sx={{
           fontWeight: 400,
         }}
       >
         $1000
-      </StyledTableCell>
+      </StyledTableCell> */}
 
       <StyledTableCell
         align="left"

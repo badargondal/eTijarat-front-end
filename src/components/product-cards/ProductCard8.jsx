@@ -39,10 +39,6 @@ const ProductCard8 = (props) => {
             <H6 color="primary.main" mr={0.5}>
               ${price}
             </H6>
-
-            <Span color="grey.600">
-              <del>$1600</del>
-            </Span>
           </FlexBox>
         </a>
       </Link>

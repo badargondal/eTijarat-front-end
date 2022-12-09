@@ -80,6 +80,7 @@ const ProductDetails = (props) => {
   }
 
   const handleOptionClick = (_, value) => setSelectedOption(value);
+  console.log("product intro", product);
 
   return (
     <ShopLayout1>

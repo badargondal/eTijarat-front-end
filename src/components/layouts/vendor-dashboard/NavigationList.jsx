@@ -182,15 +182,15 @@ export const navigations = [
     path: "/vendor/chat",
   },
   {
-    name: "Coupens",
+    name: "Coupons",
     icon: duotone.Products,
     children: [
       {
-        name: "Coupens List",
+        name: "Coupons List",
         path: "/vendor/coupens",
       },
       {
-        name: "Generate Coupen",
+        name: "Generate Coupon",
         path: "/vendor/coupens/create",
       },
     ],
