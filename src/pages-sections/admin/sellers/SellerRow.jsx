@@ -46,8 +46,16 @@ const SellerRow = ({ seller }) => {
   };
 
   console.log("seller", seller);
-  const { _id, name, phone, email, published, address, addressVerification } =
-    seller;
+  const {
+    _id,
+    name,
+    phone,
+    email,
+    published,
+    address,
+    addressVerification,
+    documents,
+  } = seller;
   const [shopPulish, setShopPublish] = useState(published);
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
@@ -71,41 +79,29 @@ const SellerRow = ({ seller }) => {
       >
         {email}
       </StyledTableCell>
-
-      {/* <StyledTableCell
-        align="left"
-        sx={{
-          fontWeight: 400,
-        }}
-      >
-        $1000
-      </StyledTableCell> */}
-
       <StyledTableCell
         align="left"
         sx={{
           fontWeight: 400,
         }}
       >
-        {address}
+        {address || "Park Road Islamabad"}
       </StyledTableCell>
       <StyledTableCell
         align="left"
+        style={{ maxWidth: 80 }}
         sx={{
           fontWeight: 400,
         }}
       >
-        {addressVerification}
+        {addressVerification || "+92 348 ******85"}
       </StyledTableCell>
-      {/* <StyledTableCell align="left">
-        <BazaarSwitch
-          color="info"
-          checked={shopPulish}
-          onChange={() => setShopPublish((state) => !state)}
-        />
-      </StyledTableCell> */}
-
       <StyledTableCell align="center">
+        <StyledIconButton>
+          <a href={documents} target="_blank">
+            <RemoveRedEye />
+          </a>
+        </StyledIconButton>
         <StyledIconButton onClick={() => approveVendor(_id)}>
           <VerifiedIcon />
         </StyledIconButton>

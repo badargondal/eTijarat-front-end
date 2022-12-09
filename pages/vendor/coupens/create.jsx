@@ -9,6 +9,7 @@ import BazaarTextField from "components/BazaarTextField";
 import { useFormik } from "formik";
 import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
 import axios from "axios";
+import { Router, useRouter } from "next/router";
 
 const Wrapper = styled(BazaarCard)(() => ({
   margin: "auto",
@@ -22,6 +23,7 @@ const StyledButton = styled(BazaarButton)(() => ({
 }));
 
 const CreateCoupen = () => {
+  const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
@@ -40,6 +42,7 @@ const CreateCoupen = () => {
         (response) => {
           response;
           console.log("response", response);
+          router.push("/vendor/coupens");
         },
         (error) => {
           console.log(error);

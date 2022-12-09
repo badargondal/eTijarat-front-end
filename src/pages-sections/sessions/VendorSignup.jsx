@@ -24,7 +24,6 @@ const VendorSignup = () => {
   }, []);
 
   const verfiedAddress = async (address) => {
-    console.log("Incoming Address", address);
     const response = await axios.post(
       `${RECOMMENDED_PRODUCTS}/address`,
       { address: address },
@@ -35,8 +34,6 @@ const VendorSignup = () => {
       }
     );
     const data = response.data;
-    // console.log("respone", response);
-    // console.log("data", data);
     return data;
   };
   const handleFormSubmit = async (values) => {
@@ -50,11 +47,11 @@ const VendorSignup = () => {
       }
     );
     const data = response.data;
-    console.log("data", data);
 
     let vendorValues = data[0].name + " , " + data[1].address;
     values.addressVerification = vendorValues;
     console.log("values", values);
+
     return fetch(`${BASE_URL + VENDOR}/register`, {
       method: "POST",
       headers: {

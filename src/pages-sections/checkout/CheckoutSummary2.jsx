@@ -37,7 +37,7 @@ const CheckoutSummary2 = () => {
 
             cartList.forEach((item) => {
               console.log(item);
-              if (item.id == coupon.productId._id) {
+              if (item._id == coupon.productId._id) {
                 setVoucher(coupon);
                 const discountprice =
                   (coupon.discount * coupon.productId.price) / 100;

@@ -35,13 +35,13 @@ const tableHeading = [
     align: "left",
   },
   {
-    id: "shopName",
-    label: "Shop Name",
+    id: "address",
+    label: "address",
     align: "left",
   },
   {
-    id: "balance",
-    label: "Balance",
+    id: "Contact",
+    label: "Contact",
     align: "left",
   },
   // {

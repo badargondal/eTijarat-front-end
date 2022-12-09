@@ -14,14 +14,23 @@ import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import Scrollbar from "components/Scrollbar";
 import { H3 } from "components/Typography";
 import useMuiTable from "hooks/useMuiTable";
-import { SellerRow } from "pages-sections/admin";
 import React from "react";
 import api from "utils/api/dashboard"; // table column list
 
-import { ADMIN, BASE_URL } from "../../../src/apiRoutes";
+import { ADMIN, BASE_URL, VENDOR } from "../../../src/apiRoutes";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import {
+  StyledIconButton,
+  StyledTableCell,
+  StyledTableRow,
+} from "../../../src/pages-sections/admin";
+import { FlexBox } from "../../../src/components/flex-box";
+import { Avatar } from "@mui/material";
+import { Paragraph, Small } from "../../../src/components/Typography";
+import { Delete, Edit, RemoveRedEye } from "@mui/icons-material";
+import VerifiedIcon from "@mui/icons-material/Verified";
 const tableHeading = [
   {
     id: "Coupon Code",
@@ -39,16 +48,6 @@ const tableHeading = [
     align: "left",
   },
   {
-    id: "price",
-    label: "price",
-    align: "left",
-  },
-  // {
-  //   id: "published",
-  //   label: "Shop Published",
-  //   align: "left",
-  // },
-  {
     id: "action",
     label: "Action",
     align: "center",
@@ -60,34 +59,71 @@ SellerList.getLayout = function getLayout(page) {
 }; // =============================================================================
 
 // =============================================================================
+
+const CouponRow = ({ seller }) => {
+  console.log("coupon row ", seller);
+  const { code, discount, productId } = seller;
+  return (
+    <StyledTableRow tabIndex={-1} role="checkbox">
+      <StyledTableCell
+        align="left"
+        sx={{
+          fontWeight: 400,
+        }}
+      >
+        {code}
+      </StyledTableCell>
+      <StyledTableCell
+        align="left"
+        sx={{
+          fontWeight: 400,
+        }}
+      >
+        {productId}
+      </StyledTableCell>
+
+      <StyledTableCell
+        align="left"
+        sx={{
+          fontWeight: 400,
+        }}
+      >
+        {discount} %
+      </StyledTableCell>
+
+      <StyledTableCell align="center">
+        <StyledIconButton>
+          <Delete />
+        </StyledIconButton>
+      </StyledTableCell>
+    </StyledTableRow>
+  );
+};
+
 export default function SellerList({ sellers }) {
-  // const [data, setdata] = useState(null);
+  const [data, setdata] = useState(null);
   const [loading, setloading] = useState(true);
 
-  // useEffect(() => {
-  //   data == null ? getVendors() : null;
-  // }, []);
+  useEffect(() => {
+    data == null ? getCoupons() : null;
+  }, []);
 
-  // var getVendors = async () => {
-  //   const response = await axios.get(
-  //     `${BASE_URL + ADMIN}/vendors`,
+  var getCoupons = async () => {
+    const response = await axios.get(
+      `${BASE_URL + VENDOR}/coupon`,
 
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   console.log("response", response.data);
-  //   setdata(response.data);
-  //   setloading(false);
-  // };
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
 
-  const data = [
-    { name: "coupon1", discount: "5%", productId: "123123" },
-    { name: "coupon1", discount: "5%", productId: "123123" },
-    { name: "coupon1", discount: "5%", productId: "123123" },
-  ];
   const {
     order,
     orderBy,
@@ -128,11 +164,15 @@ export default function SellerList({ sellers }) {
                 onRequestSort={handleRequestSort}
               />
 
-              <TableBody>
-                {data.map((seller, index) => (
-                  <SellerRow seller={seller} key={index} />
-                ))}
-              </TableBody>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <TableBody>
+                  {data.map((seller, index) => (
+                    <CouponRow seller={seller} key={index} />
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
         </Scrollbar>
