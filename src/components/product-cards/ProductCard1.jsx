@@ -80,7 +80,6 @@ const ProductCard1 = ({
   description,
   category,
   imgGroup,
-  reviews,
 }) => {
   const { state, dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);

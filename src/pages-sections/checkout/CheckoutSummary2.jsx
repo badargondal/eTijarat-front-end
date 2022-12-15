@@ -25,7 +25,6 @@ const CheckoutSummary2 = () => {
       .post(`${BASE_URL}/products/coupon/${voucher}`, cartList, {
         headers: {
           "Content-Type": "application/json",
-
           Authorization: localStorage.getItem("sessionId"),
         },
       })
@@ -37,6 +36,12 @@ const CheckoutSummary2 = () => {
 
             cartList.forEach((item) => {
               console.log(item);
+              if (item.id == coupon.productId._id) {
+                setVoucher(coupon);
+                const discountprice =
+                  (coupon.discount * coupon.productId.price) / 100;
+                setDiscount(Math.floor(discountprice));
+              }
               if (item._id == coupon.productId._id) {
                 setVoucher(coupon);
                 const discountprice =
@@ -131,7 +136,7 @@ const CheckoutSummary2 = () => {
         )}
       </FlexBox>
       {Voucher && (
-        <Box style={{marginTop:"20"}}>
+        <Box style={{ marginTop: "20" }}>
           <Paragraph>
             {`${Voucher.discount}% discount applied on product ${Voucher.productId.title}  `}
           </Paragraph>
@@ -141,22 +146,4 @@ const CheckoutSummary2 = () => {
   );
 };
 
-// const cartList = [
-
-//   {
-//     name: "iPhone 12",
-//     quantity: 1,
-//     price: 999,
-//   },
-//   {
-//     name: "iPhone 12 pro",
-//     quantity: 1,
-//     price: 1199,
-//   },
-//   {
-//     name: "iPhone 12 pro max",
-//     quantity: 1,
-//     price: 1299,
-//   },
-// ];
 export default CheckoutSummary2;

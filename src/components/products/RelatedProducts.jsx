@@ -5,8 +5,15 @@ import React from "react"; // ==================================================
 
 // ===================================================
 const RelatedProducts = ({ productsData }) => {
-  console.log("productsData",productsData)
-  
+  console.log("Related prod", productsData);
+
+  productsData.forEach((item, ind) => {
+    // console.log("item", item._id.$oid);
+    if (item._id.$oid) {
+      item._id = item._id.$oid;
+    }
+  });
+
   return (
     <Box mb={7.5}>
       <H3 mb={3}>Related Products</H3>

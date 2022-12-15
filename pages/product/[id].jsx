@@ -138,7 +138,9 @@ const ProductDetails = (props) => {
         {loadingRelatedproducts ? (
           <CircularProgress />
         ) : (
+          
           relatedProducts && <RelatedProducts productsData={relatedProducts} />
+          
         )}
       </Container>
     </ShopLayout1>

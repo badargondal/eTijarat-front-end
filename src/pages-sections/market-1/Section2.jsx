@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"; // ================================
 
 // =============================================================
 const Section2 = ({ flashDeals }) => {
+  console.log("flashhh", flashDeals);
   // {(flashDeals.slice(1,3)).map(item => console.log(item))}
   // {flashDeals.slice(1,3).map(item => console.log("item",item))}
   const [visibleSlides, setVisibleSlides] = useState(4);
@@ -25,14 +26,14 @@ const Section2 = ({ flashDeals }) => {
       seeMoreLink="#"
     >
       <Carousel
-        totalSlides={(flashDeals.slice(1,8)).length}
+        totalSlides={flashDeals.slice(1, 8).length}
         visibleSlides={visibleSlides}
         infinite={true}
       >
-        {flashDeals.slice(1,8).map((item, ind) => (
+        {flashDeals.slice(1, 8).map((item, ind) => (
           <Box py={0.5} key={ind}>
             <ProductCard1
-              id={item.id}
+              _id={item._id}
               title={item.title}
               price={item.price}
               imgUrl={item.imgUrl}

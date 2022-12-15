@@ -143,26 +143,26 @@ const CheckoutForm2 = () => {
     order.details = values;
     console.log("orders", order);
 
-    // const res = await axios
-    //   .post(`${BASE_URL + BUYER}/create-checkout-session`, order, {
-    //     headers: {
-    //       "Content-Type": "application/json",
+    const res = await axios
+      .post(`${BASE_URL + BUYER}/create-checkout-session`, order, {
+        headers: {
+          "Content-Type": "application/json",
 
-    //       Authorization: localStorage.getItem("sessionId"),
-    //     },
-    //   })
-    //   .then(
-    //     (response) => {
-    //       if (response.data.url) {
-    //         window.location.href = response.data.url;
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      })
+      .then(
+        (response) => {
+          if (response.data.url) {
+            window.location.href = response.data.url;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
-    // return res;
+    return res;
   };
 
   const handleFieldValueChange = (value, fieldName, setFieldValue) => () => {
@@ -205,8 +205,6 @@ const CheckoutForm2 = () => {
     setSelected(data);
     openEditForm ? setOpenEditForm(false) : setOpenEditForm(true);
   };
-
-  
 
   const initialValues = {
     date: "",

@@ -141,7 +141,7 @@ export default function SellerList({ sellers }) {
 
       <SearchArea
         handleSearch={() => {}}
-        buttonText="Add New Seller"
+        buttonText="Add New Coupon"
         handleBtnClick={() => {}}
         searchPlaceholder="Search Seller..."
       />
