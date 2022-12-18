@@ -16,7 +16,7 @@ const WishCard = () => {
       }}
     >
       <H5 color="info.main" mb={0.5}>
-        Good Morning, Maruf!
+        Good Morning, Badar!
       </H5>
       <Paragraph color="grey.600">
         Here’s what happening with your store today!

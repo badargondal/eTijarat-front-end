@@ -1,16 +1,17 @@
-import { Container, styled } from "@mui/material";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import BazaarButton from "components/BazaarButton";
 import React, { useCallback, useState } from "react";
 import BazaarCard from "components/BazaarCard";
-import { Button, Card, Grid, MenuItem, TextField } from "@mui/material";
+import { styled, Box, CircularProgress, Typography } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import BazaarTextField from "components/BazaarTextField";
 
 import { useFormik } from "formik";
 import { BASE_URL, VENDOR } from "../../../src/apiRoutes";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
-
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { currency } from "data/months-years";
 const Wrapper = styled(BazaarCard)(() => ({
   margin: "auto",
   padding: "3rem",
@@ -28,6 +29,29 @@ const CreateCoupen = () => {
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility((visible) => !visible);
   }, []);
+
+  const [data, setdata] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    data == null ? getProducts() : null;
+  }, []);
+
+  var getProducts = async () => {
+    const response = await axios.get(
+      `${BASE_URL + VENDOR}/products`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("sessionId"),
+        },
+      }
+    );
+    console.log("response drop down", response.data);
+    setdata(response.data);
+    setloading(false);
+  };
 
   const handleFormSubmit = async (values) => {
     console.log(values);
@@ -58,21 +82,36 @@ const CreateCoupen = () => {
   return (
     <Wrapper style={{ marginTop: 50 }}>
       <form onSubmit={handleSubmit}>
-        <BazaarTextField
-          mb={1.5}
-          fullWidth
-          name="productId"
-          size="small"
-          type="text"
-          variant="outlined"
-          onBlur={handleBlur}
-          value={values.productId}
-          onChange={handleChange}
-          label="Product ID"
-          placeholder="Valid product id"
-          error={!!touched.productId && !!errors.productId}
-          helperText={touched.productId && errors.productId}
-        />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Box mb={3.5}>
+            <Grid container spacing={3}>
+              <Grid item sm={12} xs={12}>
+                <Box>
+                  <TextField
+                    select
+                    fullWidth
+                    type="number"
+                    name="product"
+                    onChange={handleChange}
+                    label="Select product for discount "
+                    value={values.product}
+                    error={!!touched.product && !!errors.product}
+                    helperText={touched.product && errors.product}
+                  >
+                    {data.map((item) => (
+                      <MenuItem value={item._id} key={item}>
+                        {item.title}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+
         <BazaarTextField
           mb={1.5}
           fullWidth
@@ -148,7 +187,7 @@ CreateCoupen.getLayout = function getLayout(page) {
 };
 
 const initialValues = {
-  productId: "",
+  product: "",
   code: "",
   discount: "",
 };

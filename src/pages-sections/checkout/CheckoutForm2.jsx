@@ -412,13 +412,6 @@ const CheckoutForm2 = () => {
                   </Box>
                 </Grid>
               </Grid>
-              {/* <FormControlLabel
-                sx={{
-                  mt: 1,
-                }}
-                control={<Checkbox />}
-                label="Save this card"
-              /> */}
             </Box>
 
             {/* <Box>

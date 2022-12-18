@@ -151,7 +151,7 @@ const ProductForm = (props) => {
                   label="Select Category"
                   error={!!touched.category && !!errors.category}
                   helperText={touched.category && errors.category}
-                >
+                 >
                   <MenuItem value="electronics">Electronics</MenuItem>
                   <MenuItem value="fashion">Fashion</MenuItem>
                   <MenuItem value="bikes">bikes</MenuItem>
