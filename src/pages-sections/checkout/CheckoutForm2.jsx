@@ -105,36 +105,6 @@ const CheckoutForm2 = () => {
     setcardLoading(false);
   };
 
-  // const handleFormSubmit = async (values) => {
-  //   const order = new Object();
-  //   order.buyerId = localStorage.getItem("buyerId");
-  //   order.products = cartList;
-  //   order.details = values;
-  //   console.log("orders", order);
-
-  //   const res = await axios
-  //     .post(`${BASE_URL + BUYER}/order/create`, order, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: localStorage.getItem("sessionId"),
-  //       },
-  //     })
-  //     .then(
-  //       (response) => {
-  //         response;
-  //         // console.log("response from order",response.data)
-  //         console.log(response.data.message);
-  //         router.push("/order-confirmation");
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-
-  //   // console.log("res",res)
-  //   return res;
-  // };
-
   const handleFormSubmit = async (values) => {
     console.log("CartList", cartList);
     const order = new Object();
@@ -302,7 +272,6 @@ const CheckoutForm2 = () => {
               <Grid container spacing={3}>
                 {data.address.map((item, ind) => (
                   <Grid item md={4} sm={6} xs={12} key={ind}>
-                    {/* {console.log("item", item)} */}
                     <Card
                       sx={{
                         padding: 2,
@@ -339,31 +308,6 @@ const CheckoutForm2 = () => {
                             setAddressData={setAddressData}
                           />
                         )}
-
-                        {/* <IconButton
-                          size="small"
-                          sx={{
-                            mr: 1,
-                          }}
-                          onClick={() => editHandler(item.name)}
-                        >
-                          <ModeEditOutline
-                            sx={{
-                              fontSize: 20,
-                            }}
-                          />
-                        </IconButton>
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => deleteAddress(item.name)}
-                         >
-                          <DeleteOutline
-                            sx={{
-                              fontSize: 20,
-                            }}
-                            />
-                        </IconButton> */}
                       </FlexBox>
 
                       <H6 mb={0.5}>{item.name}</H6>
@@ -413,108 +357,6 @@ const CheckoutForm2 = () => {
                 </Grid>
               </Grid>
             </Box>
-
-            {/* <Box>
-              <Typography mb={1.5}>Saved Cards</Typography>
-
-              {cardLoading ? (
-                <CircularProgress />
-               ) : (
-                <Grid container spacing={3}>
-                  {paymentMethodList.map((item,index) => (
-                    <Grid item md={4} sm={6} xs={12} key={index}>
-                      {console.log("item", item)}
-                      <Card
-                        sx={{
-                          padding: 2,
-                          boxShadow: "none",
-                          cursor: "pointer",
-                          border: "1px solid",
-                          backgroundColor: "grey.100",
-                          borderColor:
-                            item.last4Digits === values.card
-                              ? "primary.main"
-                              : "transparent",
-                        }}
-                        onClick={handleFieldValueChange(
-                          item.last4Digits,
-                          "card",
-                          setFieldValue
-                        )}
-                      >
-                        <Box height={24} width={36} position="relative" mb={1}>
-                          <LazyImage
-                            layout="fill"
-                            objectFit="contain"
-                            src={`/assets/images/payment-methods/Visa.svg`}
-                          />
-                        </Box>
-
-                        <Paragraph color="grey.700">
-                          **** **** **** {item.last4Digits}
-                        </Paragraph>
-                        <Paragraph color="grey.700">{item.name}</Paragraph>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              )}
-            </Box> */}
-
-            {/* <Button
-              sx={{
-                color: "primary.main",
-                mt: 3,
-                lineHeight: 1,
-              }}
-              onClick={toggleHasVoucher}
-            >
-              I have a voucher
-            </Button>
-
-            {hasVoucher && (
-              <FlexBox mt={3} gap={2} maxWidth="400px">
-                <TextField
-                  fullWidth
-                  name="voucher"
-                  value={values.voucher}
-                  id="voucher"
-                  onChange={handleChange}
-                  placeholder="Enter voucher code here"
-                />
-                {Voucher ? (
-                  <Button
-                    variant="contained"
-                    color="success"
-                    type="button"
-                    onClick={validateVoucher}
-                  >
-                    Applied
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="button"
-                    onClick={validateVoucher}
-                  >
-                    Apply
-                  </Button>
-                )}
-              </FlexBox>
-            )} */}
-
-            {/* <Button
-              fullWidth
-              type="submit"
-              color="primary"
-              variant="contained"
-              sx={{
-                mt: 3,
-              }}
-            >
-              Place Order
-            </Button> */}
             <Button
               fullWidth
               type="submit"

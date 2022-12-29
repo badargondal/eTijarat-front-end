@@ -17,7 +17,7 @@ const navigations = [
   {
     icon: Dress,
     title: "Fashion",
-    href: "/fashion",
+    href: "/product/search/fashion",
     menuComponent: "MegaMenu1",
     menuData: {
       categories: [

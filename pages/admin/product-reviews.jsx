@@ -57,7 +57,6 @@ export default function ProductReviews({ reviews }) {
   return (
     <Box py={4}>
       <H3 mb={2}>Product Reviews</H3>
-
       <Card>
         <Scrollbar>
           <TableContainer
@@ -74,7 +73,7 @@ export default function ProductReviews({ reviews }) {
                 rowCount={reviews.length}
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
-              />
+                />
 
               <TableBody>
                 {filteredList.map((review, index) => (

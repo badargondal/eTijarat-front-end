@@ -182,16 +182,7 @@ const userAccount = {
   child: [
     {
       title: "Orders",
-      child: [
-        {
-          title: "Order List",
-          url: "/orders",
-        },
-        {
-          title: "Order Details",
-          url: "/orders/634210c35e63e7b0a222b19c",
-        },
-      ],
+      url: "/orders",
     },
     {
       title: "Profile",
@@ -218,23 +209,6 @@ const userAccount = {
           url: "/address/512474",
         },
       ],
-    },
-    {
-      title: "Support tickets",
-      child: [
-        {
-          title: "All tickets",
-          url: "/support-tickets",
-        },
-        {
-          title: "Ticket details",
-          url: "/support-tickets/512474",
-        },
-      ],
-    },
-    {
-      title: "Wishlist",
-      url: "/wish-list",
     },
   ],
 };

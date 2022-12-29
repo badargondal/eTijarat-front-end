@@ -105,7 +105,7 @@ const Section7 = (props) => {
           <CategorySectionHeader title={title} seeMoreLink="#" />
 
           <Grid container spacing={3}>
-            {productList.slice(0,9).map((item, ind) => (
+            {productList.slice(0,6).map((item, ind) => (
               <Grid item lg={4} sm={6} xs={12} key={ind}>
                 <ProductCard1 off={25} hoverEffect {...item} />
               </Grid>
